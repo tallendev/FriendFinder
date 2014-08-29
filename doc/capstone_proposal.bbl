@@ -1,0 +1,26 @@
+\begin{thebibliography}{1}
+
+\bibitem{capstone_facebook}
+Konstantinos Mourtzoukos and Ioannis~T. Christou.
+\newblock Experiences running a prototype location-aware mobile social
+  networking system.
+\newblock In {\em Proceedings of the 8th International Conference on Advances
+  in Mobile Computing and Multimedia}, MoMM '10, pages 362--365, New York, NY,
+  USA, 2010. ACM.
+
+\bibitem{conserve_gps}
+Wolfgang Narzt.
+\newblock A generic context-based architecture for energy-efficient
+  localization on mobile devices.
+\newblock In {\em Proceedings of International Conference on Advances in Mobile
+  Computing \&\#38; Multimedia}, MoMM '13, pages 33:33--33:42, New York, NY,
+  USA, 2013. ACM.
+
+\bibitem{gps_alternatives}
+Zhenyun Zhuang, Kyu-Han Kim, and Jatinder~Pal Singh.
+\newblock Improving energy efficiency of location sensing on smartphones.
+\newblock In {\em Proceedings of the 8th International Conference on Mobile
+  Systems, Applications, and Services}, MobiSys '10, pages 315--330, New York,
+  NY, USA, 2010. ACM.
+
+\end{thebibliography}

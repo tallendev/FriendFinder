@@ -1,0 +1,200 @@
+\documentclass[11pt]{article}
+\bibliographystyle{plain}
+\usepackage{graphicx}
+\usepackage[margin=.75in]{geometry}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\long\def\/*#1*/{}
+\doublespace
+
+\begin{document}
+\title{\#FriendFinder}
+\author{Tyler Allen, Karen Dana}
+\maketitle
+
+\section{Overview}
+
+Our goal is to create a social networking application for the Android mobile 
+device platform tentatively called `Friend Finder'. 
+ The users of this application will have profile information including their 
+name, schedule, `likes', `dislikes', and other useful information; parts of 
+this data will be hidden from other users, but will still be used in determining if a 
+user should receive certain notifications or if a user should be flagged 
+`busy' or `available'.
+The application will also use GPS location services to provide the 
+location of events and students who wish to make their location public. This 
+will provide students with a fun and easy-to-use service that will eliminate 
+the hassle of individually inviting people to events, finding event locations, 
+as well as locating a friend for coffee.\\
+
+The primary deliverable of this project will be the Android application; we 
+will be using the Android SDK and fundamental aspects of Android development 
+pulled from the Android Development course in order to create this application. 
+For this application to function, we will need users to be able to login to 
+their profiles; this will require us to have an SQL-based back-end database 
+that contains user credentials and profile information, as well as a database 
+connector API such as JDBC. We will be using an external server to house and 
+maintain the database.  This project will require a full spectrum of 
+software engineering and development tools and techniques. We will need to 
+explore a variety of both Android technologies, such as GPS and Android 4.0 
+technologies, as well as software libraries for database connections and 
+password encryption; it may also be necessary to explore algorithms for 
+handling large data requests via the internet.\\
+
+	In addition, we are to write a Campus Emergency Application targeted at the
+    Android Platform for Western Carolina University. This application will 
+    provide relevant Emergency Information for students, such as contact 
+    information for 911, suicide hotlines, sexual assault hotlines, 
+    campus police, and campus medical facilities. This application is to be
+    Western Carolina University themed with the campus police as our 
+    clients.
+
+\section{Problem Statement}
+
+The purpose of this project is to develop a social networking application 
+targeted at the Android Mobile platform which will provide context- and 
+location-based communication and event scheduling with other users backed by 
+an external database, maintaining user profiles and 
+other information, to simplify data processing. We are also to design a 
+Campus Safety application targeted at the Android platform in order to provide
+public safety information, from both on-campus and off-campus sources, 
+to students in an easily accessible manner.
+
+
+\section{Requirements Specification}
+
+\subsection{Campus Police Application}
+\begin{itemize}
+\item This application must provide phone numbers, web pages, and other pertinent 
+contact information for on-campus and local emergency resources in a 
+well-organized, functional manner.
+ \item This application may provide the ability to call/contact these resources 
+directly from the app if it can be done in such a way that is not intrusive 
+and is not likely to happen by accident, but is still convenient enough to be 
+usable.
+\end{itemize}
+
+
+\subsection{Friend Finder Application}
+\begin{itemize}
+\item The android application should provide the ability to create a persistent 
+profile containing information, of which some will be publicly available and some 
+will be private. We will investigate using facebook authentication 
+for this app, as it seems to be both popular and reduce the complexity of 
+building a login system \cite{capstone_facebook}.
+
+\item The android application should allow a user to join groups, add `likes' to 
+their profile, and broadcast/receive events based on these likes and groups. 
+Users should be able to create likes/groups if a reasonable protocol for doing
+so becomes apparent while maintaining security and without overcomplicating
+the app.
+
+\item The android application should provide the ability for users to search/query 
+for other users, `likes', and groups available within the app. The user should 
+    also be able to upload their schedule; this will allow the application to 
+    deactivate itself or take other action when the user is `busy' according to
+    their schedule.
+
+\item The user should be able to have a `friends' list, a special group which allows 
+viewing of additional profile information such as the user's class/work 
+schedule. This will also allow the user to broadcast their location to their 
+friends, making meetups easier. GPS is notoriously known for using large amounts 
+of power, draining the battery in a short amount of time. We will be investigating
+methods for efficiently making use of the GPS transmitter as well as using 
+other technologies in place of GPS in order to conserve power \cite{conserve_gps} \cite{gps_alternatives}.
+
+\item The application should provide different levels of events and determine if 
+events warrant a push notification versus a log under their respective page.
+The server should provide a stable, consistent database of user credentials, 
+profiles, and other information.
+
+\item The server should be able to provide information about a user without revealing 
+personal information (i.e. extract `busy' status from a user's schedule and 
+deliver it to other users, 
+without revealing the actual details of the schedule).
+
+\item The server should provide user authentication; this user authentication will 
+be encrypted if it is feasible to include this within the scope of this project.
+\end{itemize}
+
+
+
+
+
+
+\section{Testing Plan}
+
+    Testing will be completed as the application is developed. We will create 
+    Regression/Integration tests using the Android TestSuite - a derivative of 
+    JUnit. An adequate server-side unit testing framework will be selected 
+    based on the final language decision; presently, there is no concrete 
+    language decision for the server while we weigh our concerns about 
+    performance, usability, and database and API availability.  Testing will 
+    also include an evaluation of the user experience on Android devices 
+    of multiple sizes, and conceivably performance concerns. Ideally, we will be
+    able to generate and/or simulate a large number of registered users as well
+    as simulated users to test usability. Our server will be the server Polaris. 
+    Our test android devices will be a Samsung Galaxy Neo, an LG G2, 
+    a Google Nexus 7 (2012), and any other devices we can allocate during 
+    the course of this project. We will be targeting Android Version 2.3 for 
+    the Campus Police application and Android Version 4.0 for the `Friend 
+    Finder' application.
+
+\section{Schedule of Completion}
+
+\textbf{Tuesday, September 16, 2014}
+\\
+\indent We will have completed the emergency application for the Western 
+Carolina campus police. The planning stage for the second part of our capstone
+will also be finished; this includes the layouts for the Android application
+and UML diagrams for the entire `Friend Finder' project.\\
+
+
+\textbf{Tuesday, September 30, 2014}
+\\  \indent  At this meeting, we will have the skeleton of the Android application 
+    finished. This contains the screens that will be used, including the 
+    graphics, layouts, styling, and non event-driven buttons. The options to 
+    enter text, change forms, and making sure the user enters valid input will 
+    have been implemented as well. We will have the normalized database schema 
+    completed, setting the layout for the information stored in the database by
+    the application. \\
+
+\textbf{Tuesday, October 21, 2014}
+\\	\indent By this time, there will be user authentication and encryption. The 
+    information for all the user profiles will also be uploaded into the 
+    database. We will also have created several different `likes' and `dislikes'
+    that users can choose to add to their profile, which will then be updated 
+    in the database.\\
+
+\textbf{Tuesday, November 4, 2014}
+\\	\indent At this point, all the information from the users stored in the database 
+    can now be queried for `likes' and `dislikes'; a user can choose a `like' 
+    or `dislike', and the database will return a list of the current users who
+    also have that same interest or disinterest. The user will also be able to
+    create groups of different people, called 'circles', that will be saved 
+    into a group database. There will also be standard groups created by us 
+    that will be gathered from users based on their location, schedule, and 
+    other information.\\
+
+\textbf{Tuesday, November 18, 2014}
+\\	\indent The user will now be able to create meetings and invite either one of his
+    own custom groups or one of the standard groups to the event. There will
+    also be the option to input their course schedule. When the user is in
+    class, it will display that they are busy on the user's profile.\\
+
+\textbf{Tuesday, December 2, 2014}
+\\	\indent Whenever a user is invited to an event, they will get a notification sent 
+    to their phone. If the user has entered the schedule and is currently in 
+    class, their notification will be delayed until they are free; if they have
+    their options set to not receive invitations, no notification will be sent.
+    We will also have implemented a map which shows nearby users who have the
+    hidden mode disabled in their settings; hidden mode allows a user to accept
+    invites and create events without being visible on the map to other users.\\
+
+\newpage
+\bibliography{capstone_proposal}
+\bibliographystyle{plain}
+\nocite{}
+\end{document}
