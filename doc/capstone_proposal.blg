@@ -1,8 +1,8 @@
-This is BibTeX, Version 0.99d (TeX Live 2012)
+This is BibTeX, Version 0.99d (TeX Live 2013/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: capstone_proposal.aux
 The style file: plain.bst
-Illegal, another \bibstyle command---line 16 of file capstone_proposal.aux
+Illegal, another \bibstyle command---line 15 of file capstone_proposal.aux
  : \bibstyle
  :          {plain}
 I'm skipping whatever remains of this command
