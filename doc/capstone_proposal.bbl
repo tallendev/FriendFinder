@@ -16,6 +16,13 @@ Wolfgang Narzt.
   Computing \&\#38; Multimedia}, MoMM '13, pages 33:33--33:42, New York, NY,
   USA, 2013. ACM.
 
+\bibitem{android_stats}
+Android developers dashboards.
+\newblock Web, 2014.
+\newblock
+  \url{https://developer.android.com/about/dashboards/index.html?utm_source=ausdroid.net}
+  Accessed: 2014-09-05.
+
 \bibitem{gps_alternatives}
 Zhenyun Zhuang, Kyu-Han Kim, and Jatinder~Pal Singh.
 \newblock Improving energy efficiency of location sensing on smartphones.

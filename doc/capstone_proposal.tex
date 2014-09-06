@@ -6,133 +6,138 @@
 \usepackage{comment}
 \usepackage{setspace}
 \usepackage{indentfirst}
-\long\def\/*#1*/{}
+\usepackage{hyperref}
+\usepackage{url}
 \doublespace
 
 \begin{document}
-\title{Social Networking Application} %FIXME: maybe
+\title{\#FriendFinder}
 \author{Tyler Allen, Karen Dana}
 \maketitle
 
 % What is it
 \section{Overview}
 
+
 The goal of this capstone is to develop a social networking application for 
-the Android mobile platform. The application will allow users to register 
-an account with a user name and password. Account information will be stored 
-in a database on a back end server. Users will authenticate using their user names and 
-passwords every time they launch the application. User account authentication 
-will be handled by the server to help ensure secure login. User account 
+the Android mobile platform. The application will allow users to connect with other people and 
+plan events. Users will be able to find people by name or through mutual interests. The application
+will allow users to invite other users to events they are planning. The application will display 
+friends and nearby users. This will provide students with a fun and easy-to-use social networking
+application.\\
+
+
+The application will allow users to register an account with a user name and password. 
+Account information will be stored in a database on a back end server. Users will authenticate 
+using their user names and passwords every time they launch the application. User account 
+authentication will be handled by the server to help ensure secure log in. User account 
 credentials will be encrypted before they are sent from the application to the
-server. \\\\
+server. \\
+
 
 The application will provide an interface for the user to create a 
-"User Profile". Every user will create a User Profile when they log into the 
-application for the first time. User Profiles contain
-personal information about the user obtained at the time that the user creates
-their User Profile. A user is not required to enter information
-for all input fields in the User Profile creation interface. This information will 
-    be stored in the back-end database. Input fields for user profiles will include %TODO: check here
+\textit{user profile}. User profiles will provide a way for users to identify other users 
+that they may already know, or that they may wish to become friends with by exposing some of the 
+personal information, such as their name and university, to other users. Every user will create a 
+user profile when they log into the application for the first time. A user is not required to 
+enter information for all input fields in the user profile creation interface. This information will 
+be stored in the back-end database. Input fields for user profiles may include
 their name, university, course schedules, and an identifying picture of their choosing. The list of 
-potential user input fields may be expanded in the future.
+potential user input fields may be expanded in the future. Users will 
+be free to modify/delete information from their user profile at any time. Users will have access
+to a search feature that allows them to find other users. The search feature will be implemented using queries
+to the database. \\
 
-The User Profile feature will 
-provide a way for users to identify other users that they may already know,
-or that they may wish to become friends with by exposing some of the personal
-information, such as their name and university, to other users. Users will 
-be free to modify/delete information from their User Profile at any time. \\\\
+Users may include their class schedule as part of their profile information. A user's profile will display
+a "busy" status if they have a class when the profile is accessed. A user's schedule will only be 
+visible to other users if they choose to make their schedule publicly accessible. A calendar 
+Application Programming Interface (API) will be used to create the events and store the user's schedule. \\ 
 
 The application will contain three other entities existing alongside users: 
-'Likes', 'Groups', and 'Events'. Groups are entities that contain zero or more other 
-groups, and zero or more Users. The default group will be known as "World". Users
-may create other groups that exist under "World". For example, a group may %second thoughts about this...
-be created and named "Western Carolina University." Users could then join this
-group, and their user name would be added to the group roster. A user's group
-membership will be visible from their profile as additional identifying 
-information.
+\textit{groups}, \textit{likes}, and \textit{events}. \textit{Groups} are entities that contain zero or more other 
+\textit{groups}, and zero or more users. The current plan is to create \textit{default groups} that users may join. 
+For example, a user could join the "Western Carolina University" group if they attend Western 
+Carolina University. Users will also be able to create custom groups that other users may join.
+A user's \textit{group membership} will be visible from their profile as identifying 
+information. A \textit{like} is anything in which the user has an interest.
+For now, users will be able to choose from a list of predefined
+\textit{likes}. \textit{Likes} will show up on a user's profile, and users will be able to search for users who have
+a particular \textit{like}. Users are permitted to create \textit{events} within the application. 
+They can invite other users and entire groups to attend the \textit{event}. Every \textit{event} will have an \textit{event 
+page} containing the name, date, time, length, location of the \textit{event}, as well as a list of attending users. The current 
+plan is to have the application display a notification on an attending user's phone when an \textit{event} is about to 
+start. Users will be able to see a scrolling list of information about groups and events. 
+The search feature will be capable of searching for groups and users who have specific likes. \\
 
 %Quitting here 9/4/2014
-\/* The users of this application will have profile information including their 
-name, schedule, `likes', `dislikes', and other useful information; parts of 
-this data will be hidden from other users, but will still be used in determining if a 
-user should receive certain notifications or if a user should be flagged 
-`busy' or `available'.
-The application will also use GPS location services to provide the 
-location of events and students who wish to make their location public. This 
-will provide students with a fun and easy-to-use service that will eliminate 
-the hassle of individually inviting people to events, finding event locations, 
-as well as locating a friend for coffee.\\
 
-The primary deliverable of this project will be the Android application; we 
-will be using the Android SDK and fundamental aspects of Android development 
-pulled from the Android Development course in order to create this application. 
-For this application to function, we will need users to be able to login to 
-their profiles; this will require us to have an SQL-based back-end database 
-that contains user credentials and profile information, as well as a database 
-connector API such as JDBC. We will be using an external server to house and 
-maintain the database.  This project will require a full spectrum of 
-software engineering and development tools and techniques. We will need to 
-explore a variety of both Android technologies, such as GPS and Android 4.0 
-technologies, as well as software libraries for database connections and 
-password encryption; it may also be necessary to explore algorithms for 
-handling large data requests via the internet.\\ */
+The application will allow users to share their locations with their friends and chosen users. Users
+will be able to identify nearby users within a predefined radius and treat them as a \textit{group}. 
+Scheduled events will contain a map that displays a map marker at the event location. 
+The current plan is to use a Global Positioning System (GPS) service to locate users. The application 
+will use a mapping API, such as Google Maps, to display user or event locations. \\
 
+The application will be targeted at Android Version 4.0. This version was chosen because the majority 
+($85.7\%$) of Android devices are running Android Version 4.0 and above according to Android Developer
+statistics generated on August $12^{th}$, 2014 \cite{android_stats}. The current plan is to use an 
+Structured Query Language (SQL) database as the backend database and access the database from another high level language 
+a database connector API such as Java Database Connectivity (JDBC). The software architecture model for communication between the 
+mobile application and the server will be based on the client-server model. A data encryption API
+will be used to encrypt user credentials when they are transferred from the application to the 
+server as a way to increase user security.
 
 %Why is it a good capstone
 \section{Problem Statement}
 
-The purpose of this project is to develop a social networking application 
-targeted at the Android Mobile platform which will provide context- and 
-location-based communication and event scheduling with other users backed by 
-an external database, maintaining user profiles and 
-other information, to simplify data processing. We are also to design a 
-Campus Safety application targeted at the Android platform in order to provide
-public safety information, from both on-campus and off-campus sources, 
-to students in an easily accessible manner.
+This project contains a number of challenging aspects. A user authentication system involves sending 
+encrypted user credentials from the application to the server, querying the database to check the 
+validity of the credentials, and maintaining an authenticated connection between the server and 
+the application. An encryption API will need to be learned and applied to authenticate the
+user credentials. An Android application interfacing with a server will require large amounts of 
+dynamic content to be generated by the application in order to provide current content; this can be 
+difficult due to frequent changes and inconsistent behavior in the Android API. The application 
+includes features that locate devices within a certain range using GPS; this can be difficult to 
+accomplish in a timely and resource efficient manner and will require a large amount of prior research. 
+The server will also need to sync with all authenticated users periodically to keep information about
+groups and events up to date without causing unnecessary web traffic and draining the battery life 
+of devices running the application.
 
 
-% Mostly good except critiscism?
 \section{Requirements Specification}
 
 \begin{itemize}
-\item The android application should provide the ability to create a persistent 
-profile containing information, of which some will be publicly available and some 
-will be private. We will investigate using facebook authentication 
-for this app, as it seems to be both popular and reduce the complexity of 
-building a login system \cite{capstone_facebook}.
+\item The application should provide the ability to create a user profile. 
+    We will investigate using facebook authentication 
+for this app because it is popular and provides an easy method of user registration \cite{capstone_facebook}.
 
-\item The android application should allow a user to join groups, add `likes' to 
-their profile, and broadcast/receive events based on these likes and groups. 
-Users should be able to create likes/groups if a reasonable protocol for doing
-so becomes apparent while maintaining security and without overcomplicating
-the app.
+\item The application will allow a user to join \textit{groups}, add \textit{likes} to 
+    their profile, and broadcast/receive events based on these \textit{likes} and \textit{groups}. 
+Users will be able to create \textit{likes}/\textit{groups}.
 
-\item The android application should provide the ability for users to search/query 
-for other users, `likes', and groups available within the app. The user should 
-    also be able to upload their schedule; this will allow the application to 
-    deactivate itself or take other action when the user is `busy' according to
-    their schedule.
+\item The application will allow users to search for other users, \textit{likes}, and \textit{groups}
+    available. Users will also be able to build their schedule. User schedules
+    will allow the application to deactivate itself when the user is `busy' 
+    according to their schedule.
 
-\item The user should be able to have a `friends' list, a special group which allows 
-viewing of additional profile information such as the user's class/work 
+\item Users will be able to have a `friends' list, a special group which allows 
+viewing of additional profile information such as the user's class
 schedule. This will also allow the user to broadcast their location to their 
-friends, making meetups easier. GPS is notoriously known for using large amounts 
+friends. GPS is notoriously known for using large amounts 
 of power, draining the battery in a short amount of time. We will be investigating
 methods for efficiently making use of the GPS transmitter as well as using 
-other technologies in place of GPS in order to conserve power \cite{conserve_gps} \cite{gps_alternatives}.
+other technologies in place of GPS in order to conserve battery power \cite{conserve_gps} \cite{gps_alternatives}.
 
-\item The application should provide different levels of events and determine if 
-events warrant a push notification versus a log under their respective page.
+\item  Users will have a scrolling list containing event and group information. 
 The server should provide a stable, consistent database of user credentials, 
 profiles, and other information.
 
-\item The server should be able to provide information about a user without revealing 
-personal information (i.e. extract `busy' status from a user's schedule and 
+\item The server will be able to provide information about a user without revealing 
+information marked private (i.e. extract `busy' status from a user's schedule and 
 deliver it to other users, 
 without revealing the actual details of the schedule).
 
-\item The server should provide user authentication; this user authentication will 
-be encrypted if it is feasible to include this within the scope of this project.
+\item There will be a user authentication mechanism; the user credentials will 
+be encrypted by an encryption API.
 \end{itemize}
 
 
@@ -143,75 +148,67 @@ be encrypted if it is feasible to include this within the scope of this project.
 \section{Testing Plan}
 
     Testing will be completed as the application is developed. We will create 
-    Regression/Integration tests using the Android TestSuite - a derivative of 
+    regression/integration tests using Android TestSuite - a derivative of 
     JUnit. An adequate server-side unit testing framework will be selected 
     based on the final language decision; presently, there is no concrete 
-    language decision for the server while we weigh our concerns about 
-    performance, usability, and database and API availability.  Testing will 
+    language decision for the server while the concerns about 
+    performance, usability, and database and API availability are weighed.  Testing will 
     also include an evaluation of the user experience on Android devices 
-    of multiple sizes, and conceivably performance concerns. Ideally, we will be
-    able to generate and/or simulate a large number of registered users as well
-    as simulated users to test usability. Our server will be the server Polaris. 
-    Our test android devices will be a Samsung Galaxy Neo, an LG G2, 
-    a Google Nexus 7 (2012), and any other devices we can allocate during 
-    the course of this project. We will be targeting Android Version 2.3 for 
-    the Campus Police application and Android Version 4.0 for the `Friend 
-    Finder' application.
+    of multiple form factors and screen sizes. Ideally, a large number of registered users 
+    can be simulated to test usability. The server will be located on Polaris. 
+    Test Android devices will include Samsung Galaxy Neo, an LG G2, 
+    a Google Nexus 7 (2012), and any other devices that can be procured during 
+    the course of this project. All testing devices will run Android 4.0 or higher. 
 
 %TODO: Can't remember
 \section{Schedule of Completion}
 
 \textbf{Tuesday, September 16, 2014}
 \\
-\indent We will have completed the emergency application for the Western 
-Carolina campus police. The planning stage for the second part of our capstone
-will also be finished; this includes the layouts for the Android application
-and UML diagrams for the entire `Friend Finder' project.\\
+\indent  The planning stage for the capstone
+will be completed; this includes the layouts for the application
+and Unified Modelling Language (UML) diagrams for the entire `Friend Finder' project.\\
 
 
 \textbf{Tuesday, September 30, 2014}
-\\  \indent  At this meeting, we will have the skeleton of the Android application 
-    finished. This contains the screens that will be used, including the 
-    graphics, layouts, styling, and non event-driven buttons. The options to 
-    enter text, change forms, and making sure the user enters valid input will 
-    have been implemented as well. We will have the normalized database schema 
+\\  \indent  The skeleton of the application 
+    will be complete. The skeleton contains the page layouts, including the 
+    graphics, styling, and non event-driven buttons. Options to 
+    enter text and edit user profiles and events will have been completed. User input validation will 
+    be completed as well. The normalized database schema will be 
     completed, setting the layout for the information stored in the database by
     the application. \\
 
 \textbf{Tuesday, October 21, 2014}
-\\	\indent By this time, there will be user authentication and encryption. The 
-    information for all the user profiles will also be uploaded into the 
-    database. We will also have created several different `likes' and `dislikes'
+\\	\indent User authentication and encryption will be completed. The 
+    database schema will be applied to the database and the database will be set 
+    up for queries and modification. There will be several different default \textit{likes} 
     that users can choose to add to their profile, which will then be updated 
     in the database.\\
 
 \textbf{Tuesday, November 4, 2014}
-\\	\indent At this point, all the information from the users stored in the database 
-    can now be queried for `likes' and `dislikes'; a user can choose a `like' 
-    or `dislike', and the database will return a list of the current users who
-    also have that same interest or disinterest. The user will also be able to
-    create groups of different people, called 'circles', that will be saved 
-    into a group database. There will also be standard groups created by us 
-    that will be gathered from users based on their location, schedule, and 
-    other information.\\
+\\	\indent The information gathered from user profiles
+    that is stored in the database can now be queried for \textit{likes}; a user can choose a 
+    \textit{like}, and the database will return a list of the current users who
+    also have that same interest. Users will also be able to
+    create groups of different people that will be saved 
+     in the back-end database. Default groups will have been completed.  \\
 
 \textbf{Tuesday, November 18, 2014}
-\\	\indent The user will now be able to create meetings and invite either one of his
-    own custom groups or one of the standard groups to the event. There will
-    also be the option to input their course schedule. When the user is in
+\\	\indent Users will now be able to create events and invite their friends or groups to the event. 
+    The user profile creation interface will be complete. When the user is in
     class, it will display that they are busy on the user's profile.\\
 
 \textbf{Tuesday, December 2, 2014}
-\\	\indent Whenever a user is invited to an event, they will get a notification sent 
-    to their phone. If the user has entered the schedule and is currently in 
-    class, their notification will be delayed until they are free; if they have
-    their options set to not receive invitations, no notification will be sent.
-    We will also have implemented a map which shows nearby users who have the
+\\	\indent When a user is invited to an event, the application will generate a
+    notification for the user. If the user has entered their class schedule and is currently in 
+    class, their notifications will be silenced until they are free; if they have
+    their options set to not receive notifications, no notification will be created.
+    We will also have completed a map feature which shows nearby users who have the
     hidden mode disabled in their settings; hidden mode allows a user to accept
     invites and create events without being visible on the map to other users.\\
 
 \newpage
 \bibliography{capstone_proposal}
-\bibliographystyle{plain}
 \nocite{}
 \end{document}
