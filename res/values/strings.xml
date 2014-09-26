@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FriendFinder</string>
+    <string name="f1">Friend</string>
+    <string name="f2">Finder</string>
+    <string name="email">Email Address</string>
+    <string name="pass">Password</string>
+    <string name="missing_acc">Don't have an account?</string>
+    <string name="login">Log In</string>
+    <string name="register">Sign Up</string>
 </resources>
+
