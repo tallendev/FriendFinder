@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple">#592C88</color>
+    <color name="gold">#C1A875</color>
+
+    <color name="black">#000000</color>
+    <color name="blue">#222266</color>
+    <color name="lt_blue">#4444cc</color>
+    <color name="dk_blue">#111133</color>
+    <color name="red">#662222</color>
+    <color name="lt_red">#CC4444</color>
+    <color name="dk_red">#331111</color>
+    <color name="magenta">#FF00FF</color>
+    <color name="lt_pink">#FF88FF</color>
+    <color name="dk_pink">#440044</color>
+    <color name="green">#226622</color>
+    <color name="lt_green">#44CC44</color>
+    <color name="dk_green">#113311</color>
+    <color name="cyan">#00FFFF</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="white">#ffffff</color>
+    <color name="grey">#999999</color>
+    <color name="lt_grey">#bbbbbb</color>
+    <color name="dk_grey">#444444</color>
+    <color name="orange">#dd8822</color>
+    <color name="brown">#774422</color>
+    <color name="purple2">#6644CC</color>
+</resources>
