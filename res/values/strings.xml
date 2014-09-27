@@ -21,6 +21,14 @@
 
     <string name="key">AIzaSyANvTxkYoSOzfBbdflsx-otMQbYmN3MW7w</string>
 
+    <string name="eventname">Event Name</string>
+    <string name="timedate">Time/Date filler</string>
+    <string name="location">Location</string>
+    <string name="information">Information:</string>
+    <string name="placeholder_message">Placeholder Message</string>
+
+
+
 
 </resources>
 
