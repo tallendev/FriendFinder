@@ -17,7 +17,9 @@
 
     <string name="invite_settings">Allow Invites from Friends Only</string>
 
-    <string name="event_priv_Settings">Make Events Attending Public</string>
+    <string name="event_priv_settings">Make Events Attending Public</string>
+
+    <string name="key">AIzaSyANvTxkYoSOzfBbdflsx-otMQbYmN3MW7w</string>
 
 
 </resources>

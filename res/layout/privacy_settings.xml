@@ -144,7 +144,7 @@
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/event_priv_Settings"
+                android:text="@string/event_priv_settings"
                 android:textSize="30sp"
                 android:textColor="@color/gold"
                 android:layout_weight="58"
