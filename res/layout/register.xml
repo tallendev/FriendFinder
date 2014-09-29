@@ -23,7 +23,7 @@ Registration page.
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"
+            android:layout_weight="13"
             android:weightSum="100">
 
         <LinearLayout
@@ -37,20 +37,21 @@ Registration page.
                 android:text="@string/register"
                 android:textSize="60sp"
                 android:textColor="@color/gold"
-                android:layout_weight="80"/>
+                android:layout_weight="60"/>
 
     </LinearLayout>
 
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="6"/>
+            android:layout_weight="8"/>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="9"
             android:weightSum="100">
+
 
         <LinearLayout
                 android:layout_width="0dp"
@@ -72,9 +73,14 @@ Registration page.
     </LinearLayout>
 
     <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="9"
             android:weightSum="100">
 
         <LinearLayout
@@ -97,9 +103,14 @@ Registration page.
     </LinearLayout>
 
     <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="9"
             android:weightSum="100">
 
         <LinearLayout
@@ -114,6 +125,64 @@ Registration page.
                 android:ems="10"
                 android:id="@+id/repeat_pass"
                 android:hint="@string/repeat_pass"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:gravity="center"
+                android:layout_weight="60"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="5"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:weightSum="100">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"/>
+
+        <!-- replace with custom buttons -->
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:id="@+id/login"
+                android:clickable="true"
+                android:scaleType="centerInside"
+                android:text="Log In"/>
+        <!--android:background="@drawable/button1"-->
+
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:weightSum="100">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/missing_acc"
                 android:singleLine="true"
                 android:ellipsize="start"
                 android:gravity="center"
@@ -137,11 +206,12 @@ Registration page.
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="40"
-                android:id="@+id/login"
+                android:id="@+id/register"
                 android:clickable="true"
                 android:scaleType="centerInside"
-                android:text="@string/sign_up"/>
+                android:text="@string/register"/>
         <!--android:background="@drawable/button1"-->
+
 
     </LinearLayout>
 

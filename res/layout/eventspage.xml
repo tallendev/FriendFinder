@@ -10,27 +10,129 @@ Dynamically generated page representing an event.
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:padding="10dp"
               android:weightSum="100"
               android:background="@color/purple">
 
-    <TextView
-            android:layout_width="match_parent"
+    <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@string/eventname"
-            android:textSize="60sp"
-            android:textColor="@color/gold"
-            android:id="@+id/friend"
-            android:layout_weight="15"
-            android:gravity="center"/>
+            android:layout_weight="8"/>
 
-    <TextView
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="@string/timedate"
-            android:textSize="40sp"
-            android:textColor="@color/gold"
-            android:layout_weight="15"/>
+            android:layout_weight="13"
+            android:weightSum="100">
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/eventname"
+                android:textSize="50sp"
+                android:textColor="@color/gold"
+                android:id="@+id/friend"
+                android:layout_weight="100"
+                android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="8"/>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:weightSum="100">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/timedate"
+                android:textSize="30sp"
+                android:textColor="@color/gold"
+                android:layout_weight="100"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="8"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:weightSum="100">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textSize="30sp"
+                android:textColor="@color/gold"
+                android:layout_weight="60"/>
+
+        <!-- Placeholder for maps icon -->
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:text="Map"/>
+                <!--android:background="@drawable/go"-->
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textSize="40sp"
+                android:textColor="@color/gold"
+                android:layout_weight="60"
+                android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="8"/>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:weightSum="100">
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/information"
+                android:textSize="30sp"
+                android:textColor="@color/gold"
+                android:layout_weight="90"/>
+
+    </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -38,50 +140,23 @@ Dynamically generated page representing an event.
             android:layout_weight="20"
             android:weightSum="100">
 
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"/>
+
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/location"
-                android:layout_gravity="center"
-                android:textSize="40sp"
+                android:text="@string/placeholder_message"
+                android:textSize="20sp"
                 android:textColor="@color/gold"
-                android:layout_weight="65"/>
-
-        <!-- Placeholder for maps icon -->
-        <Button
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="35"
-                android:layout_gravity="right"
-                android:text="Map"/>
-                <!--android:background="@drawable/go"-->
+                android:layout_weight="92"/>
 
     </LinearLayout>
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="@string/information"
-            android:textSize="40sp"
-            android:textColor="@color/gold"
-            android:layout_weight="15"/>
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="15dp"
-            android:text="@string/placeholder_message"
-            android:textSize="20sp"
-            android:textColor="@color/gold"
-            android:layout_weight="25"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_weight="10"
-        android:layout_gravity="bottom"
-        android:text="Edit Event"/>
+
 
 </LinearLayout>

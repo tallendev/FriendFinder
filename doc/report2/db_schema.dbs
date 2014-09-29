@@ -114,8 +114,8 @@
 			<column name="location" type="varchar" length="100" jt="12" >
 				<comment><![CDATA[location that can be parsed by client]]></comment>
 			</column>
-			<index name="pk_schedule" unique="PRIMARY_KEY" >
-				<column name="owner" />
+			<index name="pk_schedule_entry" unique="PRIMARY_KEY" >
+				<column name="appointment_name" />
 			</index>
 			<fk name="fk_schedule_event_user" to_schema="friendfinder" to_table="user" delete_action="cascade" update_action="cascade" >
 				<fk_column name="owner" pk="email" />
@@ -150,8 +150,8 @@
 			</index>
 		</table>
 		<table name="user_likes" >
-			<column name="user" type="varchar" length="30" jt="12" />
-			<column name="like" type="varchar" length="10" jt="12" />
+			<column name="user" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="like" type="varchar" length="10" jt="12" mandatory="y" />
 			<index name="idx_user_likes" unique="NORMAL" >
 				<column name="like" />
 			</index>
@@ -167,16 +167,16 @@
 		</table>
 	</schema>
 	<layout id="Layout4996512" name="FriendFinder" show_relation_columns="y" >
-		<entity schema="friendfinder" name="settings" color="b2cdf7" x="45" y="150" />
-		<entity schema="friendfinder" name="user_likes" color="b2cdf7" x="120" y="420" />
-		<entity schema="friendfinder" name="photo" color="b2cdf7" x="360" y="390" />
-		<entity schema="friendfinder" name="group_member" color="b2cdf7" x="375" y="270" />
-		<entity schema="friendfinder" name="likes" color="b2cdf7" x="195" y="525" />
-		<entity schema="friendfinder" name="group" color="b2cdf7" x="495" y="375" />
-		<entity schema="friendfinder" name="user" color="b2cdf7" x="210" y="210" />
-		<entity schema="friendfinder" name="event" color="b2cdf7" x="525" y="45" />
-		<entity schema="friendfinder" name="attending_event" color="b2cdf7" x="360" y="105" />
-		<entity schema="friendfinder" name="pending_event_invite" color="b2cdf7" x="555" y="240" />
-		<entity schema="friendfinder" name="schedule_entry" color="b2cdf7" x="315" y="510" />
+		<entity schema="friendfinder" name="group_member" color="b2cdf7" x="420" y="270" />
+		<entity schema="friendfinder" name="likes" color="b2cdf7" x="240" y="525" />
+		<entity schema="friendfinder" name="group" color="b2cdf7" x="540" y="375" />
+		<entity schema="friendfinder" name="user" color="b2cdf7" x="255" y="210" />
+		<entity schema="friendfinder" name="attending_event" color="b2cdf7" x="405" y="105" />
+		<entity schema="friendfinder" name="user_likes" color="b2cdf7" x="165" y="420" />
+		<entity schema="friendfinder" name="settings" color="b2cdf7" x="45" y="90" />
+		<entity schema="friendfinder" name="event" color="b2cdf7" x="570" y="45" />
+		<entity schema="friendfinder" name="photo" color="b2cdf7" x="405" y="390" />
+		<entity schema="friendfinder" name="schedule_entry" color="b2cdf7" x="360" y="510" />
+		<entity schema="friendfinder" name="pending_event_invite" color="b2cdf7" x="600" y="240" />
 	</layout>
 </project>
