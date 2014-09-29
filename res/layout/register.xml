@@ -16,7 +16,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="13"
+            android:layout_weight="15"
             android:weightSum="100">
 
         <LinearLayout
@@ -30,7 +30,7 @@
                 android:text="@string/register"
                 android:textSize="60sp"
                 android:textColor="@color/gold"
-                android:layout_weight="60"/>
+                android:layout_weight="80"/>
 
     </LinearLayout>
 
@@ -133,62 +133,8 @@
                 android:id="@+id/login"
                 android:clickable="true"
                 android:scaleType="centerInside"
-                android:text="Log In"/>
+                android:text="@string/sign_up"/>
         <!--android:background="@drawable/button1"-->
-
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="4"/>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:weightSum="100">
-
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="20"/>
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/missing_acc"
-                android:singleLine="true"
-                android:ellipsize="start"
-                android:gravity="center"
-                android:layout_weight="60"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:weightSum="100">
-
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="30"/>
-
-        <!-- replace with custom buttons -->
-        <Button
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:id="@+id/register"
-                android:clickable="true"
-                android:scaleType="centerInside"
-                android:text="@string/register"/>
-        <!--android:background="@drawable/button1"-->
-
 
     </LinearLayout>
 

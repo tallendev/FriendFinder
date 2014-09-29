@@ -4,65 +4,27 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:padding="10dp"
               android:weightSum="100"
               android:background="@color/purple">
 
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="8"/>
-
-
-    <LinearLayout
+    <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="13"
-            android:weightSum="100">
+            android:text="@string/eventname"
+            android:textSize="60sp"
+            android:textColor="@color/gold"
+            android:id="@+id/friend"
+            android:layout_weight="15"
+            android:gravity="center"/>
 
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/eventname"
-                android:textSize="60sp"
-                android:textColor="@color/gold"
-                android:id="@+id/friend"
-                android:layout_weight="100"
-                android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="8"/>
-
-
-    <LinearLayout
+    <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
-            android:weightSum="100">
-
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"/>
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/timedate"
-                android:textSize="40sp"
-                android:textColor="@color/gold"
-                android:layout_weight="100"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="8"/>
+            android:text="@string/timedate"
+            android:textSize="40sp"
+            android:textColor="@color/gold"
+            android:layout_weight="10"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -70,87 +32,50 @@
             android:layout_weight="15"
             android:weightSum="100">
 
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"/>
-
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/location"
+                android:layout_gravity="center"
                 android:textSize="40sp"
                 android:textColor="@color/gold"
-                android:layout_weight="60"/>
+                android:layout_weight="65"/>
 
         <!-- Placeholder for maps icon -->
         <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="35"
+                android:layout_gravity="right"
                 android:text="Map"/>
                 <!--android:background="@drawable/go"-->
 
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/location"
-                android:textSize="40sp"
-                android:textColor="@color/gold"
-                android:layout_weight="60"
-                android:gravity="center"/>
-
     </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="8"/>
-
-
-    <LinearLayout
+    <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
-            android:weightSum="100">
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"/>
+            android:text="@string/information"
+            android:textSize="40sp"
+            android:textColor="@color/gold"
+            android:layout_weight="10"/>
 
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/information"
-                android:textSize="40sp"
-                android:textColor="@color/gold"
-                android:layout_weight="100"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
-            android:weightSum="100">
+            android:layout_marginLeft="15dp"
+            android:text="@string/placeholder_message"
+            android:textSize="20sp"
+            android:textColor="@color/gold"
+            android:layout_weight="40"/>
 
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="8"/>
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder_message"
-                android:textSize="20sp"
-                android:textColor="@color/gold"
-                android:layout_weight="92"/>
-
-    </LinearLayout>
-
-
-
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_weight="10"
+        android:layout_gravity="bottom"
+        android:text="Edit Event"/>
 
 </LinearLayout>

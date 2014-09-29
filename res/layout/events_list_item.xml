@@ -4,23 +4,19 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:background="@drawable/events_list_item_bg"
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:weightSum="10" >
 
-    <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:weightSum="10">
-
     	<TextView
     	    android:id="@+id/eventname"
     	    android:layout_width="0dp"
     	    android:layout_height="?android:attr/listPreferredItemHeight"
-    	    android:layout_weight="6"
+    	    android:layout_weight="4"
     	    android:gravity="left|center_vertical"
     	    android:paddingLeft="5dp"
     	    android:paddingRight="2dp"
@@ -32,7 +28,7 @@
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="?android:attr/listPreferredItemHeight"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dp"
                 android:paddingRight="2dp"
@@ -41,19 +37,12 @@
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:clickable="true"
-            android:id="@+id/buttonclick">
-
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="?android:attr/listPreferredItemHeight"
-                android:layout_weight="6"
+                android:layout_weight="3"
+                android:clickable="true"
+                android:id="@+id/buttonclick"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dp"
                 android:paddingRight="2dp"
@@ -61,10 +50,5 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
-    </LinearLayout>
-
-
-
-
 
 </LinearLayout>
