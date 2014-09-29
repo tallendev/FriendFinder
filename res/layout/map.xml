@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Tyler Allen
+Last Updated: 09/29/14
+Map view for locations. Refer to strings file for key and manifest for permissions.
+-->
+
+
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           android:id="@+id/map"

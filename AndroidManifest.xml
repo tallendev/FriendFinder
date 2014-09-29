@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Tyler Allen
+Last Updated: 09/29/14
+Android manifest.
+-->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="edu.wcu.cs.agora.FriendFinder"
           android:versionCode="1"
@@ -12,6 +19,10 @@
     <uses-feature
             android:glEsVersion="0x00020000"
             android:required="true" />
+
+<!--
+Permissions.
+-->
 
     <uses-permission android:name="edu.wcu.cs.agora.tallen.Maps.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -32,6 +43,11 @@
         <activity android:name=".Settings"/>
         <activity android:name=".Privacy"/>
         <activity android:name=".EventsPage"/>
+
+
+<!--
+Maps setup.
+-->
 
         <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"

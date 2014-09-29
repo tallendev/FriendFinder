@@ -4,11 +4,21 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by tyler on 9/27/14.
+ * Tyler Allen
+ * 09/29/2014
+ *
+ * Code for functionality on the user privacy settings page.
  */
-public class Privacy extends Activity {
+
+public class Privacy extends Activity
+{
+
+    /**
+     * Currently the default onCreate.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.privacy_settings);
     }

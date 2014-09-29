@@ -7,11 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by tyler on 9/27/14.
+ * Tyler Allen
+ * 09/29/2014
+ *
+ * Code for functioning the events page.
  */
-public class Events extends Fragment {
+
+public class Events extends Fragment
+{
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+    /**
+     * Currently the default fragment onCreate.
+     */
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         return inflater.inflate(R.layout.events, container, false);
     }
 }

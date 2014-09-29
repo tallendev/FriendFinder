@@ -5,11 +5,21 @@ import android.os.Bundle;
 import edu.wcu.cs.agora.FriendFinder.R;
 
 /**
- * Created by tyler on 9/27/14.
+ * Tyler Allen
+ * 09/29/2014
+ *
+ * Code for functionality on the user privacy settings page.
  */
-public class Settings extends Activity {
+
+public class Settings extends Activity
+{
+
+    /**
+     * Currently the default onCreate.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
     }
