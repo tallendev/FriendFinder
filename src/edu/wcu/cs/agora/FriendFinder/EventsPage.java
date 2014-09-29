@@ -4,11 +4,20 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by tyler on 9/27/14.
+ * Tyler Allen
+ * 09/29/2014
+ *
+ * Code for functioning specific event instance.
  */
-public class EventsPage extends Activity {
+public class EventsPage extends Activity
+{
+
+    /**
+     * Currently the default fragment onCreate.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventspage);
     }
