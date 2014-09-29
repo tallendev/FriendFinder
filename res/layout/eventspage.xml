@@ -30,12 +30,12 @@ Dynamically generated page representing an event.
             android:text="@string/timedate"
             android:textSize="40sp"
             android:textColor="@color/gold"
-            android:layout_weight="10"/>
+            android:layout_weight="15"/>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"
+            android:layout_weight="20"
             android:weightSum="100">
 
         <TextView
@@ -64,7 +64,7 @@ Dynamically generated page representing an event.
             android:text="@string/information"
             android:textSize="40sp"
             android:textColor="@color/gold"
-            android:layout_weight="10"/>
+            android:layout_weight="15"/>
 
     <TextView
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@ Dynamically generated page representing an event.
             android:text="@string/placeholder_message"
             android:textSize="20sp"
             android:textColor="@color/gold"
-            android:layout_weight="40"/>
+            android:layout_weight="25"/>
 
     <Button
         android:layout_width="match_parent"
