@@ -9,15 +9,13 @@ import android.os.Bundle;
  *
  * Code for functionality on the log in page.
  */
-public class Login extends Activity
-{
+public class Login extends Activity {
 
     /**
      * Called when the activity is first created. Boilerplate code.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
     }
