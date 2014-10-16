@@ -62,7 +62,7 @@ Permissions.
 
         <provider
                 android:name="edu.wcu.cs.agora.FriendFinder.ServerContentProvider"
-                android:authorities="com.example.android.datasync.provider"
+                android:authorities="edu.wcu.cs.agora.FriendFinder.provider"
                 android:exported="false"
                 android:syncable="true"/>
 
