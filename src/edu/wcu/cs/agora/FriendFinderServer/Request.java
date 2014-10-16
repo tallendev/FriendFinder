@@ -32,6 +32,9 @@ public abstract class Request
     }
 
     /**
+     *
+     * FIXME: This will be modified in correspondence to the way SyncAdapter communicates client side.
+     *
      *   0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
      * +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
      * |      Request Type     |      Information...   |
@@ -49,6 +52,11 @@ public abstract class Request
      * Request Type > 4  || Request Type < 0 - Malformed Packet
      *
      * Information - Information depends on specific request. See specific class documentation.
+     *
+     * This method is an implementation of the Builder design pattern, allowing an object of the correct type to be
+     * returned based on the initial information retrieved from the request.
+     *
+     * @param in - A wrapper around an input stream attached to the socket.
      *
      */
     protected static Request requestBuilder(Scanner in)
