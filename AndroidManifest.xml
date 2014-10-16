@@ -60,6 +60,12 @@ Permissions.
                        android:resource="@xml/syncadapter" />
         </service>
 
+        <provider
+                android:name="edu.wcu.cs.agora.FriendFinder.ServerContentProvider"
+                android:authorities="com.example.android.datasync.provider"
+                android:exported="false"
+                android:syncable="true"/>
+
 
 
 
