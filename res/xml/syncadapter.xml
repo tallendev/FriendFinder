@@ -7,5 +7,4 @@
               android:supportsUploading="true"
               android:allowParallelSyncs="false"
               android:isAlwaysSyncable="true"
-              android:syncAdapterSettingsAction="null"
         />

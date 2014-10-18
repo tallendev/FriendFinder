@@ -1,6 +1,7 @@
 package edu.wcu.cs.agora.FriendFinder;
 
 import android.app.Activity;
+import android.content.ContentProviderClient;
 import android.os.Bundle;
 
 /**
@@ -11,6 +12,7 @@ import android.os.Bundle;
  */
 public class Login extends Activity
 {
+    public final static String AUTHORITY = "edu.wcu.cs.agora.FriendFinder";
 
     /**
      * Called when the activity is first created. Boilerplate code.
@@ -20,5 +22,6 @@ public class Login extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        getContentResolver().requestSync(GenericAccountService.getAccount(), AUTHORITY, null);
     }
 }

@@ -39,7 +39,7 @@ Log in page.
                 android:textSize="60sp"
                 android:textColor="@color/gold"
                 android:id="@+id/friend"
-                android:layout_weight="45"/>
+                android:layout_weight="55"/>
 
     </LinearLayout>
 
@@ -61,7 +61,7 @@ Log in page.
                 android:textSize="60sp"
                 android:textColor="@color/gold"
                 android:id="@+id/finder"
-                android:layout_weight="45"/>
+                android:layout_weight="55"/>
 
     </LinearLayout>
 

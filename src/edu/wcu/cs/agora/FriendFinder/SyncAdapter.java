@@ -3,6 +3,16 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.accounts.Account;
 import android.content.*;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import javax.net.ssl.HttpsURLConnection;
+import java.io.IOError;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by tyler on 10/16/2014.
@@ -28,6 +38,24 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     }
 
     /**
+     * Creates an {@link android.content.AbstractThreadedSyncAdapter}.
+     *
+     * @param context the {@link android.content.Context} that this is running within.
+     * @param autoInitialize if true then sync requests that have {@link
+     * android.content.ContentResolver#SYNC_EXTRAS_INITIALIZE} set will be internally handled by
+     * {@link android.content.AbstractThreadedSyncAdapter} by calling {@link
+     * android.content.ContentResolver#setIsSyncable(android.accounts.Account, String, int)} with 1
+     * if it is currently set to <0.
+     * @param allowParallelSyncs if true then allow syncs for different accounts to run at the same
+     * time, each in their own thread. This must be consistent with the setting
+     */
+    public SyncAdapter (Context context, boolean autoInitialize, boolean allowParallelSyncs)
+    {
+        super(context, autoInitialize, allowParallelSyncs);
+        contentResolver = context.getContentResolver();
+    }
+
+    /**
      * Perform a sync for this account. SyncAdapter-specific parameters may be specified in extras,
      * which is guaranteed to not be null. Invocations of this method are guaranteed to be
      * serialized.
@@ -43,6 +71,18 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     public void onPerformSync (Account account, Bundle extras, String authority,
                                ContentProviderClient provider, SyncResult syncResult)
     {
-
+        try
+        {
+            URL url = new URL("https://trantracker.com:8888");
+            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+            InputStream in = urlConnection.getInputStream();
+            OutputStream out = urlConnection.getOutputStream();
+            out.write("Hello World".getBytes());
+        }
+        catch (IOException ioe)
+        {
+            Toast.makeText(getContext(), "An error occured while attempting to sync",
+                           Toast.LENGTH_LONG).show();
+        }
     }
 }
