@@ -25,13 +25,16 @@ public class RequestServer
 
     public RequestServer(int port) throws IOException
     {
+        System.err.println("RequestServer created.");
         this.port = port;
         serverSocket = SSLServerSocketFactory.getDefault().createServerSocket(port);
     }
 
     public void listen() throws IOException
     {
+        System.err.println("RequestServer listening for new connection.");
         Socket client = serverSocket.accept();
+        System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
         Scanner in = new Scanner(client.getInputStream());
         while (in.hasNextLine())

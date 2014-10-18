@@ -79,6 +79,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             Log.d("SYNC", "starting");
             URL url = new URL("https://www.trantracker.com:8888");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+            Log.d("SYNC", "Success connecting to server.");
             InputStream in = urlConnection.getInputStream();
             OutputStream out = urlConnection.getOutputStream();
             out.write("Hello World".getBytes());
@@ -87,6 +88,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         catch (IOException ioe)
         {
             Log.d("SYNC", "An error occurred while attempting to sync");
+            Log.d("SYNC", ioe.getMessage());
         }
     }
 }
