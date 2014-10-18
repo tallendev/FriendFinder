@@ -3,6 +3,7 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 /**
  * Created by tyler on 10/16/2014.
@@ -24,11 +25,13 @@ public class SyncService extends Service
     public void onCreate ()
     {
         super.onCreate();
+        Log.d("SYNC SERVICE", "OnCreate");
         synchronized (syncAdapterLock)
         {
             if (syncAdapter == null)
             {
                 syncAdapter = new SyncAdapter(getApplicationContext(), true);
+                Log.d("SYNC SERVICE", "SyncAdapter created");
             }
         }
     }

@@ -52,7 +52,8 @@ Permissions.
         <service
                 android:name="edu.wcu.cs.agora.FriendFinder.SyncService"
                 android:exported="true"
-                android:process=":sync">
+                android:process=":sync"
+                android:enabled="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
@@ -60,9 +61,19 @@ Permissions.
                        android:resource="@xml/syncadapter" />
         </service>
 
+        <service android:name=".GenericAccountService">
+            <!-- Required filter used by the system to launch our account service. -->
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <!-- This points to an XMLf ile which describes our account service. -->
+            <meta-data android:name="android.accounts.AccountAuthenticator"
+                      android:resource="@xml/authenticator" />
+        </service>
+
         <provider
-                android:name="edu.wcu.cs.agora.FriendFinder.ServerContentProvider"
-                android:authorities="edu.wcu.cs.agora.FriendFinder.provider"
+                android:name=".ServerContentProvider"
+                android:authorities="edu.wcu.cs.agora.FriendFinder"
                 android:exported="false"
                 android:syncable="true"/>
 

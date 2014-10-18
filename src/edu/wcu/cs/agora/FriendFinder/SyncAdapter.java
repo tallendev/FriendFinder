@@ -3,6 +3,7 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.accounts.Account;
 import android.content.*;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -35,6 +36,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     {
         super(context, autoInitialize);
         contentResolver = context.getContentResolver();
+        Log.d("SYNC", "constructor called");
     }
 
     /**
@@ -53,6 +55,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     {
         super(context, autoInitialize, allowParallelSyncs);
         contentResolver = context.getContentResolver();
+        Log.d("SYNC", "constructor called");
     }
 
     /**
@@ -73,16 +76,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     {
         try
         {
+            Log.d("SYNC", "starting");
             URL url = new URL("https://trantracker.com:8888");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             InputStream in = urlConnection.getInputStream();
             OutputStream out = urlConnection.getOutputStream();
             out.write("Hello World".getBytes());
+            Log.d("SYNC", "Written");
         }
         catch (IOException ioe)
         {
-            Toast.makeText(getContext(), "An error occured while attempting to sync",
-                           Toast.LENGTH_LONG).show();
+            Log.d("SYNC", "An error occurred while attempting to sync");
         }
     }
 }

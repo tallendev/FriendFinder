@@ -2,7 +2,13 @@ package edu.wcu.cs.agora.FriendFinder;
 
 import android.app.Activity;
 import android.content.ContentProviderClient;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import com.google.android.gms.identity.intents.AddressConstants;
 
 /**
  * Tyler Allen
@@ -12,7 +18,7 @@ import android.os.Bundle;
  */
 public class Login extends Activity
 {
-    public final static String AUTHORITY = "edu.wcu.cs.agora.FriendFinder";
+    private String AUTHORITY;
 
     /**
      * Called when the activity is first created. Boilerplate code.
@@ -20,8 +26,28 @@ public class Login extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        Log.d("LOGIN", "OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        getContentResolver().requestSync(GenericAccountService.getAccount(), AUTHORITY, null);
+        AUTHORITY = getResources().getString(R.string.authority);
+        Intent intent = new Intent(this, SyncService.class);
+
+        startService(intent);
+        startService(new Intent(this, GenericAccountService.class));
+        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
+
+
+        Bundle extras = new Bundle();
+        Runnable r = new Runnable()
+        {
+            @Override
+            public void run ()
+            {
+                getContentResolver().requestSync(GenericAccountService.getAccount(), AUTHORITY, extras);
+                Log.d("LOGIN", "Sync Requested");
+            }
+        };
+        Handler handler = new Handler();
+        handler.postDelayed(r, 5000);
     }
 }

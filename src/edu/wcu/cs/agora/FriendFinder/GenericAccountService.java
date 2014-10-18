@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 /**
  * Reference: Google docs GenericAccountService example.
@@ -18,7 +19,7 @@ import android.os.IBinder;
  * Singleton, hence getAccount
  */
 public class GenericAccountService extends Service {
-    private static final String ACCOUNT_TYPE = "edu.wcu.cs.agora.FriendFinder";
+    private static final String ACCOUNT_TYPE = "edu.wcu";
     private Authenticator authenticator;
     private String accountName;
 
@@ -29,7 +30,7 @@ public class GenericAccountService extends Service {
      *         has been called)
      */
     public static Account getAccount() {
-
+        Log.d("GenericAccountService", "GetAccount");
         final String accountName = "temp";//FIXME: pull account name from shared preferences
         return new Account(accountName, ACCOUNT_TYPE);
     }
