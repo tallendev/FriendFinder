@@ -7,6 +7,6 @@ package edu.wcu.cs.agora.FriendFinderServer;
  *
  * TODO: implement me
  */
-public class AuthenticatingRequest extends Request
-{
-}
+//public class AuthenticatingRequest extends Request
+//{
+//}
