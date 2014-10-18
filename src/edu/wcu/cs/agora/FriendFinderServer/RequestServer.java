@@ -27,7 +27,8 @@ public class RequestServer
     {
         System.err.println("RequestServer created.");
         this.port = port;
-        serverSocket = SSLServerSocketFactory.getDefault().createServerSocket(port);
+        //serverSocket = SSLServerSocketFactory.getDefault().createServerSocket(port);
+        serverSocket = new ServerSocket(port);
     }
 
     public void listen() throws IOException
