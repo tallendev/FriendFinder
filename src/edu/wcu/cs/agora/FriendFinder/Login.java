@@ -38,13 +38,11 @@ public class Login extends Activity
 
 
         ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
-        AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
+        final AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
 
-        Bundle extras = new Bundle();
+        final Bundle extras = new Bundle();
         Runnable r = new Runnable()
         {
-
-
             /**
              * Starts executing the active part of the class' code. This method is called when a
              * thread is

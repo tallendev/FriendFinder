@@ -18,7 +18,7 @@ public class RequestServer
     public static final int SOCKET_ERROR = 1;
 
     public static final int TIMEOUT = 5000;
-    public static final int DEFAULT_PORT = 8888;
+    public static final int DEFAULT_PORT = 1337;
 
     private ServerSocket serverSocket;
     private int port;
