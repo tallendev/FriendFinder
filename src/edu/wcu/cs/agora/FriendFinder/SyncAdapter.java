@@ -77,7 +77,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         try
         {
             Log.d("SYNC", "starting");
-            URL url = new URL("https://trantracker.com:8888");
+            URL url = new URL("https://www.trantracker.com:8888");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             InputStream in = urlConnection.getInputStream();
             OutputStream out = urlConnection.getOutputStream();

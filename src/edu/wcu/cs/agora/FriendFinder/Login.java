@@ -1,14 +1,15 @@
 package edu.wcu.cs.agora.FriendFinder;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
-import android.content.ContentProviderClient;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import com.google.android.gms.identity.intents.AddressConstants;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Tyler Allen
@@ -34,20 +35,64 @@ public class Login extends Activity
 
         startService(intent);
         startService(new Intent(this, GenericAccountService.class));
-        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
 
+
+        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
+        AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
 
         Bundle extras = new Bundle();
         Runnable r = new Runnable()
         {
+
+
+            /**
+             * Starts executing the active part of the class' code. This method is called when a
+             * thread is
+             * started that has been created with a class which implements {@code Runnable}.
+             */
             @Override
             public void run ()
             {
-                getContentResolver().requestSync(GenericAccountService.getAccount(), AUTHORITY, extras);
+                getContentResolver().requestSync(account.get(), AUTHORITY, extras);
                 Log.d("LOGIN", "Sync Requested");
             }
         };
         Handler handler = new Handler();
         handler.postDelayed(r, 5000);
+    }
+
+    /**
+     * Create a new dummy account for the sync adapter
+     *
+     * @param context The application context
+     */
+    public static Account CreateSyncAccount(Context context) {
+        // Create the account type and default account
+        Account newAccount = new Account("temp", "edu.wcu");
+        // Get an instance of the Android account manager
+        AccountManager accountManager =
+                (AccountManager) context.getSystemService(
+                        ACCOUNT_SERVICE);
+        /*
+         * Add the account and account type, no password or user data
+         * If successful, return the Account object, otherwise report an error.
+         */
+        if (accountManager.addAccountExplicitly(newAccount, null, null)) {
+            Log.d("LOGIN", "Succesfully created account.");
+            /*
+             * If you don't set android:syncable="true" in
+             * in your <provider> element in the manifest,
+             * then call context.setIsSyncable(account, AUTHORITY, 1)
+             * here.
+             */
+        } else {
+            Log.d("LOGIN", "Error creating account");
+            /*
+             * The account exists or some other error occurred. Log this, report it,
+             * or handle it internally.
+             */
+        }
+
+        return newAccount;
     }
 }
