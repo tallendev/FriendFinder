@@ -37,10 +37,10 @@ public class RequestServer
         Socket client = serverSocket.accept();
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
-        Scanner in = new Scanner(client.getInputStream());
-        while (in.hasNextLine())
+        Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
+        while (in.hasNext())
         {
-            System.out.println(in.nextLine());
+            System.out.println(in.next());
         }
         //Request request = Request.requestBuilder(in);
        // request.getResponse();

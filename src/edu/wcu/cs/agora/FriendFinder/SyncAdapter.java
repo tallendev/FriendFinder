@@ -78,7 +78,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             Log.d("SYNC", "starting");
             URL url = new URL("https://www.trantracker.com:1337");
-            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+            //HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+            URLConnection urlConnection =  url.openConnection();
             Log.d("SYNC", "Success connecting to server.");
             //urlConnection.setDoInput(true);
             // in = urlConnection.getInputStream();
@@ -87,7 +88,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             urlConnection.setDoOutput(true);
             OutputStream out = urlConnection.getOutputStream();
             Log.d("SYNC", "Do we live this long?");
-            out.write("Hello World".getBytes());
+            out.write("Hello World\n".getBytes());
+            out.flush();
             Log.d("SYNC", "Written");
             out.close();
             urlConnection.setDoOutput(false);
