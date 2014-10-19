@@ -48,7 +48,7 @@ public class RequestServer
 
     public static void main(String[] args)
     {
-        System.setProperty("javax.net.ssl.keyStore", "/keystore");
+        System.setProperty("javax.net.ssl.keyStore", "keystore");
         System.setProperty("javax.net.ssl.keyStorePassword", "hadouken!");
         RequestServer requestServer = null;
         try
