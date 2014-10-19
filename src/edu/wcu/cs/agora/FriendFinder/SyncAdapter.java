@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import javax.net.ssl.*;
+import java.net.InetAddress;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
@@ -135,7 +136,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         try
         {
             Log.d("SYNC", "starting sync");
-            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()
+            InetAddress ip = InetAddress.getByName("www.trantracker.com");
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket("www.trantracker.com",
+                                                                            1337);
+            OutputStream out = sslSocket.getOutputStream();
+            out.write("Hello World\n".getBytes());
+            out.flush();
+            Log.d("SYNC", "Written");
+            out.close();
+            sslSocket.close();
+            /*HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()
             {
                 @Override
                 public boolean verify (String hostname, SSLSession session)
@@ -162,7 +173,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             out.flush();
             Log.d("SYNC", "Written");
             out.close();
-         //   urlConnection.setDoOutput(false);
+         //   urlConnection.setDoOutput(false);*/
         }
         catch (IOException ioe)
         {
