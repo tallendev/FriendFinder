@@ -77,15 +77,19 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         try
         {
             Log.d("SYNC", "starting");
-            URL url = new URL("https://www.trantracker.com:8888");
+            URL url = new URL("https://www.trantracker.com:1337");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             Log.d("SYNC", "Success connecting to server.");
-            //InputStream in = urlConnection.getInputStream();
+            //urlConnection.setDoInput(true);
+            // in = urlConnection.getInputStream();
+           // in.close();
+           // urlConnection.setDoInput(false);
             urlConnection.setDoOutput(true);
             OutputStream out = urlConnection.getOutputStream();
             Log.d("SYNC", "Do we live this long?");
             out.write("Hello World".getBytes());
             Log.d("SYNC", "Written");
+            out.close();
             urlConnection.setDoOutput(false);
         }
         catch (IOException ioe)
