@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.IOError;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import javax.net.ssl.*;
+import java.security.*;
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by tyler on 10/16/2014.
@@ -21,6 +24,7 @@ import java.net.URLConnection;
 public class SyncAdapter extends AbstractThreadedSyncAdapter
 {
     private final ContentResolver contentResolver;
+    private       SSLContext      sslContext;
 
     /**
      * Creates an {@link android.content.AbstractThreadedSyncAdapter}.
@@ -37,6 +41,26 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         super(context, autoInitialize);
         contentResolver = context.getContentResolver();
         Log.d("SYNC", "constructor called");
+        // Load CAs from an InputStream
+        // (could be from a resource or ByteArrayInputStream or ...)
+        try {
+            KeyStore trustStore = KeyStore.getInstance("JKS");
+            InputStream trustStoreStream = context.getResources().openRawResource(R.raw.truststore);
+            trustStore.load(trustStoreStream, "hadouken!".toCharArray());
+
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init(trustStore);
+
+            sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
+        } catch (GeneralSecurityException e) {
+            Log.e(this.getClass().toString(), "Exception while creating context: ", e);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -78,8 +102,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             Log.d("SYNC", "starting");
             URL url = new URL("https://www.trantracker.com:1337");
-            //HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-            URLConnection urlConnection =  url.openConnection();
+            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+            urlConnection.setSSLSocketFactory(sslContext.getSocketFactory());
+            //URLConnection urlConnection =  url.openConnection();
             Log.d("SYNC", "Success connecting to server.");
             //urlConnection.setDoInput(true);
             // in = urlConnection.getInputStream();
