@@ -51,7 +51,7 @@ public class Login extends Activity
             @Override
             public void run ()
             {
-                getContentResolver().requestSync(account.get(), AUTHORITY, extras);
+                ContentResolver.requestSync(account.get(), AUTHORITY, extras);
                 Log.d("LOGIN", "Sync Requested");
             }
         };

@@ -45,14 +45,21 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         // (could be from a resource or ByteArrayInputStream or ...)
         try {
             KeyStore trustStore = KeyStore.getInstance("BKS");
+            Log.d("SYNC", "KeyStore.getInstance");
             InputStream trustStoreStream = context.getResources().openRawResource(R.raw.truststore);
+            Log.d("SYNC", "turstStoreStream init");
             trustStore.load(trustStoreStream, "hadouken!".toCharArray());
+            Log.d("SYNC", "turstStoreStream load");
 
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            Log.d("SYNC", "trustManagerFactory getInstance");
             trustManagerFactory.init(trustStore);
+            Log.d("SYNC", "trustManagerFactory init");
 
             sslContext = SSLContext.getInstance("TLS");
+            Log.d("SYNC", "SSLContext.getInstance()");
             sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
+
         } catch (GeneralSecurityException e) {
             Log.e(this.getClass().toString(), "Exception while creating context: ", e);
         }
@@ -60,7 +67,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             e.printStackTrace();
         }
-
+        Log.d("SYNC", "constructor end");
     }
 
     /**
@@ -77,9 +84,36 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
      */
     public SyncAdapter (Context context, boolean autoInitialize, boolean allowParallelSyncs)
     {
-        super(context, autoInitialize, allowParallelSyncs);
+        super(context, autoInitialize);
         contentResolver = context.getContentResolver();
         Log.d("SYNC", "constructor called");
+        // Load CAs from an InputStream
+        // (could be from a resource or ByteArrayInputStream or ...)
+        try {
+            KeyStore trustStore = KeyStore.getInstance("BKS");
+            Log.d("SYNC", "KeyStore.getInstance");
+            InputStream trustStoreStream = context.getResources().openRawResource(R.raw.truststore);
+            Log.d("SYNC", "turstStoreStream init");
+            trustStore.load(trustStoreStream, "hadouken!".toCharArray());
+            Log.d("SYNC", "turstStoreStream load");
+
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            Log.d("SYNC", "trustManagerFactory getInstance");
+            trustManagerFactory.init(trustStore);
+            Log.d("SYNC", "trustManagerFactory init");
+
+            sslContext = SSLContext.getInstance("TLS");
+            Log.d("SYNC", "SSLContext.getInstance()");
+            sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
+
+        } catch (GeneralSecurityException e) {
+            Log.e(this.getClass().toString(), "Exception while creating context: ", e);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        Log.d("SYNC", "constructor end");
     }
 
     /**
@@ -100,9 +134,20 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     {
         try
         {
-            Log.d("SYNC", "starting");
+            Log.d("SYNC", "starting sync");
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()
+            {
+                @Override
+                public boolean verify (String hostname, SSLSession session)
+                {
+                    Log.d("SYNC", "Hostname verified mysteriously.");
+                    return true;
+                }
+            });
+
             URL url = new URL("https://www.trantracker.com:1337");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+
             urlConnection.setSSLSocketFactory(sslContext.getSocketFactory());
             //URLConnection urlConnection =  url.openConnection();
             Log.d("SYNC", "Success connecting to server.");
@@ -110,14 +155,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             // in = urlConnection.getInputStream();
            // in.close();
            // urlConnection.setDoInput(false);
-            urlConnection.setDoOutput(true);
+           // urlConnection.setDoOutput(true);
             OutputStream out = urlConnection.getOutputStream();
             Log.d("SYNC", "Do we live this long?");
             out.write("Hello World\n".getBytes());
             out.flush();
             Log.d("SYNC", "Written");
             out.close();
-            urlConnection.setDoOutput(false);
+         //   urlConnection.setDoOutput(false);
         }
         catch (IOException ioe)
         {
