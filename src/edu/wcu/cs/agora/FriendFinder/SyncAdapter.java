@@ -44,7 +44,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         // Load CAs from an InputStream
         // (could be from a resource or ByteArrayInputStream or ...)
         try {
-            KeyStore trustStore = KeyStore.getInstance("JKS");
+            KeyStore trustStore = KeyStore.getInstance("BKS");
             InputStream trustStoreStream = context.getResources().openRawResource(R.raw.truststore);
             trustStore.load(trustStoreStream, "hadouken!".toCharArray());
 
