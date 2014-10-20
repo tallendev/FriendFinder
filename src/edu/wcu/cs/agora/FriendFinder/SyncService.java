@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.io.IOException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * Created by tyler on 10/16/2014.
  *
@@ -20,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 public class SyncService extends Service
 {
     private static final Object      SYNC_ADAPTER_LOCK = new Object();
-    private static       SyncAdapter syncAdapter     = null;
+    private static       SyncAdapter syncAdapter       = null;
 
     /**
      * Thread-safe constructor, creates static {@link SyncAdapter} instance.
