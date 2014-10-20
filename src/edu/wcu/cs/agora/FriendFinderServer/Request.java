@@ -1,7 +1,5 @@
 package edu.wcu.cs.agora.FriendFinderServer;
 
-import edu.wcu.cs.agora.FriendFinder.R;
-
 import java.io.OutputStream;
 import java.util.Scanner;
 
