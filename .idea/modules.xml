@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/FriendFinder.iml" filepath="$PROJECT_DIR$/FriendFinder.iml" />
       <module fileurl="file://$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/libs/libs.iml" filepath="$PROJECT_DIR$/libs/libs.iml" />
-      <module fileurl="file://$PROJECT_DIR$/volley/tests/volley.iml" filepath="$PROJECT_DIR$/volley/tests/volley.iml" />
     </modules>
   </component>
 </project>
