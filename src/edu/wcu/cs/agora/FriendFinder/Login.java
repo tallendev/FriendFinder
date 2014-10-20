@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.google.android.gms.identity.intents.AddressConstants;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -40,6 +39,9 @@ public class Login extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+        //get the login and register buttons from the layout
+        loginButton    = (Button) findViewById(R.id.login);
+        registerButton = (Button) findViewById(R.id.register);
         //set handler for login and register buttons
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
