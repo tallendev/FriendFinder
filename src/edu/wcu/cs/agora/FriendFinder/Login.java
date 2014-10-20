@@ -120,7 +120,7 @@ public class Login extends Activity implements View.OnClickListener
 
             //send to server
             NetworkHandler handler = new NetworkHandler();
-            handler.send("user=" + username + " pass=" + password);
+            handler.send(this, "user=" + username + " pass=" + password);
 
         } else {
             Intent intent = new Intent(this, Register.class);
