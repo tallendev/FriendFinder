@@ -101,6 +101,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             Log.d("SYNC", "trustManagerFactory getInstance");
             trustManagerFactory.init(trustStore);
+
             Log.d("SYNC", "trustManagerFactory init");
 
             sslContext = SSLContext.getInstance("TLS");

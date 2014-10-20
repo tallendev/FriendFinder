@@ -7,19 +7,26 @@ import android.content.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import com.google.android.gms.identity.intents.AddressConstants;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Tyler Allen
+ * Karen Dana
+ *
  * 09/29/2014
  *
  * Code for functionality on the log in page.
  */
-public class Login extends Activity
+public class Login extends Activity implements View.OnClickListener
 {
-    private String AUTHORITY;
+    private String authority;
+    private Button loginButton;
+    private Button registerButton;
 
     /**
      * Called when the activity is first created. Boilerplate code.
@@ -30,14 +37,19 @@ public class Login extends Activity
         Log.d("LOGIN", "OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        AUTHORITY = getResources().getString(R.string.authority);
+
+        //set handler for login and register buttons
+        loginButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
+
+        authority = getResources().getString(R.string.authority);
         Intent intent = new Intent(this, SyncService.class);
 
         startService(intent);
         startService(new Intent(this, GenericAccountService.class));
 
 
-        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
+        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), authority, true);
         final AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
 
         final Bundle extras = new Bundle();
@@ -51,7 +63,7 @@ public class Login extends Activity
             @Override
             public void run ()
             {
-                ContentResolver.requestSync(account.get(), AUTHORITY, extras);
+                ContentResolver.requestSync(account.get(), authority, extras);
                 Log.d("LOGIN", "Sync Requested");
             }
         };
@@ -76,11 +88,11 @@ public class Login extends Activity
          * If successful, return the Account object, otherwise report an error.
          */
         if (accountManager.addAccountExplicitly(newAccount, null, null)) {
-            Log.d("LOGIN", "Succesfully created account.");
+            Log.d("LOGIN", "Successfully created account.");
             /*
              * If you don't set android:syncable="true" in
              * in your <provider> element in the manifest,
-             * then call context.setIsSyncable(account, AUTHORITY, 1)
+             * then call context.setIsSyncable(account, authority, 1)
              * here.
              */
         } else {
@@ -92,5 +104,22 @@ public class Login extends Activity
         }
 
         return newAccount;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view.getId() == R.id.login) {
+            //get username and password
+            String username = String.valueOf(((EditText) findViewById(R.id.email)).getText());
+            String password = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
+
+            //send to server
+
+
+        } else {
+            Intent intent = new Intent(this, Register.class);
+            startActivity(intent);
+        }
     }
 }
