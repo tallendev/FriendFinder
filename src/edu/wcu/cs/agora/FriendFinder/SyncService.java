@@ -19,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SyncService extends Service
 {
-    private static final Object      syncAdapterLock = new Object();
+    private static final Object      SYNC_ADAPTER_LOCK = new Object();
     private static       SyncAdapter syncAdapter     = null;
 
     /**
@@ -30,7 +30,7 @@ public class SyncService extends Service
     {
         super.onCreate();
         Log.d("SYNC SERVICE", "OnCreate");
-        synchronized (syncAdapterLock)
+        synchronized (SYNC_ADAPTER_LOCK)
         {
             if (syncAdapter == null)
             {
