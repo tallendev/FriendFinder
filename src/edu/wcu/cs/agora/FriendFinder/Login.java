@@ -115,7 +115,8 @@ public class Login extends Activity implements View.OnClickListener
             String password = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
 
             //send to server
-
+            NetworkHandler handler = new NetworkHandler();
+            handler.send("user=" + username + " pass=" + password);
 
         } else {
             Intent intent = new Intent(this, Register.class);
