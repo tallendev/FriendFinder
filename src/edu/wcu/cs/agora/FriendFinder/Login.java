@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class Login extends Activity implements View.OnClickListener
 {
-    private String authority;
+    private String AUTHORITY;
     private Button loginButton;
     private Button registerButton;
 
@@ -42,14 +42,14 @@ public class Login extends Activity implements View.OnClickListener
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
 
-        authority = getResources().getString(R.string.authority);
+        AUTHORITY = getResources().getString(R.string.authority);
         Intent intent = new Intent(this, SyncService.class);
 
         startService(intent);
         startService(new Intent(this, GenericAccountService.class));
 
 
-        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), authority, true);
+        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
         final AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
 
         final Bundle extras = new Bundle();
@@ -63,7 +63,7 @@ public class Login extends Activity implements View.OnClickListener
             @Override
             public void run ()
             {
-                ContentResolver.requestSync(account.get(), authority, extras);
+                ContentResolver.requestSync(account.get(), AUTHORITY, extras);
                 Log.d("LOGIN", "Sync Requested");
             }
         };
