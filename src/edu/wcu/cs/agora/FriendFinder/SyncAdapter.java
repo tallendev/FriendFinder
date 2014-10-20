@@ -1,6 +1,7 @@
 package edu.wcu.cs.agora.FriendFinder;
 
 import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.*;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,8 +43,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         super(context, autoInitialize);
         contentResolver = context.getContentResolver();
         Log.d("SYNC", "constructor called");
-        // Load CAs from an InputStream
-        // (could be from a resource or ByteArrayInputStream or ...)
         try {
             KeyStore trustStore = KeyStore.getInstance("BKS");
             Log.d("SYNC", "KeyStore.getInstance");
@@ -88,8 +87,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         super(context, autoInitialize);
         contentResolver = context.getContentResolver();
         Log.d("SYNC", "constructor called");
-        // Load CAs from an InputStream
-        // (could be from a resource or ByteArrayInputStream or ...)
         try {
             KeyStore trustStore = KeyStore.getInstance("BKS");
             Log.d("SYNC", "KeyStore.getInstance");
@@ -142,39 +139,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket("www.trantracker.com",
                                                                             1337);
             OutputStream out = sslSocket.getOutputStream();
-            out.write("Hello World\n".getBytes());
+            AccountManager accountManager = (AccountManager) getContext().getSystemService
+                                                             (Context.ACCOUNT_SERVICE);
+            out.write((account.name + " " +
+                       accountManager.getPassword(account)).getBytes());
             out.flush();
             Log.d("SYNC", "Written");
             out.close();
             sslSocket.close();
-            /*HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier()
-            {
-                @Override
-                public boolean verify (String hostname, SSLSession session)
-                {
-                    Log.d("SYNC", "Hostname verified mysteriously.");
-                    return true;
-                }
-            });
 
-            URL url = new URL("https://www.trantracker.com:1337");
-            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-
-            urlConnection.setSSLSocketFactory(sslContext.getSocketFactory());
-            //URLConnection urlConnection =  url.openConnection();
-            Log.d("SYNC", "Success connecting to server.");
-            //urlConnection.setDoInput(true);
-            // in = urlConnection.getInputStream();
-           // in.close();
-           // urlConnection.setDoInput(false);
-           // urlConnection.setDoOutput(true);
-            OutputStream out = urlConnection.getOutputStream();
-            Log.d("SYNC", "Do we live this long?");
-            out.write("Hello World\n".getBytes());
-            out.flush();
-            Log.d("SYNC", "Written");
-            out.close();
-         //   urlConnection.setDoOutput(false);*/
         }
         catch (IOException ioe)
         {

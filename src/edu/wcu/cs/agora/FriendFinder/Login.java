@@ -39,8 +39,8 @@ public class Login extends Activity implements View.OnClickListener
         setContentView(R.layout.login);
 
         //set handler for login and register buttons
-        loginButton.setOnClickListener(this);
-        registerButton.setOnClickListener(this);
+//        loginButton.setOnClickListener(this);
+       // registerButton.setOnClickListener(this);
 
         AUTHORITY = getResources().getString(R.string.authority);
         Intent intent = new Intent(this, SyncService.class);
@@ -109,7 +109,7 @@ public class Login extends Activity implements View.OnClickListener
     @Override
     public void onClick(View view) {
 
-        if (view.getId() == R.id.login) {
+        /*if (view.getId() == R.id.login) {
             //get username and password
             String username = String.valueOf(((EditText) findViewById(R.id.email)).getText());
             String password = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
@@ -120,6 +120,6 @@ public class Login extends Activity implements View.OnClickListener
         } else {
             Intent intent = new Intent(this, Register.class);
             startActivity(intent);
-        }
+        }*/
     }
 }
