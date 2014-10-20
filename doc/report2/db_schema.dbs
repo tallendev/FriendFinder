@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="FriendFinder" id="Project4996509" database="PostgreSQL" >
+	<schema name="friendfinder" schemaname="friendfinder" defo="y" >
+		<table name="attending_event" >
+			<column name="attendee" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="event" type="integer" jt="4" mandatory="y" />
+			<index name="idx_attending_event" unique="NORMAL" >
+				<column name="attendee" />
+			</index>
+			<index name="idx_attending_event" unique="NORMAL" >
+				<column name="event" />
+			</index>
+			<fk name="fk_attending_event_user" to_schema="friendfinder" to_table="user" delete_action="cascade" update_action="cascade" >
+				<fk_column name="attendee" pk="email" />
+			</fk>
+			<fk name="fk_attending_event_event" to_schema="friendfinder" to_table="event" delete_action="cascade" update_action="cascade" >
+				<fk_column name="event" pk="id" />
+			</fk>
+		</table>
+		<table name="event" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="event_name" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="event_date" type="date" jt="91" mandatory="y" />
+			<column name="event_time" type="time" jt="92" mandatory="y" />
+			<column name="location" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[The representation of the location that can be parsed by the client.]]></comment>
+			</column>
+			<column name="creator" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="description" type="varchar" length="1000" jt="12" >
+				<comment><![CDATA[event description]]></comment>
+			</column>
+			<index name="pk_events" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_events" unique="NORMAL" >
+				<column name="creator" />
+			</index>
+			<fk name="creator" to_schema="friendfinder" to_table="user" delete_action="cascade" update_action="cascade" >
+				<fk_column name="creator" pk="email" />
+			</fk>
+		</table>
+		<table name="group" >
+			<column name="group_name" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="group_description" type="varchar" jt="12" mandatory="y" />
+			<column name="group_photo" type="integer" jt="4" mandatory="y" />
+			<index name="pk_group" unique="PRIMARY_KEY" >
+				<column name="group_name" />
+			</index>
+		</table>
+		<table name="group_member" >
+			<column name="member" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="group" type="varchar" length="30" jt="12" mandatory="y" />
+			<index name="idx_group_member" unique="NORMAL" >
+				<column name="member" />
+			</index>
+			<index name="idx_group_member" unique="NORMAL" >
+				<column name="group" />
+			</index>
+			<fk name="fk_group_member_user" to_schema="friendfinder" to_table="user" delete_action="cascade" update_action="cascade" >
+				<fk_column name="member" pk="email" />
+			</fk>
+			<fk name="fk_group_member_group" to_schema="friendfinder" to_table="group" delete_action="cascade" update_action="cascade" >
+				<fk_column name="group" pk="group_name" />
+			</fk>
+		</table>
+		<table name="likes" >
+			<column name="name" type="varchar" length="10" jt="12" mandatory="y" />
+			<index name="pk_likes" unique="PRIMARY_KEY" >
+				<column name="name" />
+			</index>
+		</table>
+		<table name="pending_event_invite" >
+			<column name="user" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="event" type="integer" length="30" jt="4" mandatory="y" />
+			<index name="idx_pending_event_invite" unique="NORMAL" >
+				<column name="event" />
+			</index>
+			<index name="idx_pending_event_invite" unique="NORMAL" >
+				<column name="user" />
+			</index>
+			<fk name="fk_pending_event_invite_event" to_schema="friendfinder" to_table="event" delete_action="cascade" update_action="cascade" >
+				<fk_column name="event" pk="id" />
+			</fk>
+			<fk name="fk_pending_event_invite_user" to_schema="friendfinder" to_table="user" >
+				<fk_column name="user" pk="email" />
+			</fk>
+		</table>
+		<table name="photo" >
+			<column name="owner" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[photo id so that photos do not have to represent user names]]></comment>
+			</column>
+			<index name="idx_photo" unique="NORMAL" >
+				<column name="owner" />
+			</index>
+			<fk name="fk_photo_user" to_schema="friendfinder" to_table="user" delete_action="cascade" update_action="cascade" >
+				<fk_column name="owner" pk="email" />
+			</fk>
+			<fk name="fk_photo_group" to_schema="friendfinder" to_table="group" delete_action="cascade" update_action="cascade" >
+				<fk_column name="owner" pk="group_name" />
+			</fk>
+		</table>
+		<table name="schedule_entry" >
+			<column name="owner" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="appointment_name" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="appointment_day" type="varchar" length="10" jt="12" mandatory="y" >
+				<comment><![CDATA[day of week of event]]></comment>
+			</column>
+			<column name="appointment_end" type="date" jt="91" mandatory="y" >
+				<comment><![CDATA[The date this event should stop reappearing on your calendar.]]></comment>
+			</column>
+			<column name="appointment_time_start" type="time" jt="92" mandatory="y" />
+			<column name="appointment_end_time" type="time" jt="92" mandatory="y" />
+			<column name="location" type="varchar" length="100" jt="12" >
+				<comment><![CDATA[location that can be parsed by client]]></comment>
+			</column>
+			<index name="pk_schedule_entry" unique="PRIMARY_KEY" >
+				<column name="appointment_name" />
+			</index>
+			<fk name="fk_schedule_event_user" to_schema="friendfinder" to_table="user" delete_action="cascade" update_action="cascade" >
+				<fk_column name="owner" pk="email" />
+			</fk>
+		</table>
+		<table name="settings" >
+			<column name="owner" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="hidden_schedule" type="bool" jt="-7" mandatory="y" >
+				<defo>true</defo>
+			</column>
+			<column name="friend_only_invites" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="events_attending_public" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<index name="pk_settings" unique="PRIMARY_KEY" >
+				<column name="owner" />
+			</index>
+			<fk name="fk_settings_user" to_schema="friendfinder" to_table="user" delete_action="cascade" update_action="cascade" >
+				<fk_column name="owner" pk="email" />
+			</fk>
+		</table>
+		<table name="user" >
+			<column name="email" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="password" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="name" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="birthday" type="date" jt="91" mandatory="y" />
+			<column name="gender" type="varchar" length="6" jt="12" mandatory="y" />
+			<index name="pk_users" unique="PRIMARY_KEY" >
+				<column name="email" />
+			</index>
+		</table>
+		<table name="user_likes" >
+			<column name="user" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="like" type="varchar" length="10" jt="12" mandatory="y" />
+			<index name="idx_user_likes" unique="NORMAL" >
+				<column name="like" />
+			</index>
+			<index name="idx_user_likes" unique="NORMAL" >
+				<column name="user" />
+			</index>
+			<fk name="fk_user_likes_likes" to_schema="friendfinder" to_table="likes" delete_action="cascade" update_action="cascade" >
+				<fk_column name="like" pk="name" />
+			</fk>
+			<fk name="fk_user_likes_user" to_schema="friendfinder" to_table="user" delete_action="cascade" update_action="cascade" >
+				<fk_column name="user" pk="email" />
+			</fk>
+		</table>
+	</schema>
+	<layout id="Layout4996512" name="FriendFinder" show_relation_columns="y" >
+		<entity schema="friendfinder" name="group_member" color="b2cdf7" x="420" y="270" />
+		<entity schema="friendfinder" name="likes" color="b2cdf7" x="240" y="525" />
+		<entity schema="friendfinder" name="group" color="b2cdf7" x="540" y="375" />
+		<entity schema="friendfinder" name="user" color="b2cdf7" x="255" y="210" />
+		<entity schema="friendfinder" name="attending_event" color="b2cdf7" x="405" y="105" />
+		<entity schema="friendfinder" name="user_likes" color="b2cdf7" x="165" y="420" />
+		<entity schema="friendfinder" name="settings" color="b2cdf7" x="45" y="90" />
+		<entity schema="friendfinder" name="event" color="b2cdf7" x="570" y="45" />
+		<entity schema="friendfinder" name="photo" color="b2cdf7" x="405" y="390" />
+		<entity schema="friendfinder" name="schedule_entry" color="b2cdf7" x="360" y="510" />
+		<entity schema="friendfinder" name="pending_event_invite" color="b2cdf7" x="600" y="240" />
+	</layout>
+</project>

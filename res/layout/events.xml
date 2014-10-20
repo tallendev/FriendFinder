@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+Tyler Allen
+Last Updated: 09/29/14
+Event page containing a list view of events. List view must be attached via list
+adapter in code.
+-->
+
+
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">

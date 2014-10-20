@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+Tyler Allen
+Last Updated: 09/29/14
+Dynamically generated page representing an event.
+-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -23,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/eventname"
-                android:textSize="60sp"
+                android:textSize="50sp"
                 android:textColor="@color/gold"
                 android:id="@+id/friend"
                 android:layout_weight="100"
@@ -52,7 +58,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/timedate"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:textColor="@color/gold"
                 android:layout_weight="100"/>
 
@@ -67,7 +73,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"
+            android:layout_weight="10"
             android:weightSum="100">
 
         <LinearLayout
@@ -79,7 +85,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/location"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:textColor="@color/gold"
                 android:layout_weight="60"/>
 
@@ -122,16 +128,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/information"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:textColor="@color/gold"
-                android:layout_weight="100"/>
+                android:layout_weight="90"/>
 
     </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="20"
             android:weightSum="100">
 
         <LinearLayout

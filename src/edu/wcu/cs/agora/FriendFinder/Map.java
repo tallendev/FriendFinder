@@ -1,17 +1,32 @@
 package edu.wcu.cs.agora.FriendFinder;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+
 
 /**
- * Created by tyler on 9/27/14.
+ * Tyler Allen
+ * Karen Dana
+ * 09/29/2014
+ *
+ * Code for functionality on the log in page.
  */
-public class Map extends Fragment {
+public class Map extends Activity {
+
+    private GoogleMap map;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.map, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.map);
+
+        // Get the map fragment
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.layout.map)).getMap();
+        map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Constants.CULLOWHEE, Constants.MAP_ZOOM));
     }
 }
