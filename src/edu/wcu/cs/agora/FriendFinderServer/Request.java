@@ -60,11 +60,17 @@ public abstract class Request
     protected static Request requestBuilder(Scanner in)
                                             throws MalformedPacketException
     {
-        short requestType = DEFAULT;
+        //short requestType = DEFAULT;
+        String requestType = null;
         Request request = null;
-        if (in.hasNextShort())
+        /*if (in.hasNextShort())
         {
             requestType = in.nextShort();
+        }*/
+        if (in.hasNext())
+        {
+            requestType = in.next();
+
         }
         else
         {
@@ -72,29 +78,29 @@ public abstract class Request
         }
         switch (requestType)
         {
-            case (REGISTER):
+            case ("0")://case (REGISTER):
             {
                 break;
             }
-            case (GROUP_UPDATE):
+            case ("1")://case (GROUP_UPDATE):
             {
                 break;
             }
-            case (PROFILE_UPDATE):
+            case ("2")://case (PROFILE_UPDATE):
             {
                 break;
             }
-            case (SYNC):
+            case ("3"): //case (SYNC):
             {
                 break;
             }
-            case (RESPONSE):
+            case ("4")://case (RESPONSE):
             {
                 break;
             }
             default:
             {
-                throw new MalformedPacketException("Invalid Request Type");
+                //throw new MalformedPacketException("Invalid Request Type");
             }
         }
         return request;
