@@ -3,11 +3,12 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.content.*;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import com.google.android.gms.identity.intents.AddressConstants;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -76,7 +77,7 @@ public class Login extends Activity
          * If successful, return the Account object, otherwise report an error.
          */
         if (accountManager.addAccountExplicitly(newAccount, null, null)) {
-            Log.d("LOGIN", "Succesfully created account.");
+            Log.d("LOGIN", "Successfully created account.");
             /*
              * If you don't set android:syncable="true" in
              * in your <provider> element in the manifest,
