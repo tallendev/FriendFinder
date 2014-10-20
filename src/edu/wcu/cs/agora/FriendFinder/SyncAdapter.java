@@ -134,7 +134,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         try
         {
             Log.d("SYNC", "starting sync");
-            InetAddress ip = InetAddress.getByName("www.trantracker.com");
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
             SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket("www.trantracker.com",
                                                                             1337);
