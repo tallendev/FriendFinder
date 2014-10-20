@@ -31,6 +31,8 @@ public class GenericAccountService extends Service {
      */
     public static Account getAccount() {
         Log.d("GenericAccountService", "GetAccount");
+
+        //get account name from shared preferences
         final String accountName = "temp";//FIXME: pull account name from shared preferences
         return new Account(accountName, ACCOUNT_TYPE);
     }
