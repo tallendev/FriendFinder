@@ -133,7 +133,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             OutputStream out = sslSocket.getOutputStream();
             AccountManager accountManager = (AccountManager) getContext().getSystemService
                                                              (Context.ACCOUNT_SERVICE);
-            out.write((account.name + " " +
+            out.write(("3 " + account.name + " " +
                        accountManager.getPassword(account)).getBytes());
             out.flush();
             Log.d("SYNC", "Written");
