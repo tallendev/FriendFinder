@@ -51,9 +51,21 @@ public class Authenticator
                                                       "hadouken!");
         Statement statement = conn.createStatement();
         statement.execute("set search_path to friendfinder");
-        success = statement.execute("SELECT email, password_token " +
-                                    "FROM users");
-
+        if (statement.execute("SELECT email, password_token " +
+                              "FROM users"))
+        {
+            ResultSet rs = statement.getResultSet();
+            boolean userNotFound = true;
+            while (rs.next() && userNotFound)
+            {
+                String temp_user = rs.getString("email");
+                if (temp_user.equals(username))
+                {
+                    userNotFound = false;
+                    success = password.equals(rs.getString("password_token"));
+                }
+            }
+        }
         System.err.println("Account succesfully authenticated: " + success);
         return success;
     }
