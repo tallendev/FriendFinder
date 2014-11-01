@@ -82,7 +82,7 @@ public class RequestServer
             }
             catch (IOException e)
             {
-                System.err.println("Issue while listening.");
+                System.err.println("Issue while listening:\n" + e.getMessage());
             }
             catch (SQLException e)
             {
