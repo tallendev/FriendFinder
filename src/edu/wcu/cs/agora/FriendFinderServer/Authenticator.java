@@ -47,7 +47,8 @@ public class Authenticator
         {
             throw new MalformedPacketException("Missing password.");
         }
-        Connection conn = DriverManager.getConnection("friendfinder", "tyler", "hadouken!");
+        Connection conn = DriverManager.getConnection("jdbc:postgresql:friendfinder", "tyler",
+                                                      "hadouken!");
         Statement statement = conn.createStatement();
         success = statement.execute("SELECT username, password " +
                                     "FROM users");
