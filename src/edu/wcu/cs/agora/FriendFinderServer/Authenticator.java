@@ -54,6 +54,7 @@ public class Authenticator
                                     "FROM users");
 
         //TODO finish me when dummy acounts are made.
+        System.err.println("Account succesfully authenticated: " + success);
         return success; //FIXME
     }
 }
