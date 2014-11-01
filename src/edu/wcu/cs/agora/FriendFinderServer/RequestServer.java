@@ -55,7 +55,7 @@ public class RequestServer
         System.setProperty("javax.net.ssl.keyStorePassword", "hadouken!");
         try
         {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
         }
         catch (ClassNotFoundException cfne)
         {
