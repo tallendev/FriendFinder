@@ -10,7 +10,7 @@ public class Authenticator
 {
     private static Authenticator ourInstance;
 
-    public static synchronized Authenticator getInstance () throws ClassNotFoundException
+    public static synchronized Authenticator getInstance ()
     {
         if (ourInstance == null)
         {
@@ -19,14 +19,13 @@ public class Authenticator
         return ourInstance;
     }
 
-    private Authenticator () throws ClassNotFoundException
+    private Authenticator ()
     {
-        Class.forName("com.mysql.jdbc.Driver");
     }
 
     // In the end should probably return more than true false, maybe a string that could contain a
     // token?
-    public boolean AuthenticateUser(Scanner in) throws MalformedPacketException, SQLException
+    public boolean authenticateUser(Scanner in) throws MalformedPacketException, SQLException
     {
         boolean success = false;
         String username = null;

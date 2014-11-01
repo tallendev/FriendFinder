@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -15,7 +16,9 @@ import java.util.Scanner;
  */
 public class RequestServer
 {
-    public static final int SOCKET_ERROR = 1;
+    public static final int SOCKET_ERROR = 100;
+    public static final int JDBC_ERROR = 200;
+    public static final int SQL_ERROR = 300;
 
     public static final int TIMEOUT = 5000;
     public static final int DEFAULT_PORT = 1337;
@@ -31,7 +34,7 @@ public class RequestServer
         //serverSocket = new ServerSocket(port);
     }
 
-    public void listen() throws IOException
+    public void listen() throws SQLException, IOException
     {
         System.err.println("RequestServer listening for new connection.");
         Socket client = serverSocket.accept();
@@ -50,6 +53,15 @@ public class RequestServer
     {
         System.setProperty("javax.net.ssl.keyStore", "../keystore");
         System.setProperty("javax.net.ssl.keyStorePassword", "hadouken!");
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException cfne)
+        {
+            System.err.println("JDBC Driver issue:\n" + cfne.getMessage());
+            System.exit(JDBC_ERROR);
+        }
         RequestServer requestServer = null;
         try
         {
@@ -70,6 +82,11 @@ public class RequestServer
             catch (IOException e)
             {
                 System.err.println("Issue while listening.");
+            }
+            catch (SQLException e)
+            {
+                System.err.println("SQL issue:\n" + e.getMessage());
+                System.exit(SQL_ERROR);
             }
         }
     }

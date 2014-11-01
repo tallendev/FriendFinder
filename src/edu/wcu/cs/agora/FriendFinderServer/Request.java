@@ -1,6 +1,7 @@
 package edu.wcu.cs.agora.FriendFinderServer;
 
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -58,7 +59,7 @@ public abstract class Request
      *
      */
     protected static Request requestBuilder(Scanner in)
-                                            throws MalformedPacketException
+                                            throws MalformedPacketException, SQLException
     {
         //short requestType = DEFAULT;
         String requestType = null;
@@ -67,15 +68,13 @@ public abstract class Request
         {
             requestType = in.nextShort();
         }*/
-        if (in.hasNext())
-        {
-            requestType = in.next();
-
-        }
-        else
+        if (!in.hasNext())
         {
             throw new MalformedPacketException("Packet Missing Request Type");
         }
+        requestType = in.next();
+
+        Authenticator.getInstance().authenticateUser(in);
         switch (requestType)
         {
             case ("0")://case (REGISTER):
