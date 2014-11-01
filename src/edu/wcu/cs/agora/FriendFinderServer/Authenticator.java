@@ -28,6 +28,7 @@ public class Authenticator
     // token?
     public boolean AuthenticateUser(Scanner in) throws MalformedPacketException, SQLException
     {
+        boolean success = false;
         String username = null;
         String password = null;
         //todo: refactor me into a util method once format is locked down please
@@ -49,8 +50,10 @@ public class Authenticator
         }
         Connection conn = DriverManager.getConnection("friendfinder", "tyler", "hadouken!");
         Statement statement = conn.createStatement();
-        //ResultSet = statement.execute("SELECT ")
+        success = statement.execute("SELECT username, password " +
+                                    "FROM users");
+
         //TODO finish me when dummy acounts are made.
-        return true; //FIXME
+        return success; //FIXME
     }
 }
