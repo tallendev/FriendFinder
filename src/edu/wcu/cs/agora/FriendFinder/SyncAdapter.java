@@ -5,20 +5,13 @@ import android.accounts.AccountManager;
 import android.content.*;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import javax.net.ssl.*;
-import java.net.InetAddress;
-import java.security.*;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.util.concurrent.atomic.AtomicReference;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
 
 /**
  * Created by tyler on 10/16/2014.

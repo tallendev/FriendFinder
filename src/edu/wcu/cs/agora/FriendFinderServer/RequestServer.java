@@ -51,8 +51,6 @@ public class RequestServer
 
     public static void main(String[] args)
     {
-        System.setProperty("javax.net.ssl.keyStore", "../keystore");
-        System.setProperty("javax.net.ssl.keyStorePassword", "hadouken!");
         try
         {
             Class.forName("org.postgresql.Driver");
@@ -62,6 +60,9 @@ public class RequestServer
             System.err.println("JDBC Driver issue:\n" + cfne.getMessage());
             System.exit(JDBC_ERROR);
         }
+        System.setProperty("javax.net.ssl.keyStore", "../keystore");
+        System.setProperty("javax.net.ssl.keyStorePassword", "hadouken!");
+
         RequestServer requestServer = null;
         try
         {

@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.io.IOException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * Created by tyler on 10/16/2014.
  *

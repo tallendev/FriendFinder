@@ -2,7 +2,6 @@ package edu.wcu.cs.agora.FriendFinder;
 
 import android.app.Activity;
 import android.os.Bundle;
-import edu.wcu.cs.agora.FriendFinder.R;
 
 /**
  * Tyler Allen
