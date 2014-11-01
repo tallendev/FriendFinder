@@ -22,7 +22,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../postgresql-9.3-1102.jdbc41.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../postgresql-9.3-1102.jdbc41.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
