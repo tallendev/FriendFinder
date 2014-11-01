@@ -51,7 +51,7 @@ public class Authenticator
                                                       "hadouken!");
         Statement statement = conn.createStatement();
         statement.execute("set search_path to friendfinder");
-        success = statement.execute("SELECT email, password " +
+        success = statement.execute("SELECT email, password_token" +
                                     "FROM users");
 
         //TODO finish me when dummy acounts are made.
