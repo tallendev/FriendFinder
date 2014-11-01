@@ -50,8 +50,9 @@ public class Authenticator
         Connection conn = DriverManager.getConnection("jdbc:postgresql:friendfinder", "tyler",
                                                       "hadouken!");
         Statement statement = conn.createStatement();
+        statement.execute("set search_path to friendfinder");
         success = statement.execute("SELECT email, password_token" +
-                                    "FROM friendfinder.users");
+                                    "FROM users");
 
         //TODO finish me when dummy acounts are made.
         System.err.println("Account succesfully authenticated: " + success);
