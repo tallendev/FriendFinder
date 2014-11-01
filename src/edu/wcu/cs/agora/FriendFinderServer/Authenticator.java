@@ -66,7 +66,7 @@ public class Authenticator
                 }
             }
         }
-        System.err.println("Account succesfully authenticated: " + success);
+        System.err.println("Account succesfully authenticated? " + success);
         return success;
     }
 }

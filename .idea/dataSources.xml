@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1191017470">
-    <data-source source="LOCAL" name="PostgreSQL - @www.trantracker.com" uuid="c1762f4d-e0e3-4ac5-b7bd-7b9da82ecb5b">
+  <component name="DataSourceManagerImpl" format="xml" hash="2140361169">
+    <data-source source="LOCAL" name="PostgreSQL - friendfinder@www.trantracker.com" uuid="c1762f4d-e0e3-4ac5-b7bd-7b9da82ecb5b">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://www.trantracker.com:5432</jdbc-url>
+      <jdbc-url>jdbc:postgresql://www.trantracker.com:5432/friendfinder</jdbc-url>
       <user-name>tyler</user-name>
       <user-password>dfc2dfcbdfcedfc5dfdfdfc1dfcfdfc4df8b</user-password>
       <libraries />
