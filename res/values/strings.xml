@@ -38,6 +38,8 @@ String reference file.
 
     <string name="authority">edu.wcu.cs.agora.FriendFinder</string>
 
+    <string name="shared_prefs">edu.wcu.cs.agora.SHARED_PREFERENCES</string>
+
 
 
 

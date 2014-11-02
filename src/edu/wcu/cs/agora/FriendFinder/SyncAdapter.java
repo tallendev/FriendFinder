@@ -18,6 +18,8 @@ import java.security.KeyStore;
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter
 {
+    private static final String SYNC_FINISHED = "SYNC_FINISHED";
+
     private final ContentResolver contentResolver;
     private       SSLContext      sslContext;
 
@@ -146,5 +148,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             Log.d("SYNC", "An error occurred while attempting to sync");
             Log.d("SYNC", ioe.getMessage());
         }
+        Intent i = new Intent(SYNC_FINISHED);
+        getContext().sendBroadcast(i);
     }
 }

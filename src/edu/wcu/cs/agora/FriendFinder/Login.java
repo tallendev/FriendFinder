@@ -3,14 +3,14 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import com.google.android.gms.identity.intents.AddressConstants;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -27,6 +27,9 @@ public class Login extends Activity implements View.OnClickListener
     private String AUTHORITY;
     private Button loginButton;
     private Button registerButton;
+    private SharedPreferences sharedPreferences;
+
+    //TODO make broadcast receiver
 
     /**
      * Called when the activity is first created. Boilerplate code.
@@ -52,15 +55,23 @@ public class Login extends Activity implements View.OnClickListener
         ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
         final AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
 
-        final Bundle extras = new Bundle();
-        Runnable r = new Runnable()
+        sharedPreferences = this.getSharedPreferences(getString(R.string.shared_prefs),
+                                                      Context.MODE_PRIVATE);
+        String user = sharedPreferences.getString("user", null);
+        if (null == user)
         {
+            nextScreen();
+        }
+
+        //final Bundle extras = new Bundle();
+        //Runnable r = new Runnable()
+        //{
             /**
              * Starts executing the active part of the class' code. This method is called when a
              * thread is
              * started that has been created with a class which implements {@code Runnable}.
              */
-            @Override
+          /*  @Override
             public void run ()
             {
                 ContentResolver.requestSync(account.get(), AUTHORITY, extras);
@@ -68,7 +79,14 @@ public class Login extends Activity implements View.OnClickListener
             }
         };
         Handler handler = new Handler();
-        handler.postDelayed(r, 5000);
+        handler.postDelayed(r, 5000);*/
+    }
+
+    private void nextScreen()
+    {
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -109,17 +127,17 @@ public class Login extends Activity implements View.OnClickListener
     @Override
     public void onClick(View view) {
 
-        /*if (view.getId() == R.id.login) {
+        if (view.getId() == R.id.login) {
             //get username and password
-            String username = String.valueOf(((EditText) findViewById(R.id.email)).getText());
-            String password = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
+            String user = String.valueOf(((EditText) findViewById(R.id.email)).getText());
+            String pass = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
 
             //send to server
-
-
         } else {
             Intent intent = new Intent(this, Register.class);
             startActivity(intent);
-        }*/
+        }
     }
+
+
 }

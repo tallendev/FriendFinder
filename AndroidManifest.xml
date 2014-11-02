@@ -16,6 +16,10 @@ Android manifest.
             android:name="edu.wcu.cs.agora.FriendFinder.Maps.permission.MAPS_RECEIVE"
             android:protectionLevel="signature" />
 
+    <permission
+            android:name="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.SYNC_FINISHED"
+            android:protectionLevel="signature" />
+
     <uses-feature
             android:glEsVersion="0x00020000"
             android:required="true" />
@@ -76,10 +80,6 @@ Permissions.
                 android:authorities="edu.wcu.cs.agora.FriendFinder"
                 android:exported="false"
                 android:syncable="true"/>
-
-
-
-
 <!--
 Maps setup.
 -->
@@ -91,6 +91,14 @@ Maps setup.
         <meta-data
                 android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />
+
+        <receiver
+            android:enabled="true"
+            android:exported="false"
+            android:name="Login"
+            android:permission="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.SYNC_FINISHED"
+            android:process="edu.wcu.cs.agora.FriendFinder" >
+        </receiver>
 
     </application>
 </manifest>
