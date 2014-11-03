@@ -58,12 +58,14 @@ public abstract class Request
      * @param in - A wrapper around an input stream attached to the socket.
      *
      */
-    protected static Request requestBuilder(Scanner in)
+    //protected static Request requestBuilder(Scanner in)
+    protected static boolean requestBuilder(Scanner in)
                                             throws MalformedPacketException, SQLException
     {
         //short requestType = DEFAULT;
         String requestType = null;
-        Request request = null;
+        boolean request = false;
+        //Request request = null;
         /*if (in.hasNextShort())
         {
             requestType = in.nextShort();
@@ -74,7 +76,7 @@ public abstract class Request
         }
         requestType = in.next();
 
-        Authenticator.getInstance().authenticateUser(in);
+        request = Authenticator.getInstance().authenticateUser(in);
         switch (requestType)
         {
             case ("0")://case (REGISTER):

@@ -5,6 +5,7 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -45,7 +46,11 @@ public class RequestServer
         {
             System.out.println(in.next());
         }*/
-        Request request = Request.requestBuilder(in);
+        //Request request = Request.requestBuilder(in);
+        boolean request = Request.requestBuilder(in);
+        PrintStream out = new PrintStream(client.getOutputStream());
+        out.print(request);
+
        // request.getResponse();
     }
 

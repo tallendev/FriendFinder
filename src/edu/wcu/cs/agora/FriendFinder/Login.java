@@ -158,13 +158,15 @@ public class Login extends Activity implements View.OnClickListener
                     Bundle extras = new Bundle();
                     extras.putBoolean("first_sync", true);
                     receiver = new AuthenticationChecker();
+
+                    IntentFilter intentFilter = new IntentFilter();
+                    intentFilter.addAction("first_sync");
+                    registerReceiver(receiver, intentFilter);
                     ContentResolver.setSyncAutomatically(account, AUTHORITY, true);
 
                     ContentResolver.requestSync(account, AUTHORITY, extras);
                     Log.d("LOGIN", "SYNC_REQUESTED");
-                    IntentFilter intentFilter = new IntentFilter();
-                    intentFilter.addAction("first_sync");
-                    registerReceiver(receiver, intentFilter);
+
                 }
                 else
                 {

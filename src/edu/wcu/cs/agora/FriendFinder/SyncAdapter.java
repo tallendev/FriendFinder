@@ -143,7 +143,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             out.flush();
             Log.d("SYNC", "Written");
             Scanner in = new Scanner(sslSocket.getInputStream());
-            authenticated = in.next();
+            if (in.hasNext())
+            {
+                authenticated = in.next();
+            }
+            Log.d("SYNC", "Read");
             if (!authenticated.equals("true") && !authenticated.equals("false"))
             {
                 Log.d("SYNC", "Bad authentication status");
