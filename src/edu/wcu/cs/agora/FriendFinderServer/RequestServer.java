@@ -49,7 +49,7 @@ public class RequestServer
         //Request request = Request.requestBuilder(in);
         boolean request = Request.requestBuilder(in);
         PrintStream out = new PrintStream(client.getOutputStream());
-        out.print(request);
+        out.println(request);
 
        // request.getResponse();
     }
