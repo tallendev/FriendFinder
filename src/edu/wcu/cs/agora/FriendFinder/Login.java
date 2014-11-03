@@ -68,23 +68,8 @@ public class Login extends Activity implements View.OnClickListener
         }
         Log.d("LOGIN", "End on_create");
 
-        //final Bundle extras = new Bundle();
-        //Runnable r = new Runnable()
-        //{
-            /**
-             * Starts executing the active part of the class' code. This method is called when a
-             * thread is
-             * started that has been created with a class which implements {@code Runnable}.
-             */
-          /*  @Override
-            public void run ()
-            {
-                ContentResolver.requestSync(account.get(), AUTHORITY, extras);
-                Log.d("LOGIN", "Sync Requested");
-            }
-        };
-        Handler handler = new Handler();
-        handler.postDelayed(r, 5000);*/
+               // ContentResolver.requestSync(account.get(), AUTHORITY, extras);
+
     }
 
     private void nextScreen()
