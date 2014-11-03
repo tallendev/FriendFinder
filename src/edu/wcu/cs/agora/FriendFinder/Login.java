@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.google.android.gms.identity.intents.AddressConstants;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -28,6 +29,10 @@ public class Login extends Activity implements View.OnClickListener
     private Button loginButton;
     private Button registerButton;
     private SharedPreferences sharedPreferences;
+    private Account account;
+    private String user;
+    private String pass;
+    private BroadcastReceiver receiver;
 
     //TODO make broadcast receiver
 
@@ -40,7 +45,9 @@ public class Login extends Activity implements View.OnClickListener
         Log.d("LOGIN", "OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
+        user = null;
+        pass = null;
+        receiver = null;
         //set handler for login and register buttons
         loginButton = (Button) findViewById(R.id.login);
         registerButton = (Button) findViewById(R.id.register);
@@ -54,13 +61,13 @@ public class Login extends Activity implements View.OnClickListener
         startService(new Intent(this, GenericAccountService.class));
 
 
-        final AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
+        //final AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
 
         sharedPreferences = this.getSharedPreferences(getString(R.string.shared_prefs),
                                                       Context.MODE_PRIVATE);
         String user = sharedPreferences.getString("user", null);
 
-        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
+        //ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
 
         if (null != user)
         {
@@ -84,9 +91,10 @@ public class Login extends Activity implements View.OnClickListener
      *
      * @param context The application context
      */
-    public static Account CreateSyncAccount(Context context) {
+    public static Account createSyncAccount(Context context, String username, String password)
+    {
         // Create the account type and default account
-        Account newAccount = new Account("temp", "edu.wcu");
+        Account newAccount = new Account(username, "edu.wcu");
         // Get an instance of the Android account manager
         AccountManager accountManager =
                 (AccountManager) context.getSystemService(
@@ -95,7 +103,8 @@ public class Login extends Activity implements View.OnClickListener
          * Add the account and account type, no password or user data
          * If successful, return the Account object, otherwise report an error.
          */
-        if (accountManager.addAccountExplicitly(newAccount, null, null)) {
+        if (accountManager.addAccountExplicitly(newAccount, password, null))
+        {
             Log.d("LOGIN", "Successfully created account.");
             /*
              * If you don't set android:syncable="true" in
@@ -103,8 +112,10 @@ public class Login extends Activity implements View.OnClickListener
              * then call context.setIsSyncable(account, authority, 1)
              * here.
              */
-        } else {
-            Log.d("LOGIN", "Error creating account");
+        }
+        else
+        {
+            Log.d("LOGIN", "Error creating account, probably already exists");
             /*
              * The account exists or some other error occurred. Log this, report it,
              * or handle it internally.
@@ -112,6 +123,23 @@ public class Login extends Activity implements View.OnClickListener
         }
 
         return newAccount;
+    }
+
+    // should possibly be onDestroy
+    @Override
+    protected void onStop ()
+    {
+        super.onDestroy();
+        if (receiver != null)
+        {
+            if (account != null)
+            {
+                AccountManager accountManager = (AccountManager) this.getSystemService(ACCOUNT_SERVICE);
+                accountManager.removeAccount(account, null, null);
+            }
+            unregisterReceiver(receiver);
+            receiver = null;
+        }
     }
 
     @Override
@@ -122,17 +150,79 @@ public class Login extends Activity implements View.OnClickListener
         {
             case (R.id.login):
                 //get username and password
-                String user = String.valueOf(((EditText) findViewById(R.id.email)).getText());
-                String pass = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
-                //sharedPreferences.edit().putString("user", user).putString("password",
-                //                                                            pass).apply();
-                //send to server
-                nextScreen();
+                user = String.valueOf(((EditText) findViewById(R.id.email)).getText());
+                pass = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
+                if (user != null && pass != null && !user.isEmpty() && !pass.isEmpty())
+                {
+                    account = createSyncAccount(this, user, pass);
+                    Bundle extras = new Bundle();
+                    extras.putBoolean("first_sync", true);
+                    receiver = new AuthenticationChecker();
+                    ContentResolver.setSyncAutomatically(account, AUTHORITY, true);
+
+                    ContentResolver.requestSync(account, AUTHORITY, extras);
+                    Log.d("LOGIN", "SYNC_REQUESTED");
+                    IntentFilter intentFilter = new IntentFilter();
+                    intentFilter.addAction("first_sync");
+                    registerReceiver(receiver, intentFilter);
+                }
+                else
+                {
+                    Toast.makeText(this, "Please enter a valid user name and password.",
+                                   Toast.LENGTH_LONG).show();
+                }
                 break;
             case (R.id.register):
                 Intent intent = new Intent(this, Register.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    public class AuthenticationChecker extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            Bundle extras = intent.getExtras();
+            AccountManager accountManager =(AccountManager) context.getSystemService(ACCOUNT_SERVICE);
+            //TODO: refactor me to be actual true value not string
+            Log.d("AUTH_CHECKER", "Checking authentication validity");
+            if (extras != null)
+            {
+                if (extras.getString("success").equals("true"))
+                {
+                    sharedPreferences.edit().putString("user", user).putString("password",
+                                                                                pass).apply();
+                    nextScreen();
+                }
+                else
+                {
+                    // FIXME this is a race condition when screen tilts... needs to be handled
+                    if (account != null)
+                    {
+                        accountManager.removeAccount(account, null, null);
+                    }
+                    account = null;
+                    user = null;
+                    pass = null;
+                    //fixme dialog would be better
+                    if (extras.getBoolean("net_issue"))
+                    {
+                        Toast.makeText(context, "Issue connecting to server", Toast.LENGTH_LONG)
+                             .show();
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "Invalid login information", Toast.LENGTH_LONG)
+                             .show();
+                    }
+                }
+            }
+            else
+            {
+                Log.d("LOGIN", "Unhandled server connection, fixme");
+            }
         }
     }
 }

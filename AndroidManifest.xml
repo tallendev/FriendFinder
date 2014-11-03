@@ -39,6 +39,7 @@ Permissions.
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
                  android:allowBackup="false"
@@ -101,7 +102,7 @@ Maps setup.
         <receiver
             android:enabled="true"
             android:exported="false"
-            android:name="Login"
+            android:name="edu.wcu.cs.agora.FriendFinder.Login$AuthenticationChecker"
             android:permission="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.SYNC_FINISHED"
             android:process="edu.wcu.cs.agora.FriendFinder" >
         </receiver>

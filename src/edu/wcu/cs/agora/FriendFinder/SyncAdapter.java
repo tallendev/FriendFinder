@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
+import java.util.Scanner;
 
 /**
  * Created by tyler on 10/16/2014.
@@ -126,19 +127,27 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     public void onPerformSync (Account account, Bundle extras, String authority,
                                ContentProviderClient provider, SyncResult syncResult)
     {
+        String authenticated = "false";
+        boolean ioError = false;
         try
         {
             Log.d("SYNC", "starting sync");
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-            SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket("www.trantracker.com",
-                                                                            1337);
+            SSLSocket sslSocket = (SSLSocket) sslSocketFactory
+                    .createSocket("www.trantracker.com", 1337);
             OutputStream out = sslSocket.getOutputStream();
-            AccountManager accountManager = (AccountManager) getContext().getSystemService
-                                                             (Context.ACCOUNT_SERVICE);
+            AccountManager accountManager = (AccountManager) getContext()
+                    .getSystemService(Context.ACCOUNT_SERVICE);
             out.write(("3 " + account.name + " " +
                        accountManager.getPassword(account)).getBytes());
             out.flush();
             Log.d("SYNC", "Written");
+            Scanner in = new Scanner(sslSocket.getInputStream());
+            authenticated = in.next();
+            if (!authenticated.equals("true") && !authenticated.equals("false"))
+            {
+                Log.d("SYNC", "Bad authentication status");
+            }
             out.close();
             sslSocket.close();
 
@@ -147,8 +156,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             Log.d("SYNC", "An error occurred while attempting to sync");
             Log.d("SYNC", ioe.getMessage());
+            ioError = true;
         }
-        Intent i = new Intent(SYNC_FINISHED);
-        getContext().sendBroadcast(i);
+        Log.d("SYNC", "first_sync: " + extras.getBoolean("first_sync"));
+        if (extras.getBoolean("first_sync", false))
+        {
+            Log.d("SYNC", "Attempting to broadcast");
+            Intent i = new Intent(SYNC_FINISHED);
+            i.putExtra("success", authenticated);
+            i.putExtra("net_issue", ioError);
+            i.setAction("first_sync");
+            getContext().sendBroadcast(i);
+        }
     }
 }
