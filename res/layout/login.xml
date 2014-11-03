@@ -137,7 +137,6 @@ Log in page.
                 android:layout_height="match_parent"
                 android:layout_weight="40"
                 android:id="@+id/login"
-                android:clickable="true"
                 android:scaleType="centerInside"
                 android:text="Log In"/>
                 <!--android:background="@drawable/button1"-->
@@ -190,9 +189,9 @@ Log in page.
                 android:layout_height="match_parent"
                 android:layout_weight="40"
                 android:id="@+id/register"
-                android:clickable="true"
                 android:scaleType="centerInside"
                 android:text="@string/register"/>
+
         <!--android:background="@drawable/button1"-->
 
 

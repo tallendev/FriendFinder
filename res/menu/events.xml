@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <item android:id="@+id/create_event"
+          android:title="@string/create_event"/>
+
+    <item android:id="@+id/search"
+          android:title="@string/search" />
+
+    <item android:id="@+id/view_profile"
+          android:title="@string/view_profile"/>
+
+    <item android:id="@+id/settings"
+          android:title="@string/settings" />
+
+    <item android:id="@+id/logout"
+          android:title="@string/logout" />
+</menu>

@@ -99,7 +99,7 @@ public abstract class Request
             }
             default:
             {
-                //throw new MalformedPacketException("Invalid Request Type");
+                throw new MalformedPacketException("Invalid Request Type");
             }
         }
         return request;

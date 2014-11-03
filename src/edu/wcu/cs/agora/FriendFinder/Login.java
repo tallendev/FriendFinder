@@ -42,8 +42,10 @@ public class Login extends Activity implements View.OnClickListener
         setContentView(R.layout.login);
 
         //set handler for login and register buttons
-//        loginButton.setOnClickListener(this);
-       // registerButton.setOnClickListener(this);
+        loginButton = (Button) findViewById(R.id.login);
+        registerButton = (Button) findViewById(R.id.register);
+        loginButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
 
         AUTHORITY = getResources().getString(R.string.authority);
         Intent intent = new Intent(this, SyncService.class);
@@ -52,16 +54,19 @@ public class Login extends Activity implements View.OnClickListener
         startService(new Intent(this, GenericAccountService.class));
 
 
-        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
         final AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
 
         sharedPreferences = this.getSharedPreferences(getString(R.string.shared_prefs),
                                                       Context.MODE_PRIVATE);
         String user = sharedPreferences.getString("user", null);
-        if (null == user)
+
+        ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
+
+        if (null != user)
         {
             nextScreen();
         }
+        Log.d("LOGIN", "End on_create");
 
         //final Bundle extras = new Bundle();
         //Runnable r = new Runnable()
@@ -84,7 +89,7 @@ public class Login extends Activity implements View.OnClickListener
 
     private void nextScreen()
     {
-        Intent intent = new Intent(this, Register.class);
+        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
         finish();
     }
@@ -125,19 +130,24 @@ public class Login extends Activity implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View view) {
-
-        if (view.getId() == R.id.login) {
-            //get username and password
-            String user = String.valueOf(((EditText) findViewById(R.id.email)).getText());
-            String pass = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
-
-            //send to server
-        } else {
-            Intent intent = new Intent(this, Register.class);
-            startActivity(intent);
+    public void onClick(View view)
+    {
+        Log.d("LOGIN", "onclick\nview.getId(): " + view.getId() + "\nvR.id.login: " + R.id.login);
+        switch (view.getId())
+        {
+            case (R.id.login):
+                //get username and password
+                String user = String.valueOf(((EditText) findViewById(R.id.email)).getText());
+                String pass = String.valueOf(((EditText) findViewById(R.id.pass)).getText());
+                //sharedPreferences.edit().putString("user", user).putString("password",
+                //                                                            pass).apply();
+                //send to server
+                nextScreen();
+                break;
+            case (R.id.register):
+                Intent intent = new Intent(this, Register.class);
+                startActivity(intent);
+                break;
         }
     }
-
-
 }
