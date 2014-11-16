@@ -70,9 +70,14 @@ public class RequestServer
             JSONObject jsonOut = new JSONObject();
 
             Request.requestBuilder(json, jsonOut);
-            PrintStream out = new PrintStream(client.getOutputStream());
-            out.println(jsonOut.toString());
+            OutputStream out = client.getOutputStream();
+            out.write(jsonOut.toString().getBytes());
+            out.flush();
             System.err.println("Sent JSON response");
+        }
+        else
+        {
+            System.err.println("No message received from client.");
         }
 
        // request.getResponse();
