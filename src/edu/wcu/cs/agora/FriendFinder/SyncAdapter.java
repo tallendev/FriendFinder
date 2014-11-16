@@ -114,7 +114,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     public void onPerformSync (Account account, Bundle extras, String authority,
                                ContentProviderClient provider, SyncResult syncResult)
     {
-        String authenticated = "false";
+        boolean authenticated = false;
         boolean ioError = false;
         try
         {
@@ -134,16 +134,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             out.write(json.toString().getBytes());
             out.flush();
             Log.d("SYNC", "Written");
-            Scanner in = new Scanner(sslSocket.getInputStream());
+
+            JSONObject jsonIn = null;
+            Scanner in = new Scanner(sslSocket.getInputStream()).useDelimiter("\\A");
             if (in.hasNext())
             {
-                authenticated = in.next();
+                jsonIn = new JSONObject(in.next());
+                authenticated = jsonIn.getBoolean("authenticated");
             }
             Log.d("SYNC", "Read");
-            if (!authenticated.equals("true") && !authenticated.equals("false"))
-            {
-                Log.d("SYNC", "Bad authentication status");
-            }
             out.close();
             sslSocket.close();
 
@@ -153,8 +152,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             Log.d("SYNC", "An error occurred while attempting to sync");
             Log.d("SYNC", ioe.getMessage());
             ioError = true;
-        } catch (JSONException e) {
+        } catch (JSONException e)
+        {
             Log.d("SYNC", "JSON error:\n" + e.getMessage());
+            e.printStackTrace();
         }
         Log.d("SYNC", "first_sync: " + extras.getBoolean("first_sync"));
         if (extras.getBoolean("first_sync", false))

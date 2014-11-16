@@ -62,8 +62,9 @@ public abstract class Request
      *
      */
     //protected static Request requestBuilder(Scanner in)
-    protected static boolean requestBuilder(JSONObject json)
-            throws MalformedPacketException, SQLException, JSONException {
+    protected static void requestBuilder(JSONObject json, JSONObject jsonOut)
+            throws MalformedPacketException, SQLException, JSONException
+    {
         //short requestType = DEFAULT;
         String requestType = null;
         boolean request = false;
@@ -79,34 +80,37 @@ public abstract class Request
         requestType = json.getString("request_type");
 
         request = Authenticator.getInstance().authenticateUser(json);
-        switch (requestType)
+        jsonOut.put("authenticated", request);
+        if (request)
         {
-            case ("0")://case (REGISTER):
+            switch (requestType)
             {
-                break;
-            }
-            case ("1")://case (GROUP_UPDATE):
-            {
-                break;
-            }
-            case ("2")://case (PROFILE_UPDATE):
-            {
-                break;
-            }
-            case ("3"): //case (SYNC):
-            {
-                break;
-            }
-            case ("4")://case (RESPONSE):
-            {
-                break;
-            }
-            default:
-            {
-                throw new MalformedPacketException("Invalid Request Type");
+                case ("0")://case (REGISTER):
+                {
+                    break;
+                }
+                case ("1")://case (GROUP_UPDATE):
+                {
+                    break;
+                }
+                case ("2")://case (PROFILE_UPDATE):
+                {
+                    break;
+                }
+                case ("3"): //case (SYNC):
+                {
+                    break;
+                }
+                case ("4")://case (RESPONSE):
+                {
+                    break;
+                }
+                default:
+                {
+                    throw new MalformedPacketException("Invalid Request Type");
+                }
             }
         }
-        return request;
     }
 
     protected abstract void getResponse();

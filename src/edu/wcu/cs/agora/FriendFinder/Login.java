@@ -83,6 +83,10 @@ public class Login extends Activity implements View.OnClickListener
     {
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
+        if (receiver != null)
+        {
+            unregisterReceiver(receiver);
+        }
         finish();
     }
 
@@ -187,12 +191,12 @@ public class Login extends Activity implements View.OnClickListener
         public void onReceive(Context context, Intent intent)
         {
             Bundle extras = intent.getExtras();
-            AccountManager accountManager =(AccountManager) context.getSystemService(ACCOUNT_SERVICE);
+            AccountManager accountManager = (AccountManager) context.getSystemService(ACCOUNT_SERVICE);
             //TODO: refactor me to be actual true value not string
             Log.d("AUTH_CHECKER", "Checking authentication validity");
             if (extras != null)
             {
-                if (extras.getString("success").equals("true"))
+                if (extras.getBoolean("success"))
                 {
                     sharedPreferences.edit().putString("user", user).putString("password",
                                                                                 pass).apply();

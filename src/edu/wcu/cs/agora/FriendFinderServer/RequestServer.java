@@ -64,11 +64,15 @@ public class RequestServer
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
         Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
-        JSONObject json = new JSONObject(in.next());
+        if (in.hasNext())
+        {
+            JSONObject json = new JSONObject(in.next());
+            JSONObject jsonOut = new JSONObject();
 
-        boolean request = Request.requestBuilder(json);
-        PrintStream out = new PrintStream(client.getOutputStream());
-        out.println(request);
+            Request.requestBuilder(json, jsonOut);
+            PrintStream out = new PrintStream(client.getOutputStream());
+            out.println(jsonOut.toString());
+        }
 
        // request.getResponse();
     }
