@@ -41,19 +41,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     {
         super(context, autoInitialize);
         contentResolver = context.getContentResolver();
-        Log.d("SYNC", "constructor called");
         try {
             KeyStore trustStore = KeyStore.getInstance("BKS");
-            Log.d("SYNC", "KeyStore.getInstance");
             InputStream trustStoreStream = context.getResources().openRawResource(R.raw.truststore);
-            Log.d("SYNC", "turstStoreStream init");
             trustStore.load(trustStoreStream, "hadouken!".toCharArray());
-            Log.d("SYNC", "turstStoreStream load");
 
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            Log.d("SYNC", "trustManagerFactory getInstance");
             trustManagerFactory.init(trustStore);
-            Log.d("SYNC", "trustManagerFactory init");
 
             sslContext = SSLContext.getInstance("TLS");
             Log.d("SYNC", "SSLContext.getInstance()");
@@ -66,7 +60,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             e.printStackTrace();
         }
-        Log.d("SYNC", "constructor end");
     }
 
     /**
@@ -135,7 +128,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             JSONObject json = new JSONObject();
 
             json.put("request_type", "3");
-            json.put("username", account.name);
+            json.put("user", account.name);
             json.put("password", accountManager.getPassword(account));
 
             out.write(json.toString().getBytes());

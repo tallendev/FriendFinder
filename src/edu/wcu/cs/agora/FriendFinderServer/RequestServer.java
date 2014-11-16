@@ -65,11 +65,7 @@ public class RequestServer
         client.setSoTimeout(TIMEOUT);
         Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
         JSONObject json = new JSONObject(in.next());
-        /*while (in.hasNext())
-        {
-            System.out.println(in.next());
-        }*/
-        //Request request = Request.requestBuilder(in);
+
         boolean request = Request.requestBuilder(json);
         PrintStream out = new PrintStream(client.getOutputStream());
         out.println(request);
