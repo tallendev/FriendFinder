@@ -1,5 +1,8 @@
 package edu.wcu.cs.agora.FriendFinderServer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -17,16 +20,30 @@ import java.util.Scanner;
  */
 public class RequestServer
 {
+    /** Error Codes */
+
+    /** Error associated with the server socket or one of its children. */
     public static final int SOCKET_ERROR = 100;
+    /** Errors associated with JDBC, typically an issue loading JDBC. */
     public static final int JDBC_ERROR = 200;
+    /** Error associated with SQL, typically an issue with the database or with an SQL query accessing the DB. */
     public static final int SQL_ERROR = 300;
 
+    /** Amount of time before a socket times out. */
     public static final int TIMEOUT = 5000;
+    /** Default connection port. */
     public static final int DEFAULT_PORT = 1337;
 
+    /** The server socket awaiting connections from clients. */
     private ServerSocket serverSocket;
+    /** The port that the ServerSocket is listening on.*/
     private int port;
 
+    /**
+     * Constructor. Builds an SSL socket as the serverSocket if possible.
+     * @param port
+     * @throws IOException In the event that there is an error creating a server socket.
+     */
     public RequestServer(int port) throws IOException
     {
         System.err.println("RequestServer created.");
@@ -35,19 +52,25 @@ public class RequestServer
         //serverSocket = new ServerSocket(port);
     }
 
-    public void listen() throws SQLException, IOException
-    {
+    /**
+     * Listens for incoming connections from the server. Creates a request object from the information received from
+     * the client and appropriately executes it.
+     * @throws SQLException Thrown in the event that there is some error in querying the database.
+     * @throws IOException Thrown in the event that there is some
+     */
+    public void listen() throws SQLException, IOException, JSONException {
         System.err.println("RequestServer listening for new connection.");
         Socket client = serverSocket.accept();
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
-        Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
+        Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
+        JSONObject json = new JSONObject(in.next());
         /*while (in.hasNext())
         {
             System.out.println(in.next());
         }*/
         //Request request = Request.requestBuilder(in);
-        boolean request = Request.requestBuilder(in);
+        boolean request = Request.requestBuilder(json);
         PrintStream out = new PrintStream(client.getOutputStream());
         out.println(request);
 
@@ -58,6 +81,7 @@ public class RequestServer
     {
         try
         {
+            // Loads PSQL driver.
             Class.forName("org.postgresql.Driver");
         }
         catch (ClassNotFoundException cfne)
@@ -65,6 +89,7 @@ public class RequestServer
             System.err.println("JDBC Driver issue:\n" + cfne.getMessage());
             System.exit(JDBC_ERROR);
         }
+        // Sets up SSL certificate.
         System.setProperty("javax.net.ssl.keyStore", "../keystore");
         System.setProperty("javax.net.ssl.keyStorePassword", "hadouken!");
 
@@ -79,6 +104,7 @@ public class RequestServer
             System.exit(SOCKET_ERROR);
         }
 
+        // Temporary until threads or other system for closing the server is configured.
         while (true)
         {
             try
@@ -93,6 +119,8 @@ public class RequestServer
             {
                 System.err.println("SQL issue:\n" + e.getMessage());
                 System.exit(SQL_ERROR);
+            } catch (JSONException e) {
+                System.err.println("Error reading JSON object:\n" + e.getMessage());
             }
         }
     }

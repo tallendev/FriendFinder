@@ -5,6 +5,8 @@ import android.accounts.AccountManager;
 import android.content.*;
 import android.os.Bundle;
 import android.util.Log;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.net.ssl.*;
 import java.io.IOException;
@@ -23,6 +25,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
 
     private final ContentResolver contentResolver;
     private       SSLContext      sslContext;
+    private static final int DEFAULT_PORT = 1337;
 
     /**
      * Creates an {@link android.content.AbstractThreadedSyncAdapter}.
@@ -80,25 +83,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
      */
     public SyncAdapter (Context context, boolean autoInitialize, boolean allowParallelSyncs)
     {
-        super(context, autoInitialize);
+        super(context, autoInitialize, allowParallelSyncs);
         contentResolver = context.getContentResolver();
-        Log.d("SYNC", "constructor called");
         try {
             KeyStore trustStore = KeyStore.getInstance("BKS");
-            Log.d("SYNC", "KeyStore.getInstance");
             InputStream trustStoreStream = context.getResources().openRawResource(R.raw.truststore);
-            Log.d("SYNC", "turstStoreStream init");
             trustStore.load(trustStoreStream, "hadouken!".toCharArray());
-            Log.d("SYNC", "turstStoreStream load");
 
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            Log.d("SYNC", "trustManagerFactory getInstance");
             trustManagerFactory.init(trustStore);
 
-            Log.d("SYNC", "trustManagerFactory init");
-
             sslContext = SSLContext.getInstance("TLS");
-            Log.d("SYNC", "SSLContext.getInstance()");
             sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
 
         } catch (GeneralSecurityException e) {
@@ -108,7 +103,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             e.printStackTrace();
         }
-        Log.d("SYNC", "constructor end");
     }
 
     /**
@@ -134,12 +128,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             Log.d("SYNC", "starting sync");
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
             SSLSocket sslSocket = (SSLSocket) sslSocketFactory
-                    .createSocket("www.trantracker.com", 1337);
+                    .createSocket("www.trantracker.com", DEFAULT_PORT);
             OutputStream out = sslSocket.getOutputStream();
             AccountManager accountManager = (AccountManager) getContext()
                     .getSystemService(Context.ACCOUNT_SERVICE);
-            out.write(("3 " + account.name + " " +
-                       accountManager.getPassword(account)).getBytes());
+            JSONObject json = new JSONObject();
+
+            json.put("request_type", "3");
+            json.put("username", account.name);
+            json.put("password", accountManager.getPassword(account));
+
+            out.write(json.toString().getBytes());
             out.flush();
             Log.d("SYNC", "Written");
             Scanner in = new Scanner(sslSocket.getInputStream());
@@ -161,6 +160,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             Log.d("SYNC", "An error occurred while attempting to sync");
             Log.d("SYNC", ioe.getMessage());
             ioError = true;
+        } catch (JSONException e) {
+            Log.d("SYNC", "JSON error:\n" + e.getMessage());
         }
         Log.d("SYNC", "first_sync: " + extras.getBoolean("first_sync"));
         if (extras.getBoolean("first_sync", false))

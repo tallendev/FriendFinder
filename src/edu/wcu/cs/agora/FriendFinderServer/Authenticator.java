@@ -1,5 +1,8 @@
 package edu.wcu.cs.agora.FriendFinderServer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -25,23 +28,22 @@ public class Authenticator
 
     // In the end should probably return more than true false, maybe a string that could contain a
     // token?
-    public boolean authenticateUser(Scanner in) throws MalformedPacketException, SQLException
-    {
+    public boolean authenticateUser(JSONObject json) throws MalformedPacketException, SQLException, JSONException {
         boolean success = false;
         String username = null;
         String password = null;
         //todo: refactor me into a util method once format is locked down please
-        if (in.hasNext())
+        if (json.has("user"))
         {
-            username = in.next();
+            username = json.getString("user");
         }
         else
         {
             throw new MalformedPacketException("Missing username");
         }
-        if (in.hasNext())
+        if (json.has("password"))
         {
-            password = in.next();
+            password = json.getString("password");
         }
         else
         {
