@@ -70,8 +70,8 @@ public class RequestServer
             JSONObject jsonOut = new JSONObject();
 
             Request.requestBuilder(json, jsonOut);
-            OutputStream out = client.getOutputStream();
-            out.write(jsonOut.toString().getBytes());
+            PrintStream out = new PrintStream(client.getOutputStream());
+            out.println(jsonOut.toString());
             out.flush();
             System.err.println("Sent JSON response");
         }
