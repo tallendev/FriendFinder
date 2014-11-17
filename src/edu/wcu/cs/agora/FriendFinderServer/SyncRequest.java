@@ -54,6 +54,7 @@ public class SyncRequest extends Request
                     int columnCount = rs.getMetaData().getColumnCount();
                     for (int k = 0; k < columnCount;)
                     {
+                        System.out.println(rs.getMetaData().getColumnName(k));
                         builder.append(rs.getMetaData().getColumnName(k));
                         builder.append("=");
                         builder.append(rs.getString(i + 1));
