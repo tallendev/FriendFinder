@@ -85,8 +85,7 @@ public abstract class Request
     {
         //short requestType = DEFAULT;
         String requestType = null;
-        boolean request = false;
-        //Request request = null;
+        Request request = null;
         /*if (in.hasNextShort())
         {
             requestType = in.nextShort();
@@ -97,9 +96,9 @@ public abstract class Request
         }
         requestType = json.getString("request_type");
 
-        request = Authenticator.getInstance().authenticateUser(json);
+        boolean requestSuccess = Authenticator.getInstance().authenticateUser(json);
         jsonOut.put("authenticated", request);
-        if (request)
+        if (requestSuccess)
         {
             switch (requestType)
             {
@@ -118,6 +117,7 @@ public abstract class Request
                 }
                 case ("3"): //case (SYNC):
                 {
+                    request = new SyncRequest(json, jsonOut);
                     break;
                 }
                 case ("4")://case (RESPONSE):
@@ -129,6 +129,7 @@ public abstract class Request
                     throw new MalformedPacketException("Invalid Request Type");
                 }
             }
+            request.getResponse();
         }
     }
 

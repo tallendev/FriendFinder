@@ -56,10 +56,6 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         resolver = getActivity().getContentResolver();
         getActivity();
         account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
-        Bundle extras = new Bundle();
-        extras.putString("request_type", "3");
-        extras.putString("table0", "events");
-        ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
     }
 
     /**
@@ -70,6 +66,10 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     public void onResume()
     {
         super.onResume();
+        Bundle extras = new Bundle();
+        extras.putString("request_type", "3");
+        extras.putString("table0", "events");
+        ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
         ListView lv = (ListView) rootView.findViewById(R.id.listView1);
         events = new ArrayList<Event>();
         // Build the list of each picture to be displayed in the listview.
