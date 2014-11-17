@@ -86,8 +86,8 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             String eventName = cursor.getString(cursor.getColumnIndex("EVENT_NAME"));
             String eventDate = cursor.getString(cursor.getColumnIndex("EVENT_DATE"));
             String eventTime = cursor.getString(cursor.getColumnIndex("EVENT_TIME"));
-            String eventDescription = cursor.getString(cursor.getColumnIndex("EVENT_DESCRIPTION"));
-            events.add(new Event(eventName, eventDate, eventTime, eventDescription));
+//            String eventLocation = cursor.getString(cursor.getColumnIndex("EVENT_LOCATION"));
+            events.add(new Event(eventName, eventDate, eventTime, null));//, eventLocation));
         }
         // Create our list.
         Log.d("EVENTS", "ExtendedArray");
@@ -173,7 +173,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.txt1.setText(((Group) (list.get(position))).getGroupName());
+            holder.txt1.setText(((Event) (list.get(position))).getEventName());
             return convertView;
         }
     }

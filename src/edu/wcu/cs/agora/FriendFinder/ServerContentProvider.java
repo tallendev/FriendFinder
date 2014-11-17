@@ -20,10 +20,10 @@ public class ServerContentProvider extends ContentProvider
     private static final String SQL_CREATE_MAIN = "CREATE TABLE " +
                                                   "event" +          // Table's name
                                                   "(" +             // The columns in the table
-                                                  " EVENT_NAME TEXT, " +
-                                                  " EVENT_DATE TEXT" +
-                                                  " EVENT_TIME TEXT" +
-                                                  " LOCATION_VALUE TEXT)";
+                                                  " EVENT_NAME TEXT PRIMARY KEY, " +
+                                                  " EVENT_DATE TEXT, " +
+                                                  " EVENT_TIME TEXT, " +
+                                                  " LOCATION_VALUE TEXT);";
 
     public static final String AUTHORITY = "edu.wcu.cs.agora.FriendFinder.ServerContentProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
@@ -76,7 +76,7 @@ public class ServerContentProvider extends ContentProvider
             String sortOrder)
     {
         String table = getTableName(uri);
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.query(table, projection, selection, selectionArgs, null, null, sortOrder);
         return cursor;
     }
@@ -166,7 +166,8 @@ public class ServerContentProvider extends ContentProvider
         @Override
         public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion)
         {
-
+            db.execSQL("DROP TABLE IF EXISTS event");
+            onCreate(db);
         }
     }
 }
