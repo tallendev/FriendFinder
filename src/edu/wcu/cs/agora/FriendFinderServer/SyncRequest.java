@@ -57,7 +57,7 @@ public class SyncRequest extends Request
                         System.out.println("columnName: " + rs.getMetaData().getColumnName(k));
                         builder.append(rs.getMetaData().getColumnName(k));
                         builder.append("=");
-                        builder.append(rs.getString(i + 1));
+                        builder.append(rs.getString(k));
                         if (k++ < columnCount)
                         {
                             builder.append(",");
