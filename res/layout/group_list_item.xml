@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Tyler Allen
+Last Updated: 09/29/14
+Item for the list view representing the list of events.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@drawable/events_list_item_bg"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:weightSum="10" >
+
+    	<TextView
+    	    android:id="@+id/eventname"
+    	    android:layout_width="0dp"
+    	    android:layout_height="?android:attr/listPreferredItemHeight"
+    	    android:layout_weight="10"
+    	    android:gravity="left|center_vertical"
+    	    android:paddingLeft="5dp"
+    	    android:paddingRight="2dp"
+    	    android:text="Name"
+    	    android:textColor="#FFFFFF"
+    	    android:textSize="20sp"
+    	    android:textStyle="bold"/>
+
+
+</LinearLayout>

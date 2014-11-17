@@ -3,23 +3,36 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.*;
+import android.widget.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tyler on 11/2/2014.
  */
 public class Home extends Activity
 {
+    /** The root view of our fragment. */
+    private View rootView;
+    private LayoutInflater inflater;
+
+
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
+        rootView = findViewById(android.R.id.content);
         Fragment fragment1 = new Events();
         Fragment fragment2 = new Events(); //FIXME should be invitations
 
@@ -41,6 +54,7 @@ public class Home extends Activity
         actionBar.addTab(tab2);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -48,6 +62,8 @@ public class Home extends Activity
         inflater.inflate(R.menu.events, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -100,4 +116,5 @@ public class Home extends Activity
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
+
 }

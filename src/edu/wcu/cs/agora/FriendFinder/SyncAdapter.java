@@ -130,6 +130,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             json.put("request_type", "3");
             json.put("user", account.name);
             json.put("password", accountManager.getPassword(account));
+            int i = 0;
+            String current = null;
+            while((current = extras.getString("table" + i, null)) != null)
+            {
+                json.put("table + i", current);
+            }
 
             out.write(json.toString().getBytes());
             out.flush();

@@ -3,9 +3,7 @@ package edu.wcu.cs.agora.FriendFinderServer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 /**
  * Created by tyler on 10/10/14.
@@ -21,16 +19,36 @@ public abstract class Request
     public static final short SYNC = 3;
     public static final short RESPONSE = 4;
 
-    private Scanner packetInput;
+    private JSONObject in;
+    private JSONObject out;
 
-    protected Request(Scanner packetInput)
+    /**
+     * Constructor for requests.
+     * @param in JSON object to get information from.
+     * @param out JSON object to provide information.
+     */
+    protected Request(JSONObject in, JSONObject out)
     {
-        this.packetInput = packetInput;
+        this.in = in;
+        this.out = out;
     }
 
-    protected Scanner getPacketInput()
+    /**
+     * Getter for in.
+     * @return The input json object.
+     */
+    protected JSONObject getJsonIn()
     {
-        return packetInput;
+        return in;
+    }
+
+    /**
+     * Getter for out.
+     * @return The output json object.
+     */
+    protected JSONObject getJsonOut()
+    {
+        return out;
     }
 
     /**
@@ -91,6 +109,7 @@ public abstract class Request
                 }
                 case ("1")://case (GROUP_UPDATE):
                 {
+
                     break;
                 }
                 case ("2")://case (PROFILE_UPDATE):

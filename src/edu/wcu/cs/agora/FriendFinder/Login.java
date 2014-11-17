@@ -86,6 +86,7 @@ public class Login extends Activity implements View.OnClickListener
         if (receiver != null)
         {
             unregisterReceiver(receiver);
+            receiver = null;
         }
         finish();
     }
@@ -141,8 +142,11 @@ public class Login extends Activity implements View.OnClickListener
                 AccountManager accountManager = (AccountManager) this.getSystemService(ACCOUNT_SERVICE);
                 accountManager.removeAccount(account, null, null);
             }
-            unregisterReceiver(receiver);
-            receiver = null;
+            if (receiver != null)
+            {
+                unregisterReceiver(receiver);
+                receiver = null;
+            }
         }
     }
 
@@ -228,6 +232,11 @@ public class Login extends Activity implements View.OnClickListener
             else
             {
                 Log.d("LOGIN", "Unhandled server connection, fixme");
+            }
+            if (receiver != null)
+            {
+                unregisterReceiver(receiver);
+                receiver = null;
             }
         }
     }

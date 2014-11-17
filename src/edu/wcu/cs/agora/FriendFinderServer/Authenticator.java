@@ -4,7 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.util.Scanner;
 
 /**
  * Created by tyler on 10/20/2014.
