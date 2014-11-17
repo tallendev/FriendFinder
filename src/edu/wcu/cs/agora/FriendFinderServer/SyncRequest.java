@@ -16,7 +16,8 @@ public class SyncRequest extends Request
     }
 
     @Override
-    protected void getResponse() throws SQLException, JSONException {
+    protected void getResponse() throws SQLException, JSONException
+    {
         JSONObject in = getJsonIn();
         JSONObject out = getJsonOut();
         Connection conn = DriverManager.getConnection("jdbc:postgresql:friendfinder", "tyler",
@@ -38,7 +39,7 @@ public class SyncRequest extends Request
                     sql = "SELECT * " +
                           "FROM " + "event, attending_event " +
                           "WHERE " +  "attendee = ?" +
-                                      " AND attendee = event.id;";
+                                      " AND attendee IS event.id;";
                     stmt = conn.prepareStatement(sql);
                     System.err.println("in.getString(user): " + in.getString("user"));
                     stmt.setString(1, in.getString("user"));
