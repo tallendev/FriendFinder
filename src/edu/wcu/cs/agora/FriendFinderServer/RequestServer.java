@@ -68,7 +68,8 @@ public class RequestServer
             Request.requestBuilder(json, jsonOut);
             PrintStream out = new PrintStream(client.getOutputStream());
             //OutputStream out = client.getOutputStream();
-            out.println(jsonOut.toString());
+            System.out.println(jsonOut);
+            out.println(jsonOut);
             out.flush();
             System.err.println("Sent JSON response");
         }
