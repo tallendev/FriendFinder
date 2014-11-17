@@ -66,7 +66,7 @@ public class SyncRequest extends Request
                     builder.append(":");
                 }
                 System.err.println("ResultSet:\n" + rs);
-                out.put("table" + i, in.getString("table" + i) + ":" + builder.toString());
+                out.put("table" + i, in.getString("table" + i) + "," + builder.toString());
             }
             i++;
         }

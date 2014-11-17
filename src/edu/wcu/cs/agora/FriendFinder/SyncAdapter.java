@@ -168,7 +168,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                         for (String entry : entries) {
                             Log.d("ENTRY", entry);
                         }
-                        for (int k = 0; k < entries.length; k++)
+                        for (int k = 1; k < entries.length; k++)
                         {
                             String[] val = entries[k].split("=");
                             vals.put(val[0], val[1]);
