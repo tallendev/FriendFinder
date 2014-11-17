@@ -29,9 +29,9 @@ Dynamically generated page representing an event.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/eventname"
-                android:textSize="50sp"
+                android:textSize="38sp"
                 android:textColor="@color/gold"
-                android:id="@+id/friend"
+                android:id="@+id/eventname"
                 android:layout_weight="100"
                 android:gravity="center"/>
 
@@ -55,6 +55,7 @@ Dynamically generated page representing an event.
                 android:layout_weight="5"/>
 
         <TextView
+                android:id="@+id/timedate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/timedate"

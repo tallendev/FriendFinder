@@ -116,6 +116,8 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         Intent intent = new Intent(getActivity(), EventsPage.class);
         Event event = ((Event) (adapterView.getAdapter().getItem((int) l)));
         intent.putExtra("event_name", event.getEventName());
+        intent.putExtra("event_date", event.getEventDate());
+        intent.putExtra("event_time", event.getEventTime());
         startActivityForResult(intent, REQUEST);
     }
 

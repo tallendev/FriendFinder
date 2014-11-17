@@ -88,7 +88,7 @@ public class ServerContentProvider extends ContentProvider
     public Uri insert(Uri uri, ContentValues values)
     {
         String table = getTableName(uri);
-        Log.d("INSERT_CONTENT_PROVIDER", table.toString());
+        Log.d("INSERT_CONTENT_PROVIDER", table);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long value = database.insert(table, null, values);
         return Uri.withAppendedPath(CONTENT_URI, String.valueOf(value));
