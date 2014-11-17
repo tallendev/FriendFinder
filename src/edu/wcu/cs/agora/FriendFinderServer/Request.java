@@ -97,7 +97,7 @@ public abstract class Request
         requestType = json.getString("request_type");
 
         boolean requestSuccess = Authenticator.getInstance().authenticateUser(json);
-        jsonOut.put("authenticated", request);
+        jsonOut.put("authenticated", requestSuccess);
         if (requestSuccess)
         {
             switch (requestType)
