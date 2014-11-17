@@ -40,6 +40,7 @@ public class SyncRequest extends Request
                           "WHERE " +  "attendee = ?" +
                                       " AND attendee = event.id;";
                     stmt = conn.prepareStatement(sql);
+                    System.err.println("in.getString(user): " + in.getString("user"));
                     stmt.setString(1, in.getString("user"));
                 }
             }
