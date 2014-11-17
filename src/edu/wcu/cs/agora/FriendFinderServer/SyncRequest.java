@@ -37,7 +37,7 @@ public class SyncRequest extends Request
                     sql = "SELECT * " +
                           "FROM " + "event, attending_event " +
                           "WHERE " +  "attending_event.attendee = " + in.get("user") +
-                                      " attending_event.attendee = event.id";
+                                      " attending_event.attendee = event.id;";
                 }
             }
 
