@@ -37,7 +37,7 @@ public class SyncRequest extends Request
                 {
                     sql = "SELECT * " +
                           "FROM " + "event, attending_event " +
-                          "WHERE " +  "attendee IS ?" +
+                          "WHERE " +  "attendee = ?" +
                                       " AND attendee = event.id;";
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, in.getString("user"));
