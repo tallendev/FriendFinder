@@ -89,7 +89,8 @@ public class ServerContentProvider extends ContentProvider
      * insert() always returns null (no URI)
      */
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(Uri uri, ContentValues values)
+    {
         String table = getTableName(uri);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long value = database.insert(table, null, values);
@@ -99,7 +100,8 @@ public class ServerContentProvider extends ContentProvider
      * delete() always returns "no rows affected" (0)
      */
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(Uri uri, String selection, String[] selectionArgs)
+    {
         String table = getTableName(uri);
         SQLiteDatabase dataBase = dbHelper.getWritableDatabase();
         return dataBase.delete(table, selection, selectionArgs);

@@ -132,5 +132,5 @@ public abstract class Request
         }
     }
 
-    protected abstract void getResponse();
+    protected abstract void getResponse() throws SQLException, JSONException;
 }

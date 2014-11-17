@@ -15,6 +15,7 @@ public class GroupUpdateRequest extends Request
     @Override
     protected void getResponse()
     {
-
+        JSONObject in = getJsonIn();
+        JSONObject out = getJsonOut();
     }
 }
