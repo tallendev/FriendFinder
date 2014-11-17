@@ -22,7 +22,8 @@ public class ServerContentProvider extends ContentProvider
                                                   "(" +             // The columns in the table
                                                   " EVENT_NAME TEXT, " +
                                                   " EVENT_DATE TEXT" +
-                                                  " EVENT_TIME TEXT)";
+                                                  " EVENT_TIME TEXT" +
+                                                  " LOCATION_VALUE TEXT)";
 
     public static final String AUTHORITY = "edu.wcu.cs.agora.FriendFinder.ServerContentProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);

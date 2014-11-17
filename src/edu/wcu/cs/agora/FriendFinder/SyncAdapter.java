@@ -172,11 +172,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                     for (int j = 1; j < lines.length; j++)
                     {
                         ContentValues vals = new ContentValues();
-                        String entries[] = lines[i].split(",");
+                        String entries[] = lines[j].split(",");
                         for (String entry : entries) {
                             Log.d("ENTRY", entry);
                         }
-                        for (int k = 1; k < entries.length; k++)
+                        for (int k = 0; k < entries.length; k++)
                         {
                             String[] val = entries[k].split("=");
                             vals.put(val[0].toUpperCase(), val[1]);
