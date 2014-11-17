@@ -36,7 +36,7 @@ String reference file.
     <string name="information">Information:</string>
     <string name="placeholder_message">Placeholder Message</string>
 
-    <string name="authority">edu.wcu.cs.agora.FriendFinder</string>
+    <string name="authority">edu.wcu.cs.agora.FriendFinder.ServerContentProvider</string>
 
     <string name="shared_prefs">edu.wcu.cs.agora.SHARED_PREFERENCES</string>
 

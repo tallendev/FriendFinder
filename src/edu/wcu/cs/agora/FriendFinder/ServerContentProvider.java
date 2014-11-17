@@ -25,7 +25,7 @@ public class ServerContentProvider extends ContentProvider
                                                   " EVENT_TIME TEXT" +
                                                   " EVENT_DESCRIPTION TEXT)";
 
-    public static final String AUTHORITY = "FriendFinderAuth";
+    public static final String AUTHORITY = "edu.wcu.cs.agora.FriendFinder.ServerContentProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
 
@@ -38,10 +38,6 @@ public class ServerContentProvider extends ContentProvider
 
     // Defines the database name
     private static final String DBNAME = "server_data";
-
-    // Holds the database object
-    private SQLiteDatabase db;
-
 
     /*
      * Always return true, indicating that the

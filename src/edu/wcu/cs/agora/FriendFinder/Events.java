@@ -52,6 +52,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
+        super.onCreate(savedInstanceState);
         resolver = getActivity().getContentResolver();
         getActivity();
         account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
@@ -73,8 +74,8 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         events = new ArrayList<Event>();
         // Build the list of each picture to be displayed in the listview.
 
-        Cursor cursor = resolver.query(Uri.parse(ServerContentProvider.CONTENT_URI + "user_group"), null, null, null, null);
-        while (cursor.moveToNext())
+        Cursor cursor = resolver.query(Uri.parse(ServerContentProvider.CONTENT_URI + "/event"), null, null, null, null);
+        while (cursor != null && cursor.moveToNext())
         {
             String eventName = cursor.getString(cursor.getColumnIndex("EVENT_NAME"));
             String eventDate = cursor.getString(cursor.getColumnIndex("EVENT_DATE"));
@@ -106,8 +107,8 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                              int i, long l)
     {
         Intent intent = new Intent(getActivity(), EventsPage.class);
-        Group pic = ((Group) (adapterView.getAdapter().getItem((int) l)));
-        intent.putExtra("group_key", pic.getGroupName());
+        Event event = ((Event) (adapterView.getAdapter().getItem((int) l)));
+        intent.putExtra("event_name", event.getEventName());
         startActivityForResult(intent, REQUEST);
     }
 

@@ -60,8 +60,8 @@ public class RequestServer
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
         Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
-        if (in.hasNext())
-        {
+     //   if (in.hasNext())
+     //   {
             JSONObject json = new JSONObject(in.next());
             JSONObject jsonOut = new JSONObject();
 
@@ -70,11 +70,11 @@ public class RequestServer
             out.println(jsonOut.toString());
             out.flush();
             System.err.println("Sent JSON response");
-        }
+       /* }
         else
         {
             System.err.println("No message received from client.");
-        }
+        }*/
 
        // request.getResponse();
     }
