@@ -67,6 +67,6 @@ public class SyncRequest extends Request
             }
             i++;
         }
-        System.out.println(out.get("table" + 0));
+        //System.out.println(out.get("table" + 0));
     }
 }
