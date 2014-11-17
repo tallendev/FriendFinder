@@ -48,10 +48,25 @@ public class SyncRequest extends Request
             ResultSet rs;
             if ((rs = stmt.executeQuery()) != null)
             {
+                StringBuilder builder = new StringBuilder();
+                while (rs.next())
+                {
+                    int columnCount = rs.getMetaData().getColumnCount();
+                    for (int k = 0; k < columnCount;)
+                    {
+                        builder.append(rs.getString(i + 1));
+                        if (++k < columnCount)
+                        {
+                            builder.append(",");
+                        }
+                    }
+                    builder.append(" ");
+                }
                 System.err.println("ResultSet:\n" + rs);
-                out.put("table" + i, in.getString("table" + i) + "\n" + rs);
+                out.put("table" + i, in.getString("table" + i) + " " + builder.toString());
             }
             i++;
         }
+        System.out.println(out.get("table" + i));
     }
 }

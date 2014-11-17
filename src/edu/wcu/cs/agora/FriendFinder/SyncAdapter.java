@@ -156,13 +156,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 current = null;
                 String lines[] = null;
                 while (((current = jsonIn.getString("table" + i)) != null)) {
-                    lines = current.split("\\r?\\n");
+                    lines = current.split(" ");
                     String table = lines[0];
                     ContentValues vals = new ContentValues();
                     for (int j = 1; j < lines.length; j++) {
-                        String entries[] = lines[i].split(" ");
-                        for (String entry : entries) {
-                            //vals.put("entry" + j, )
+                        String entries[] = lines[i].split(",");
+                        for (String entry : entries)
+                        {
+                            //provider.insert(ServerContentProvider.CONTENT_URI + table, );
                         }
                         //provider.insert(ServerContentProvider.CONTENT_URI + table, )
                     }
