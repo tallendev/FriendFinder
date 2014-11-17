@@ -51,6 +51,7 @@ public class SyncRequest extends Request
                 System.err.println("ResultSet:\n" + rs);
                 out.put("table" + i, in.getString("table" + i) + "\n" + rs);
             }
+            i++;
         }
     }
 }
