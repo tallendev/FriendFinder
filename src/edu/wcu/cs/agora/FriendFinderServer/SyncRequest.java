@@ -36,7 +36,7 @@ public class SyncRequest extends Request
             {
                 case "event":
                 {
-                    sql = "SELECT * " +
+                    sql = "SELECT event_name, event_Date, event_time, location_value " +
                           "FROM " + "event, attending_event " +
                           "WHERE " +  "attendee = ?" +
                                       " AND event = id;";
@@ -63,7 +63,7 @@ public class SyncRequest extends Request
                             builder.append(",");
                         }
                     }
-                    builder.append(" ");
+                    builder.append(":");
                 }
                 System.err.println("ResultSet:\n" + rs);
                 out.put("table" + i, in.getString("table" + i) + " " + builder.toString());

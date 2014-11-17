@@ -156,7 +156,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 current = null;
                 String lines[] = null;
                 while (((current = jsonIn.getString("table" + i)) != null)) {
-                    lines = current.split(" ");
+                    lines = current.split(":");
                     String table = lines[0];
                     ContentValues vals = new ContentValues();
                     for (int j = 1; j < lines.length; j++) {
