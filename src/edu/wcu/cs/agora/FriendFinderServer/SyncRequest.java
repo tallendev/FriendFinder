@@ -28,6 +28,7 @@ public class SyncRequest extends Request
         while (in.has("table" + i))
         {
             String sql = null;
+            System.err.println("in string:\n" + in.getString("table" + i));
             switch (in.getString("table" + i))
             {
                 case "event":
