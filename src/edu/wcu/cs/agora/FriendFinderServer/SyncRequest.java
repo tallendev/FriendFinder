@@ -35,7 +35,7 @@ public class SyncRequest extends Request
                 case "event":
                 {
                     sql = "SELECT * " +
-                          "FROM " + "event, attending_event " +
+                          "FROM " + "attending_event, event " +
                           "WHERE " +  "attending_event.attendee = " + in.get("user") +
                                       " attending_event.attendee = event.id;";
                 }
