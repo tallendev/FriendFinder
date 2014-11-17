@@ -165,9 +165,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                     {
                         ContentValues vals = new ContentValues();
                         String entries[] = lines[i].split(",");
-                        for (String entry : entries)
+                        for (String entry : entries) {
+                            Log.d("ENTRY", entry);
+                        }
+                        for (int k = 0; k < entries.length; k++)
                         {
-                            String[] val = entry.split("=");
+                            String[] val = entries[k].split("=");
                             vals.put(val[0], val[1]);
                         }
                         try
