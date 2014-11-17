@@ -162,7 +162,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 {
                     Log.d("SYNC", "LINE " + i);
                     current = jsonIn.getString("table" + i);
-                    lines = current.split(":");
+                    lines = current.split("\\");
                     String table = lines[0];
                     for (int j = 1; j < lines.length; j++)
                     {
