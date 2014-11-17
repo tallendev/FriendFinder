@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -59,16 +59,16 @@ public class RequestServer
         Socket client = serverSocket.accept();
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
-        Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
+        Scanner in = new Scanner(client.getInputStream());
         if (in.hasNext())
         {
             JSONObject json = new JSONObject(in.next());
             JSONObject jsonOut = new JSONObject();
 
             Request.requestBuilder(json, jsonOut);
-            // out = new PrintStream(client.getOutputStream());
-            OutputStream out = client.getOutputStream();
-            out.write(jsonOut.toString().getBytes());
+            PrintStream out = new PrintStream(client.getOutputStream());
+            //OutputStream out = client.getOutputStream();
+            out.println(jsonOut.toString());
             out.flush();
             System.err.println("Sent JSON response");
         }

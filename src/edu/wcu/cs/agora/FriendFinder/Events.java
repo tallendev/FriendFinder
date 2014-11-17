@@ -68,7 +68,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         super.onResume();
         Bundle extras = new Bundle();
         extras.putString("request_type", "3");
-        extras.putString("table0", "events");
+        extras.putString("table0", "event");
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
         ListView lv = (ListView) rootView.findViewById(R.id.listView1);
         events = new ArrayList<Event>();
