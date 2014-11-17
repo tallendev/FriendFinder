@@ -25,6 +25,7 @@ public class SyncRequest extends Request
         statement.execute("set search_path to friendfinder");
 
         int i = 0;
+        System.err.println("getResponse");
         while (in.has("table" + i))
         {
             String sql = null;
@@ -36,7 +37,7 @@ public class SyncRequest extends Request
                     sql = "SELECT *" +
                           "FROM " + "event, attending_event " +
                           "WHERE " +  "attending_event.attendee = " + in.get("user") +
-                                      "attending_event.attendee = event.id";
+                                      " attending_event.attendee = event.id";
                 }
             }
 

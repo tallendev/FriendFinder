@@ -100,6 +100,7 @@ public abstract class Request
         jsonOut.put("authenticated", requestSuccess);
         if (requestSuccess)
         {
+            System.err.println("RequestType: " + requestType);
             switch (requestType)
             {
                 case ("0")://case (REGISTER):
@@ -117,6 +118,7 @@ public abstract class Request
                 }
                 case ("3"): //case (SYNC):
                 {
+                    System.err.println("new SyncRequest");
                     request = new SyncRequest(json, jsonOut);
                     break;
                 }
@@ -130,6 +132,7 @@ public abstract class Request
                 }
             }
             request.getResponse();
+
         }
     }
 
