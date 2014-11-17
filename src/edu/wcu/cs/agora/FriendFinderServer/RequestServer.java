@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -66,8 +66,9 @@ public class RequestServer
             JSONObject jsonOut = new JSONObject();
 
             Request.requestBuilder(json, jsonOut);
-            PrintStream out = new PrintStream(client.getOutputStream());
-            out.println(jsonOut.toString());
+            // out = new PrintStream(client.getOutputStream());
+            OutputStream out = client.getOutputStream();
+            out.write(jsonOut.toString().getBytes());
             out.flush();
             System.err.println("Sent JSON response");
         }

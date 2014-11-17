@@ -143,33 +143,32 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             out.flush();
             Log.d("SYNC", "Written");
             JSONObject jsonIn = null;
-            Scanner in = new Scanner(sslSocket.getInputStream());
+            Scanner in = new Scanner(sslSocket.getInputStream()).useDelimiter("\\A");
             Log.d("SYNC", "Made Socket");
             Log.d("SYNC", "in.hasNext()");
-            jsonIn = new JSONObject(in.nextLine());
-            Log.d("SYNC", "new JSONObject");
-            authenticated = jsonIn.getBoolean("authenticated");
+            if (in.hasNext()) {
+                jsonIn = new JSONObject(in.next());
+                Log.d("SYNC", "new JSONObject");
+                authenticated = jsonIn.getBoolean("authenticated");
 
-            i = 0;
-            current = null;
-            String lines[] = null;
-            while (((current = jsonIn.getString("table" + i)) != null))
-            {
-                lines = current.split("\\r?\\n");
-                String table = lines[0];
-                ContentValues vals = new ContentValues();
-                for (int j = 1; j < lines.length; j++)
-                {
-                    String entries[] = lines[i].split(" ");
-                    for (String entry : entries)
-                    {
-                        //vals.put("entry" + j, )
+                i = 0;
+                current = null;
+                String lines[] = null;
+                while (((current = jsonIn.getString("table" + i)) != null)) {
+                    lines = current.split("\\r?\\n");
+                    String table = lines[0];
+                    ContentValues vals = new ContentValues();
+                    for (int j = 1; j < lines.length; j++) {
+                        String entries[] = lines[i].split(" ");
+                        for (String entry : entries) {
+                            //vals.put("entry" + j, )
+                        }
+                        //provider.insert(ServerContentProvider.CONTENT_URI + table, )
                     }
-                    //provider.insert(ServerContentProvider.CONTENT_URI + table, )
-                }
 
+                }
+                Log.d("SYNC", "Read");
             }
-            Log.d("SYNC", "Read");
             out.close();
             sslSocket.close();
 
