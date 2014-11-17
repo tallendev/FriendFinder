@@ -3,7 +3,9 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.*;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,12 +160,21 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 while (((current = jsonIn.getString("table" + i)) != null)) {
                     lines = current.split(":");
                     String table = lines[0];
-                    ContentValues vals = new ContentValues();
-                    for (int j = 1; j < lines.length; j++) {
+                    for (int j = 1; j < lines.length; j++)
+                    {
                         String entries[] = lines[i].split(",");
                         for (String entry : entries)
                         {
-                            //provider.insert(ServerContentProvider.CONTENT_URI + table, );
+                            ContentValues vals = new ContentValues();
+                            String[] val = entry.split("=");
+                            vals.put(val[0], val[1]);
+                            try
+                            {
+                                provider.insert(Uri.parse(ServerContentProvider.CONTENT_URI + table), vals);
+                            } catch (RemoteException e)
+                            {
+                                Log.d("SYNC", "Remote Exception:\n" + e.getMessage());
+                            }
                         }
                         //provider.insert(ServerContentProvider.CONTENT_URI + table, )
                     }
