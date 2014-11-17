@@ -136,7 +136,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             {
                 json.put("table + i", current);
             }
-
+            Log.d("SYNC", "JSON dump:\n" + json);
             out.write(json.toString().getBytes());
             out.flush();
             Log.d("SYNC", "Written");
