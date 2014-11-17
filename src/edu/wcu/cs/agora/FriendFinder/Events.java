@@ -57,6 +57,10 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         resolver = getActivity().getContentResolver();
         getActivity();
         account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
+        Bundle extras = new Bundle();
+        extras.putString("request_type", "3");
+        extras.putString("table0", "event");
+        ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
     }
 
     /**

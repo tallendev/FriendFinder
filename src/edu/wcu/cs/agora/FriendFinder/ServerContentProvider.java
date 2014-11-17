@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Created by tyler on 10/16/2014.
@@ -19,12 +20,9 @@ public class ServerContentProvider extends ContentProvider
     private static final String SQL_CREATE_MAIN = "CREATE TABLE " +
                                                   "event" +          // Table's name
                                                   "(" +             // The columns in the table
-                                                  "_ID INTEGER PRIMARY_KEY" +
                                                   " EVENT_NAME TEXT, " +
                                                   " EVENT_DATE TEXT" +
-                                                  " EVENT_TIME TEXT" +
-                                                  " EVENT_DESCRIPTION TEXT" +
-                                                  " LOCATION_VALUE)";
+                                                  " EVENT_TIME TEXT)";
 
     public static final String AUTHORITY = "edu.wcu.cs.agora.FriendFinder.ServerContentProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
@@ -89,6 +87,7 @@ public class ServerContentProvider extends ContentProvider
     public Uri insert(Uri uri, ContentValues values)
     {
         String table = getTableName(uri);
+        Log.d("INSERT_CONTENT_PROVIDER", table.toString());
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long value = database.insert(table, null, values);
         return Uri.withAppendedPath(CONTENT_URI, String.valueOf(value));
