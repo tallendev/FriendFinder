@@ -30,20 +30,22 @@ public class SyncRequest extends Request
         {
             String sql = null;
             System.err.println("in string:\n" + in.getString("table" + i));
+            PreparedStatement stmt = null;
             switch (in.getString("table" + i))
             {
                 case "event":
                 {
                     sql = "SELECT * " +
                           "FROM " + "event, attending_event " +
-                          "WHERE " +  "attendee IS " + in.get("user") +
+                          "WHERE " +  "attendee IS ?" +
                                       " AND attendee = event.id;";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, in.getString("user"));
                 }
             }
-
-            if (statement.execute(sql))
+            ResultSet rs;
+            if ((rs = stmt.executeQuery()) != null)
             {
-                ResultSet rs = statement.getResultSet();
                 System.err.println("ResultSet:\n" + rs);
                 out.put("table" + i, in.getString("table" + i) + "\n" + rs);
             }
