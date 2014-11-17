@@ -157,24 +157,25 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 i = 0;
                 current = null;
                 String lines[] = null;
-                while (((current = jsonIn.getString("table" + i)) != null)) {
+                while (((current = jsonIn.getString("table" + i)) != null))
+                {
                     lines = current.split(":");
                     String table = lines[0];
                     for (int j = 1; j < lines.length; j++)
                     {
+                        ContentValues vals = new ContentValues();
                         String entries[] = lines[i].split(",");
                         for (String entry : entries)
                         {
-                            ContentValues vals = new ContentValues();
                             String[] val = entry.split("=");
                             vals.put(val[0], val[1]);
-                            try
-                            {
-                                provider.insert(Uri.parse(ServerContentProvider.CONTENT_URI + table), vals);
-                            } catch (RemoteException e)
-                            {
-                                Log.d("SYNC", "Remote Exception:\n" + e.getMessage());
-                            }
+                        }
+                        try
+                        {
+                            provider.insert(Uri.parse(ServerContentProvider.CONTENT_URI + table), vals);
+                        } catch (RemoteException e)
+                        {
+                            Log.d("SYNC", "Remote Exception:\n" + e.getMessage());
                         }
                         //provider.insert(ServerContentProvider.CONTENT_URI + table, )
                     }

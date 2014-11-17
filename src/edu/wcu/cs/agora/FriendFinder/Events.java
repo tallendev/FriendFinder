@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,10 +74,11 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         ListView lv = (ListView) rootView.findViewById(R.id.listView1);
         events = new ArrayList<Event>();
         // Build the list of each picture to be displayed in the listview.
-
+        Log.d("EVENTS", "Resolver query");
         Cursor cursor = resolver.query(Uri.parse(ServerContentProvider.CONTENT_URI + "/event"), null, null, null, null);
         while (cursor != null && cursor.moveToNext())
         {
+            Log.d("EVENTS", "cursor != null");
             String eventName = cursor.getString(cursor.getColumnIndex("EVENT_NAME"));
             String eventDate = cursor.getString(cursor.getColumnIndex("EVENT_DATE"));
             String eventTime = cursor.getString(cursor.getColumnIndex("EVENT_TIME"));
@@ -84,6 +86,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             events.add(new Event(eventName, eventDate, eventTime, eventDescription));
         }
         // Create our list.
+        Log.d("EVENTS", "ExtendedArray");
         ExtendedArrayAdapter<Event> ad = new ExtendedArrayAdapter<Event>
                 (rootView.getContext(), R.layout.events_list_item, R.id.eventname,
                         events);
