@@ -125,6 +125,7 @@ public class RequestServer
                 System.exit(SQL_ERROR);
             } catch (JSONException e) {
                 System.err.println("Error reading JSON object:\n" + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
