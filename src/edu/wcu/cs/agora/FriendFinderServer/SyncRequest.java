@@ -48,7 +48,7 @@ public class SyncRequest extends Request
                 {
                     sql = " SELECT user_group.group_name, group_description " +
                             " FROM user_group, group_member " +
-                            " WHERE member_email = ?; ";
+                            " WHERE member_email = ? AND user_group.group_name = group_member.group_name; ";
                     sqlVal1 = "user";
                     break;
                 }
