@@ -30,7 +30,6 @@ public class Search extends Activity implements AdapterView.OnItemClickListener
     /** The request status when requesting a PicInfo class.*/
     public static final int REQUEST = 1;
 
-    private View rootView;
     /** Our ArrayList containing each picture to be entered into the listview. */
     private ArrayList<Group> results;
     private ContentResolver resolver;
@@ -56,7 +55,7 @@ public class Search extends Activity implements AdapterView.OnItemClickListener
         extras.putString("request_type", "3");
         extras.putString("table0", "user_group");
         ContentResolver.requestSync(account, getString(R.string.authority), extras);
-        ListView lv = (ListView) rootView.findViewById(R.id.listView1);
+        ListView lv = (ListView) findViewById(R.id.listView1);
         results = new ArrayList<Group>();
         // Build the list of each picture to be displayed in the listview.
         Log.d("GROUPS", "Resolver query");
@@ -72,7 +71,7 @@ public class Search extends Activity implements AdapterView.OnItemClickListener
         // Create our list.
         Log.d("EVENTS", "ExtendedArray");
         ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>
-                (rootView.getContext(), R.layout.events_list_item, R.id.eventname,
+                (this, R.layout.group_list_item, R.id.groupname,
                         results);
 
         lv.setAdapter(ad);

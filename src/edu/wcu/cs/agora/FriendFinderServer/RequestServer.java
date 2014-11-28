@@ -122,7 +122,8 @@ public class RequestServer
             catch (SQLException e)
             {
                 System.err.println("SQL issue:\n" + e.getMessage());
-                System.exit(SQL_ERROR);
+                e.printStackTrace();
+                //System.exit(SQL_ERROR);
             } catch (JSONException e) {
                 System.err.println("Error reading JSON object:\n" + e.getMessage());
                 e.printStackTrace();

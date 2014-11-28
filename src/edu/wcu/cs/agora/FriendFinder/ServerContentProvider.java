@@ -17,19 +17,20 @@ import android.util.Log;
 public class ServerContentProvider extends ContentProvider
 {
     // A string that defines the SQL statement for creating a table
-    private static final String SQL_CREATE_MAIN = "CREATE TABLE " +
+    private static final String SQL_CREATE_EVENT = "CREATE TABLE " +
                                                   "event" +          // Table's name
                                                   "(" +             // The columns in the table
                                                   " EVENT_NAME TEXT PRIMARY KEY, " +
                                                   " EVENT_DATE TEXT, " +
                                                   " EVENT_TIME TEXT, " +
-                                                  " LOCATION_VALUE TEXT);" +
+                                                  " LOCATION_VALUE TEXT);";
 
+     private static final String SQL_CREATE_USER_GROUP =
                                                   " CREATE TABLE " +
                                                   "user_group" +
                                                   "(" +
-                                                  " GROUP_NAME" +
-                                                  " GROUP_DESCRIPTION);";
+                                                  " GROUP_NAME TEXT PRIMARY KEY," +
+                                                  " GROUP_DESCRIPTION TEXT);";
 
     public static final String AUTHORITY = "edu.wcu.cs.agora.FriendFinder.ServerContentProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
@@ -149,7 +150,8 @@ public class ServerContentProvider extends ContentProvider
         public void onCreate(SQLiteDatabase db) {
 
             // Creates the main table
-            db.execSQL(SQL_CREATE_MAIN);
+            db.execSQL(SQL_CREATE_EVENT);
+            db.execSQL(SQL_CREATE_USER_GROUP);
         }
 
         /**
@@ -173,6 +175,7 @@ public class ServerContentProvider extends ContentProvider
         public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion)
         {
             db.execSQL("DROP TABLE IF EXISTS event");
+            db.execSQL("DROP TABLE IF EXISTS user_group");
             onCreate(db);
         }
     }
