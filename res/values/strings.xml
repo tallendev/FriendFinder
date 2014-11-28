@@ -47,6 +47,10 @@ String reference file.
     <string name="option_settings">Settings</string>
     <string name="logout">Logout</string>
 
+    <string name="groupname">Group Name</string>
+
+    <string name="members">Members</string>
+
 
 
 

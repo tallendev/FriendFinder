@@ -55,7 +55,6 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     {
         super.onCreate(savedInstanceState);
         resolver = getActivity().getContentResolver();
-        getActivity();
         account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
         Bundle extras = new Bundle();
         extras.putString("request_type", "3");
@@ -166,7 +165,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             if (convertView == null)
             {
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.group_list_item, null);
+                convertView = inflater.inflate(R.layout.events_list_item, null);
                 holder.txt1 =
                         (TextView) convertView.findViewById(R.id.eventname);
                 convertView.setTag(holder);

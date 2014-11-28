@@ -60,6 +60,7 @@ Permissions.
         <activity android:name=".CreateEvent"/>
         <activity android:name=".Search"/>
         <activity android:name=".Profile"/>
+        <activity android:name=".GroupPage"/>
 
         <service
                 android:name="edu.wcu.cs.agora.FriendFinder.SyncService"

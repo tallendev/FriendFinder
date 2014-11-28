@@ -29,22 +29,28 @@ public class SyncRequest extends Request
         System.err.println("getResponse");
         while (in.has("table" + i))
         {
-            String sql = null;
             System.err.println("in string:\n" + in.getString("table" + i));
             PreparedStatement stmt = null;
+            String sql = null;
             switch (in.getString("table" + i))
             {
                 case "event":
                 {
-                    sql = "SELECT event_name, event_Date, event_time, location_value " +
-                          "FROM " + "event, attending_event " +
-                          "WHERE " +  "attendee = ?" +
-                                      " AND event = id;";
-                    stmt = conn.prepareStatement(sql);
-                    System.err.println("in.getString(user): " + in.getString("user"));
-                    stmt.setString(1, in.getString("user"));
+                    sql =   "SELECT event_name, event_Date, event_time, location_value " +
+                            "FROM " + "event, attending_event " +
+                            "WHERE " +  "attendee = ?" +
+                            " AND event = id;";
+                    break;
+                }
+                case "user_group":
+                {
+                    sql = " SELECT group_name, group_description " +
+                            " FROM user_group, group_member " +
+                            " WHERE member_email = ?; ";
+                    break;
                 }
             }
+            stmt = conn.prepareStatement(sql);
             ResultSet rs;
             if ((rs = stmt.executeQuery()) != null)
             {
@@ -72,4 +78,5 @@ public class SyncRequest extends Request
         }
         //System.out.println(out.get("table" + 0));
     }
+
 }
