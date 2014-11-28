@@ -5,15 +5,11 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.*;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.google.android.gms.identity.intents.AddressConstants;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Tyler Allen
@@ -33,8 +29,6 @@ public class Login extends Activity implements View.OnClickListener
     private String user;
     private String pass;
     private BroadcastReceiver receiver;
-
-    //TODO make broadcast receiver
 
     /**
      * Called when the activity is first created. Boilerplate code.

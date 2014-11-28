@@ -6,9 +6,11 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,30 +61,41 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
     public void onResume()
     {
         super.onResume();
+        Uri userGroup = Uri.parse(ServerContentProvider.CONTENT_URI + "/user_group");
+                resolver.delete(userGroup, "*", null);
         Bundle extras = new Bundle();
         extras.putString("request_type", "3");
         extras.putString("table0", "user_group");
         ContentResolver.requestSync(account, getString(R.string.authority), extras);
+        Handler handler = new Handler();
         ListView lv = (ListView) findViewById(R.id.listView1);
-        results = new ArrayList<Group>();
-        // Build the list of each picture to be displayed in the listview.
-        Log.d("GROUPS", "Resolver query");
-        Cursor cursor = resolver.query(Uri.parse(ServerContentProvider.CONTENT_URI + "/user_group"), null, null, null, null);
-        while (cursor != null && cursor.moveToNext())
+        resolver.registerContentObserver(userGroup, true, new ContentObserver(handler)
         {
-            Log.d("EVENTS", "cursor != null");
-            String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
-            String groupDescription = cursor.getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
+            @Override
+            public void onChange(boolean selfChange)
+            {
+                super.onChange(selfChange);
+                results = new ArrayList<Group>();
+                // Build the list of each picture to be displayed in the listview.
+                Log.d("GROUPS", "Resolver query");
+                Cursor cursor = resolver.query(userGroup, null, null, null, null);
+                while (cursor != null && cursor.moveToNext())
+                {
+                    Log.d("EVENTS", "cursor != null");
+                    String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
+                    String groupDescription = cursor.getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
 //            String eventLocation = cursor.getString(cursor.getColumnIndex("EVENT_LOCATION"));
-            results.add(new Group(groupName, groupDescription));//, eventLocation));
-        }
-        // Create our list.
-        Log.d("EVENTS", "ExtendedArray");
-        ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>
-                (this, R.layout.group_list_item, R.id.groupname,
-                        results);
+                    results.add(new Group(groupName, groupDescription));//, eventLocation));
+                }
+                // Create our list.
+                Log.d("EVENTS", "ExtendedArray");
+                ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>
+                        (getApplicationContext(), R.layout.group_list_item, R.id.groupname,
+                                results);
 
-        lv.setAdapter(ad);
+                lv.setAdapter(ad);
+            }
+        });
         lv.setOnItemClickListener(this);
     }
 
@@ -98,7 +111,7 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
      */
     @Override
     public void onItemClick (AdapterView<?> adapterView, View view,
-                             int pos, long l)
+                             int i, long l)
     {
         Intent intent = new Intent(this, GroupPage.class);
         Group group = ((Group) (adapterView.getAdapter().getItem((int) l)));

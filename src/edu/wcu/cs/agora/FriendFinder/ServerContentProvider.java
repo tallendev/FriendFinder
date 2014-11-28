@@ -98,6 +98,7 @@ public class ServerContentProvider extends ContentProvider
         Log.d("INSERT_CONTENT_PROVIDER", table);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long value = database.insert(table, null, values);
+        this.getContext().getContentResolver().notifyChange(uri, null);
         return Uri.withAppendedPath(CONTENT_URI, String.valueOf(value));
     }
     /*
@@ -108,6 +109,7 @@ public class ServerContentProvider extends ContentProvider
     {
         String table = getTableName(uri);
         SQLiteDatabase dataBase = dbHelper.getWritableDatabase();
+        this.getContext().getContentResolver().notifyChange(uri, null);
         return dataBase.delete(table, selection, selectionArgs);
     }
     /*
