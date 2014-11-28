@@ -32,6 +32,7 @@ public class SyncRequest extends Request
             System.err.println("in string:\n" + in.getString("table" + i));
             PreparedStatement stmt = null;
             String sql = null;
+            String sqlVal1 = null;
             switch (in.getString("table" + i))
             {
                 case "event":
@@ -40,6 +41,7 @@ public class SyncRequest extends Request
                             "FROM " + "event, attending_event " +
                             "WHERE " +  "attendee = ?" +
                             " AND event = id;";
+                    sqlVal1 = "user";
                     break;
                 }
                 case "user_group":
@@ -47,10 +49,12 @@ public class SyncRequest extends Request
                     sql = " SELECT group_name, group_description " +
                             " FROM user_group, group_member " +
                             " WHERE member_email = ?; ";
+                    sqlVal1 = "user";
                     break;
                 }
             }
             stmt = conn.prepareStatement(sql);
+            stmt.setString(1, in.getString(sqlVal1));
             ResultSet rs;
             if ((rs = stmt.executeQuery()) != null)
             {
