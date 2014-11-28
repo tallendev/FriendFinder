@@ -51,6 +51,12 @@ String reference file.
 
     <string name="members">Members</string>
 
+    <string-array name="search_options_array">
+        <item>Users</item>
+        <item>Groups</item>
+        <item>Likes</item>
+    </string-array>
+
 
 
 

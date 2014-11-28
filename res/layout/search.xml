@@ -18,11 +18,11 @@ Search page with dynamic lists.
         android:padding="5dp"
         android:weightSum="10">
 
-        <ExpandableListView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:id="@+id/expandableListView" />
+        <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"/>
 
         <EditText
             android:layout_width="0dp"

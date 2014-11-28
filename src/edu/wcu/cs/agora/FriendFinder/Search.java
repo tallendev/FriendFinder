@@ -13,10 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +21,7 @@ import java.util.List;
 /**
  * Created by tyler on 11/2/2014.
  */
-public class Search extends Activity implements AdapterView.OnItemClickListener
+public class Search extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener
 {
 
     /** The request status when requesting a PicInfo class.*/
@@ -34,12 +31,22 @@ public class Search extends Activity implements AdapterView.OnItemClickListener
     private ArrayList<Group> results;
     private ContentResolver resolver;
     private Account account;
+    private Spinner spinner;
 
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.search_options_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
         resolver = getContentResolver();
         account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
     }
@@ -91,13 +98,46 @@ public class Search extends Activity implements AdapterView.OnItemClickListener
      */
     @Override
     public void onItemClick (AdapterView<?> adapterView, View view,
-                             int i, long l)
+                             int pos, long l)
     {
         Intent intent = new Intent(this, GroupPage.class);
         Group group = ((Group) (adapterView.getAdapter().getItem((int) l)));
         intent.putExtra("group_name", group.getGroupName());
         intent.putExtra("group_description", group.getDescription());
         startActivityForResult(intent, REQUEST);
+    }
+
+    /**
+     * <p>Callback method to be invoked when an item in this view has been
+     * selected. This callback is invoked only when the newly selected
+     * position is different from the previously selected position or if
+     * there was no selected item.</p>
+     * <p>
+     * Impelmenters can call getItemAtPosition(position) if they need to access the
+     * data associated with the selected item.
+     *
+     * @param parent   The AdapterView where the selection happened
+     * @param view     The view within the AdapterView that was clicked
+     * @param position The position of the view in the adapter
+     * @param id       The row id of the item that is selected
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+    {
+        Object item = parent.getItemAtPosition(position);
+        Log.d("SPINNER", "Item string: " + item.toString());
+    }
+
+    /**
+     * Callback method to be invoked when the selection disappears from this
+     * view. The selection can disappear for instance when touch is activated
+     * or when the adapter becomes empty.
+     *
+     * @param parent The AdapterView that now contains no selected item.
+     */
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     /**
@@ -152,7 +192,7 @@ public class Search extends Activity implements AdapterView.OnItemClickListener
             {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.txt1.setText(((Event) (list.get(position))).getEventName());
+            holder.txt1.setText(((Group) (list.get(position))).getGroupName());
             return convertView;
         }
     }
@@ -164,5 +204,53 @@ public class Search extends Activity implements AdapterView.OnItemClickListener
     {
         /** First text view holding name.*/
         public TextView txt1;
+    }
+
+    private enum SearchOption
+    {
+        USERS("Users"),
+        GROUPS("Groups"),
+        LIKES("Likes");
+
+        private String option;
+
+        private SearchOption(String option)
+        {
+            this.option = option;
+        }
+
+        public static SearchOption selectOption(String option)
+        {
+            SearchOption returnOption= null;
+            switch (option)
+            {
+                case "Users":
+                {
+                    returnOption = USERS;
+                    break;
+                }
+                case "Groups":
+                {
+                    returnOption = GROUPS;
+                    break;
+                }
+                case "Likes":
+                {
+                    returnOption = LIKES;
+                    break;
+                }
+                default:
+                {
+                    Log.d("SearchOption", "Bug encountered: null returned from SearchOption");
+                    break;
+                }
+            }
+            return returnOption;
+        }
+
+        public String toString()
+        {
+            return option;
+        }
     }
 }

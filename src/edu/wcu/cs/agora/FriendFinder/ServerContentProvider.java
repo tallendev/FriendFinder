@@ -20,7 +20,7 @@ public class ServerContentProvider extends ContentProvider
     private static final String SQL_CREATE_EVENT = "CREATE TABLE " +
                                                   "event" +          // Table's name
                                                   "(" +             // The columns in the table
-                                                  " EVENT_NAME TEXT PRIMARY KEY, " +
+                                                  " EVENT_NAME TEXT PRIMARY KEY ON CONFLICT REPLACE, " +
                                                   " EVENT_DATE TEXT, " +
                                                   " EVENT_TIME TEXT, " +
                                                   " LOCATION_VALUE TEXT);";
@@ -29,7 +29,7 @@ public class ServerContentProvider extends ContentProvider
                                                   " CREATE TABLE " +
                                                   "user_group" +
                                                   "(" +
-                                                  " GROUP_NAME TEXT PRIMARY KEY," +
+                                                  " GROUP_NAME TEXT PRIMARY KEY ON CONFLICT REPLACE," +
                                                   " GROUP_DESCRIPTION TEXT);";
 
     public static final String AUTHORITY = "edu.wcu.cs.agora.FriendFinder.ServerContentProvider";
