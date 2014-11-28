@@ -46,7 +46,7 @@ public class SyncRequest extends Request
                 }
                 case "user_group":
                 {
-                    sql = " SELECT group_name, group_description " +
+                    sql = " SELECT user_group.group_name, group_description " +
                             " FROM user_group, group_member " +
                             " WHERE member_email = ?; ";
                     sqlVal1 = "user";

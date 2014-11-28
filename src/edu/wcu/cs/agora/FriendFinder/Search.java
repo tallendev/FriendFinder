@@ -39,6 +39,7 @@ public class Search extends Activity implements AdapterView.OnItemClickListener
     public void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.search);
         resolver = getContentResolver();
         account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
     }
