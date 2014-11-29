@@ -29,14 +29,14 @@ public class RegistrationRequest extends Request
 
         Connection conn = DriverManager.getConnection("jdbc:postgresql:friendfinder", "tyler",
                                                       "hadouken!");
-        ResultSet rs = Authenticator.find_user(conn, user);
+        ResultSet rs = Authenticator.findUser(conn, user);
         if (rs.next())
         {
             out.put("success", false);
         }
         else
         {
-            String createUser = "INSERT INTO users VALUES(?, ?, ?, ?, ?)";
+            String createUser = "INSERT INTO friendfinder.users VALUES(?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(createUser);
             stmt.setString(1, user);
             stmt.setString(2, birthday);
