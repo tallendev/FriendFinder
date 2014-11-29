@@ -63,7 +63,7 @@ public class Authenticator
     protected static ResultSet findUser(Connection conn, String username) throws SQLException
     {
         PreparedStatement stmt = conn.prepareStatement("SELECT friendfinder.users.email, friendfinder.users.password_token " +
-                                                        "FROM users WHERE email = ?");
+                                                        "FROM friendfinder.users WHERE email = ?");
         stmt.setString(1, username);
         ResultSet rs;
         return stmt.executeQuery();
