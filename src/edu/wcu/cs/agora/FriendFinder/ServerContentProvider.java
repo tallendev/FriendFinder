@@ -35,7 +35,7 @@ public class ServerContentProvider extends ContentProvider
 
     private static final String SQL_CREATE_USERS =
                                                   " CREATE TABLE " +
-                                                  "user" +
+                                                  "users" +
                                                   "(" + "EMAIL TEXT PRIMARY KEY ON CONFLICT REPLACE" +
                                                           " NAME TEXT," +
                                                           " BIRTHDAY TEXT," +

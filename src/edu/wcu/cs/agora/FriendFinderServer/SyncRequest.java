@@ -116,10 +116,12 @@ public class SyncRequest extends Request
         stmt = conn.prepareStatement(sql);
         if (search != null)
         {
+            System.err.println("SyncRequest: Search is null.");
             stmt.setString(1, search);
         }
         if (user != null) //FIXME not a great design
         {
+            System.err.println("SyncRequest: User is null.");
             stmt.setString(2, user);
         }
 
