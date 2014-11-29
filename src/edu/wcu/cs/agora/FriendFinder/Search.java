@@ -41,12 +41,14 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
     private EditText editText;
     private Button search;
     private SearchOption currentOption;
+    private LoadingSpinnerDialog spinnerDialog;
 
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+        spinnerDialog = new LoadingSpinnerDialog();
         spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -138,6 +140,7 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
     {
+        lv.setAdapter(null);
         Object item = parent.getItemAtPosition(position);
         currentOption = SearchOption.selectOption(item.toString());
         Log.d("SPINNER", "Item string: " + item.toString());
@@ -172,6 +175,7 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
             extras.putString("search", "%" + editText.getText().toString() + "%");
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             lv.setOnItemClickListener(this);
+            spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
         }
     }
 
@@ -261,9 +265,9 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
 
     private enum SearchOption
     {
-        USERS("users", "USERS", Search.USERS),
-        GROUPS("user_group", "USER_GROUP", USER_GROUP),
-        LIKES("likes", "LIKES",  Search.LIKES);
+        USERS("users", "EMAIL", Search.USERS),
+        GROUPS("user_group", "GROUP_NAME", USER_GROUP),
+        LIKES("likes", "LIKE_LABEL",  Search.LIKES);
 
         private String serverColumn;
         private String query;
@@ -335,9 +339,11 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
             super.onChange(selfChange);
             // Build the list of each picture to be displayed in the listview.
             Log.d("GROUPS", "Resolver query");
-            String[] projArgs = {editText.getText().toString() + "%"};
-            Cursor cursor = resolver.query(currentOption.getUri(), null, currentOption.getQuery() + " like ?", projArgs, null);
+            //String[] projArgs = {"%" + editText.getText().toString() + "%"};
+            //Cursor cursor = resolver.query(currentOption.getUri(), null, currentOption.getQuery() + " like ?", projArgs, null);
+            Cursor cursor = resolver.query(currentOption.getUri(), null, null, null, null);
             updateListView(cursor, lv);
+            spinnerDialog.dismiss();
         }
 
 

@@ -29,6 +29,7 @@ public class Login extends Activity implements View.OnClickListener
     private String user;
     private String pass;
     private BroadcastReceiver receiver;
+    private LoadingSpinnerDialog spinnerDialog;
 
     /**
      * Called when the activity is first created. Boilerplate code.
@@ -54,27 +55,24 @@ public class Login extends Activity implements View.OnClickListener
         startService(intent);
         startService(new Intent(this, GenericAccountService.class));
 
-
-        //final AtomicReference<Account> account = new AtomicReference<>(CreateSyncAccount(this));
-
         sharedPreferences = this.getSharedPreferences(getString(R.string.shared_prefs),
                                                       Context.MODE_PRIVATE);
         String user = sharedPreferences.getString("user", null);
-
-        //ContentResolver.setSyncAutomatically(GenericAccountService.getAccount(), AUTHORITY, true);
+        spinnerDialog = new LoadingSpinnerDialog();
 
         if (null != user)
         {
             nextScreen();
         }
         Log.d("LOGIN", "End on_create");
-
-               // ContentResolver.requestSync(account.get(), AUTHORITY, extras);
-
     }
 
     private void nextScreen()
     {
+        if (spinnerDialog.isVisible())
+        {
+            spinnerDialog.dismiss();
+        }
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
         if (receiver != null)
@@ -168,6 +166,7 @@ public class Login extends Activity implements View.OnClickListener
 
                     ContentResolver.requestSync(account, AUTHORITY, extras);
                     Log.d("LOGIN", "SYNC_REQUESTED");
+                    spinnerDialog.show(getFragmentManager(), "Attempting to Log In");
 
                 }
                 else

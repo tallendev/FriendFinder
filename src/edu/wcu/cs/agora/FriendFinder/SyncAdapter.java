@@ -163,10 +163,20 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 Log.d("SYNC", "STARTING JSON PARSE");
                 while (((jsonIn.has("table" + i))))
                 {
+
                     Log.d("SYNC", "LINE " + i);
                     current = jsonIn.getString("table" + i);
                     lines = current.split("~");
                     String table = lines[0];
+
+                    try
+                    {
+                        provider.delete(Uri.parse(ServerContentProvider.CONTENT_URI + "/" + table), null, null);
+                    } catch (RemoteException e)
+                    {
+                        Log.d("SYNC", "Remote exception caught deleting table values.");
+                    }
+
                     for (String line : lines)
                     {
                         Log.d("SYNC", "LINE: " + line);

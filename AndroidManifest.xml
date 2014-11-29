@@ -44,7 +44,7 @@ Permissions.
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
                  android:allowBackup="false"
-                 android:theme="@android:style/Theme.Holo">
+                 android:theme="@android:style/Theme.Holo" android:name=".FriendFinder">
         <activity android:name="Login"
                   android:label="@string/app_name">
             <intent-filter>

@@ -37,7 +37,7 @@ public class ServerContentProvider extends ContentProvider
                                                   " CREATE TABLE " +
                                                   "users" +
                                                   "(" + "EMAIL TEXT PRIMARY KEY ON CONFLICT REPLACE," +
-                                                          " NAME TEXT," +
+                                                          " FULL_NAME TEXT," +
                                                           " BIRTHDAY TEXT," +
                                                           "GENDER TEXT);";
 
@@ -109,7 +109,6 @@ public class ServerContentProvider extends ContentProvider
     @Override
     public Uri insert(Uri uri, ContentValues values)
     {
-        delete(uri, null, null);
         String table = getTableName(uri);
         Log.d("INSERT_CONTENT_PROVIDER", table);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
