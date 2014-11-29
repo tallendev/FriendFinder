@@ -106,8 +106,8 @@ public class SyncRequest extends Request
             case "users":
             {
                 sql = " SELECT email, birthday, gender, full_name " +
-                        " FROM likes " +
-                        " WHERE like_label ILIKE ?"; //+
+                        " FROM users " +
+                        " WHERE email ILIKE ?"; //+
                 //" WHERE member_email = ? AND user_group.group_name = group_member.group_name; ";
                 user = null;
                 break;
