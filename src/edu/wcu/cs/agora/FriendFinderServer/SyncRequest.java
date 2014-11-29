@@ -69,7 +69,7 @@ public class SyncRequest extends Request
         PreparedStatement stmt = null;
         String sql = null;
         JSONObject in = getJsonIn();
-        String search = in.getString("search");
+        String search = in.has("search") ? in.getString("search") : null;
         String user = in.getString("user");
         switch (in.getString("table" + tableNum))
         {
