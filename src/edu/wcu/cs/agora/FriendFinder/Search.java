@@ -166,7 +166,6 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
     {
         if (v.getId() == R.id.search)
         {
-            lv.invalidateViews();
             Bundle extras = new Bundle();
             extras.putString("request_type", "3");
             extras.putString("table0", currentOption.getServerColumn());
@@ -344,6 +343,7 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
 
         private void updateListView(Cursor cursor, ListView lv)
         {
+            lv.invalidateViews();
             switch (currentOption)
             {
                 case USERS:

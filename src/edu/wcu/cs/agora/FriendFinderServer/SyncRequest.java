@@ -87,6 +87,7 @@ public class SyncRequest extends Request
                 sql = " SELECT user_group.group_name, group_description " +
                         " FROM user_group, group_member " +
                         " WHERE user_group.group_name ILIKE ?";
+                user = null;
                         // +
                         // below is code for user-specfic groups.
                         //" WHERE member_email = ? AND user_group.group_name = group_member.group_name; ";
@@ -98,6 +99,7 @@ public class SyncRequest extends Request
                 sql = " SELECT like_label " +
                         " FROM likes " +
                         " WHERE like_label ILIKE ?"; //+
+                user = null;
                         //" WHERE member_email = ? AND user_group.group_name = group_member.group_name; ";
                 break;
             }
@@ -107,6 +109,7 @@ public class SyncRequest extends Request
                         " FROM likes " +
                         " WHERE like_label ILIKE ?"; //+
                 //" WHERE member_email = ? AND user_group.group_name = group_member.group_name; ";
+                user = null;
                 break;
             }
         }
@@ -115,7 +118,7 @@ public class SyncRequest extends Request
         {
             stmt.setString(1, search);
         }
-        if (user != null)
+        if (user != null) //FIXME not a great design
         {
             stmt.setString(2, user);
         }
