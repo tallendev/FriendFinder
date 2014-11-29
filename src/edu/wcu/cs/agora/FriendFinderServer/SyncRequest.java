@@ -34,6 +34,7 @@ public class SyncRequest extends Request
             i++;
         }
         //System.out.println(out.get("table" + 0));
+        conn.close();
     }
 
     private void executeStatement(PreparedStatement stmt, int tableNum) throws SQLException, JSONException

@@ -50,24 +50,22 @@ public class Authenticator
         }
         Connection conn = DriverManager.getConnection("jdbc:postgresql:friendfinder", "tyler",
                                                       "hadouken!");
-        Statement statement = conn.createStatement();
-        statement.execute("set search_path to friendfinder");
-        if (statement.execute("SELECT email, password_token " +
-                              "FROM users"))
+        ResultSet rs = find_user(conn, username);
+        if (rs.next())
         {
-            ResultSet rs = statement.getResultSet();
-            boolean userNotFound = true;
-            while (rs.next() && userNotFound)
-            {
-                String temp_user = rs.getString("email");
-                if (temp_user.equals(username))
-                {
-                    userNotFound = false;
-                    success = password.equals(rs.getString("password_token"));
-                }
-            }
+            success = password.equals(rs.getString("password_token"));
         }
         System.err.println("Account successfully authenticated? " + success);
+        conn.close();
         return success;
+    }
+
+    protected static ResultSet find_user(Connection conn, String username) throws SQLException
+    {
+        PreparedStatement stmt = conn.prepareStatement("SELECT users.email, users.password_token " +
+                                                        "FROM users WHERE email = ?");
+        stmt.setString(1, username);
+        ResultSet rs;
+        return stmt.executeQuery();
     }
 }

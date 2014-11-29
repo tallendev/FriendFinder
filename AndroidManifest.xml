@@ -109,6 +109,15 @@ Maps setup.
             android:process="edu.wcu.cs.agora.FriendFinder" >
         </receiver>
 
+        <receiver
+                android:enabled="true"
+                android:exported="false"
+                android:name="edu.wcu.cs.agora.FriendFinder.Register$RegistrationReceiver"
+                android:permission="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.REGISTRATION"
+                android:process="edu.wcu.cs.agora.FriendFinder">
+        </receiver>
+
+
     </application>
 </manifest>
 

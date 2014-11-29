@@ -137,30 +137,6 @@ Registration page.
             android:layout_height="0dp"
             android:layout_weight="5"/>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:weightSum="100">
-
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="30"/>
-
-        <!-- replace with custom buttons -->
-        <Button
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:id="@+id/login"
-                android:clickable="true"
-                android:scaleType="centerInside"
-                android:text="Log In"/>
-        <!--android:background="@drawable/button1"-->
-
-
-    </LinearLayout>
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -170,19 +146,22 @@ Registration page.
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="9"
             android:weightSum="100">
+
 
         <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="20"/>
 
-        <TextView
+        <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 android:ems="10"
-                android:hint="@string/missing_acc"
+                android:id="@+id/name"
+                android:hint="@string/name"
                 android:singleLine="true"
                 android:ellipsize="start"
                 android:gravity="center"
@@ -191,6 +170,39 @@ Registration page.
     </LinearLayout>
 
     <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:weightSum="10">
+
+        <Spinner
+                android:id="@+id/gender"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:weightSum="10">
+
+        <Button
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:onClick="showDatePickerDialog"/>
+    </LinearLayout>
+
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"

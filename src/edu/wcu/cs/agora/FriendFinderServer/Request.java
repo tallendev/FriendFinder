@@ -76,7 +76,6 @@ public abstract class Request
      * This method is an implementation of the Builder design pattern, allowing an object of the correct type to be
      * returned based on the initial information retrieved from the request.
      *
-     * @param in - A wrapper around an input stream attached to the socket.
      *
      */
     //protected static Request requestBuilder(Scanner in)
@@ -95,9 +94,11 @@ public abstract class Request
             throw new MalformedPacketException("Packet Missing Request Type");
         }
         requestType = json.getString("request_type");
-
-        boolean requestSuccess = Authenticator.getInstance().authenticateUser(json);
-        jsonOut.put("authenticated", requestSuccess);
+        boolean requestSuccess = true;
+        if (!requestType.equals("0")) {
+            requestSuccess = Authenticator.getInstance().authenticateUser(json);
+            jsonOut.put("authenticated", requestSuccess);
+        }
         if (requestSuccess)
         {
             System.err.println("RequestType: " + requestType);
@@ -105,6 +106,8 @@ public abstract class Request
             {
                 case ("0")://case (REGISTER):
                 {
+                    System.err.println("New register request");
+                    request = new RegistrationRequest(json, jsonOut);
                     break;
                 }
                 case ("1")://case (GROUP_UPDATE):
