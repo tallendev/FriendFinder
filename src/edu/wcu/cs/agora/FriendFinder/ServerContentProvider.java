@@ -23,7 +23,8 @@ public class ServerContentProvider extends ContentProvider
                                                   " EVENT_NAME TEXT PRIMARY KEY ON CONFLICT REPLACE, " +
                                                   " EVENT_DATE TEXT, " +
                                                   " EVENT_TIME TEXT, " +
-                                                  " LOCATION_VALUE TEXT);";
+                                                  " LOCATION_VALUE TEXT," +
+                                                  " CREATOR TEXT);";
 
      private static final String SQL_CREATE_USER_GROUP =
                                                   " CREATE TABLE " +
@@ -31,6 +32,20 @@ public class ServerContentProvider extends ContentProvider
                                                   "(" +
                                                   " GROUP_NAME TEXT PRIMARY KEY ON CONFLICT REPLACE," +
                                                   " GROUP_DESCRIPTION TEXT);";
+
+    private static final String SQL_CREATE_USERS =
+                                                  " CREATE TABLE " +
+                                                  "user" +
+                                                  "(" + "EMAIL TEXT PRIMARY KEY ON CONFLICT REPLACE" +
+                                                          " NAME TEXT," +
+                                                          " BIRTHDAY TEXT," +
+                                                          "GENDER TEXT);";
+
+    private static final String SQL_CREATE_LIKES =
+                    " CREATE TABLE " +
+                    "likes" +
+                    "(" +
+                    " LIKE_LABEL TEXT PRIMARY KEY ON CONFLICT REPLACE);";
 
     public static final String AUTHORITY = "edu.wcu.cs.agora.FriendFinder.ServerContentProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
@@ -155,6 +170,8 @@ public class ServerContentProvider extends ContentProvider
             // Creates the main table
             db.execSQL(SQL_CREATE_EVENT);
             db.execSQL(SQL_CREATE_USER_GROUP);
+            db.execSQL(SQL_CREATE_USERS);
+            db.execSQL(SQL_CREATE_LIKES);
         }
 
         /**
@@ -179,6 +196,8 @@ public class ServerContentProvider extends ContentProvider
         {
             db.execSQL("DROP TABLE IF EXISTS event");
             db.execSQL("DROP TABLE IF EXISTS user_group");
+            db.execSQL("DROP TABLE IF EXISTS likes");
+            db.execSQL("DROP TABLE IF EXISTS users");
             onCreate(db);
         }
     }

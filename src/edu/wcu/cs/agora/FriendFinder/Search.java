@@ -170,6 +170,7 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
             Bundle extras = new Bundle();
             extras.putString("request_type", "3");
             extras.putString("table0", currentOption.getServerColumn());
+            extras.putString("search", "%" + editText.getText().toString() + "%");
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             lv.setOnItemClickListener(this);
         }
