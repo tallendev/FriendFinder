@@ -59,7 +59,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         Bundle extras = new Bundle();
         extras.putString("request_type", "3");
         extras.putString("table0", "event");
-        extras.putString("search", "%");
+        extras.putString("search", "%%");
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
     }
 
@@ -74,7 +74,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         Bundle extras = new Bundle();
         extras.putString("request_type", "3");
         extras.putString("table0", "event");
-        extras.putString("search", "%");
+        extras.putString("search", "%%");
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
         ListView lv = (ListView) rootView.findViewById(R.id.listView1);
         events = new ArrayList<Event>();

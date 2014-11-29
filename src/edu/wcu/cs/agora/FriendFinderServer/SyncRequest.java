@@ -78,8 +78,8 @@ public class SyncRequest extends Request
             {
                 sql =   "SELECT event_name, event_Date, event_time, location_value, creator " +
                         "FROM " + "event, attending_event " +
-                        "WHERE " +  "attendee = ?" +
-                        " AND event = id AND event_name ILIKE ?;";
+                        "WHERE " +  "event_name ILIKE ?" +
+                        " AND event = id AND attendee = ?;";
                 //sqlVal1 = "user";
                 break;
             }

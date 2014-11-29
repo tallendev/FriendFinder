@@ -153,6 +153,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             //if (in.hasNextLine())
             //{
                 jsonIn = new JSONObject(in.nextLine());
+                Log.d("SYNC", "jsonIn:\n" + jsonIn);
                 Log.d("SYNC", "new JSONObject");
                 authenticated = jsonIn.getBoolean("authenticated");
 
