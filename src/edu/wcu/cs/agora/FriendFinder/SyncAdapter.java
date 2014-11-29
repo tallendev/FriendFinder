@@ -126,11 +126,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             OutputStream out = sslSocket.getOutputStream();
             AccountManager accountManager = (AccountManager) getContext()
                     .getSystemService(Context.ACCOUNT_SERVICE);
+            String requestType = extras.getString("request_type");
             JSONObject json = new JSONObject();
-            json.put("request_type", extras.getString("request_type"));
+            json.put("request_type", requestType);
             json.put("user", account.name);
             json.put("password", accountManager.getPassword(account));
-            switch (extras.getString("request_type"))
+            switch (requestType)
             {
                 case "0":
                 {

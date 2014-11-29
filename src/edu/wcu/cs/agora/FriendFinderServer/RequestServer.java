@@ -59,7 +59,7 @@ public class RequestServer
         Socket client = serverSocket.accept();
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
-        Scanner in = new Scanner(client.getInputStream());
+        Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
         if (in.hasNext())
         {
             JSONObject json = new JSONObject(in.next());

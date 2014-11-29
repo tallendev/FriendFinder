@@ -16,11 +16,12 @@ import java.util.Calendar;
 /**
  * Created by tyler on 9/26/14.
  */
-public class Register extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-    private Button register;
+public class Register extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener
+{
     private EditText user;
     private EditText password;
     private EditText rpassword;
+    private EditText name;
     private LoadingSpinnerDialog spinnerDialog;
     private RegistrationReceiver receiver;
     private Account account;
@@ -28,6 +29,7 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
     private Spinner gender;
     private String genderSelected;
     private Button date;
+    private Button register;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -37,7 +39,8 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
         this.user = (EditText) findViewById(R.id.email);
         this.password = (EditText) findViewById(R.id.pass);
         this.rpassword = (EditText) findViewById(R.id.repeat_pass);
-        this.register = (Button) findViewById(R.id.register);
+        this.name = (EditText) findViewById(R.id.name);
+
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -51,7 +54,11 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
         gender.setAdapter(adapter);
         gender.setOnItemSelectedListener(this);
         genderSelected = "Male";
-        date = (Button) findViewById(R.id.date);
+
+        this.register = (Button) findViewById(R.id.register);
+        this.date = (Button) findViewById(R.id.date);
+        this.register.setOnClickListener(this);
+        this.date.setOnClickListener(this);
     }
 
     @Override
@@ -98,15 +105,18 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
         {
             if (password.getText().toString().equals(rpassword.getText().toString()))
             {
+                String AUTHORITY = getResources().getString(R.string.authority);
                 Bundle extras = new Bundle();
                 extras.putString("request_type", "0");
                 extras.putString("user", user.getText().toString());
                 extras.putString("password", user.getText().toString());
                 extras.putString("birthday", datePicker.toString());
                 extras.putString("gender", genderSelected);
+                extras.putString("name", name.getText().toString());
                 Account account = FriendFinder.createSyncAccount(this, user.getText().toString(),
                                                                  user.getText().toString());
-                ContentResolver.requestSync(account, getResources().getString(R.string.authority), extras);
+                ContentResolver.setSyncAutomatically(account, AUTHORITY, true);
+                ContentResolver.requestSync(account, AUTHORITY, extras);
                 spinnerDialog.show(getFragmentManager(), "Registering User");
                 receiver = new RegistrationReceiver();
                 IntentFilter intentFilter = new IntentFilter();
@@ -117,6 +127,10 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
             {
                 Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_LONG).show();
             }
+        }
+        else if (v == date)
+        {
+            datePicker.show(getFragmentManager(), "Date Picker");
         }
     }
 
@@ -152,6 +166,7 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
     {
 
     }
+
 
     public class RegistrationReceiver extends BroadcastReceiver
     {
@@ -207,12 +222,6 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
         {
 
-        }
-
-        public void showDatePickerDialog(View v)
-        {
-            DialogFragment newFragment = new DatePickerFragment();
-            newFragment.show(getFragmentManager(), "datePicker");
         }
     }
 }
