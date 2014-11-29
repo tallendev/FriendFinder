@@ -391,7 +391,5 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
 
             }
         }
-
-
     }
 }
