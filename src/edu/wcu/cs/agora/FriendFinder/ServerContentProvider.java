@@ -94,6 +94,7 @@ public class ServerContentProvider extends ContentProvider
     @Override
     public Uri insert(Uri uri, ContentValues values)
     {
+        delete(uri, null, null);
         String table = getTableName(uri);
         Log.d("INSERT_CONTENT_PROVIDER", table);
         SQLiteDatabase database = dbHelper.getWritableDatabase();

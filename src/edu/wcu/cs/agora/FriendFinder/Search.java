@@ -23,17 +23,24 @@ import java.util.List;
 /**
  * Created by tyler on 11/2/2014.
  */
-public class Search extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener
+public class Search extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener
 {
 
     /** The request status when requesting a PicInfo class.*/
     public static final int REQUEST = 1;
 
+    public static final Uri USER_GROUP = Uri.parse(ServerContentProvider.CONTENT_URI + "/user_group");
+    public static final Uri USERS = Uri.parse(ServerContentProvider.CONTENT_URI + "/users");
+    public static final Uri LIKES = Uri.parse(ServerContentProvider.CONTENT_URI + "/likes");
+
     /** Our ArrayList containing each picture to be entered into the listview. */
-    private ArrayList<Group> results;
     private ContentResolver resolver;
     private Account account;
     private Spinner spinner;
+    private ListView lv;
+    private EditText editText;
+    private Button search;
+    private SearchOption currentOption;
 
     @Override
     public void onCreate (Bundle savedInstanceState)
@@ -51,6 +58,15 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
         spinner.setOnItemSelectedListener(this);
         resolver = getContentResolver();
         account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
+        lv = (ListView) findViewById(R.id.listView1);
+        editText = (EditText) findViewById(R.id.searchEditText);
+        search = (Button) findViewById(R.id.search);
+        search.setOnClickListener(this);
+        currentOption = SearchOption.USERS;
+        Handler handler = new Handler();
+        resolver.registerContentObserver(USER_GROUP, true, new SearchContentObserver(handler));
+        resolver.registerContentObserver(LIKES, true, new SearchContentObserver(handler));
+        resolver.registerContentObserver(USERS, true, new SearchContentObserver(handler));
     }
 
     /**
@@ -61,42 +77,6 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
     public void onResume()
     {
         super.onResume();
-        Uri userGroup = Uri.parse(ServerContentProvider.CONTENT_URI + "/user_group");
-                resolver.delete(userGroup, "*", null);
-        Bundle extras = new Bundle();
-        extras.putString("request_type", "3");
-        extras.putString("table0", "user_group");
-        ContentResolver.requestSync(account, getString(R.string.authority), extras);
-        Handler handler = new Handler();
-        ListView lv = (ListView) findViewById(R.id.listView1);
-        resolver.registerContentObserver(userGroup, true, new ContentObserver(handler)
-        {
-            @Override
-            public void onChange(boolean selfChange)
-            {
-                super.onChange(selfChange);
-                results = new ArrayList<Group>();
-                // Build the list of each picture to be displayed in the listview.
-                Log.d("GROUPS", "Resolver query");
-                Cursor cursor = resolver.query(userGroup, null, null, null, null);
-                while (cursor != null && cursor.moveToNext())
-                {
-                    Log.d("EVENTS", "cursor != null");
-                    String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
-                    String groupDescription = cursor.getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
-//            String eventLocation = cursor.getString(cursor.getColumnIndex("EVENT_LOCATION"));
-                    results.add(new Group(groupName, groupDescription));//, eventLocation));
-                }
-                // Create our list.
-                Log.d("EVENTS", "ExtendedArray");
-                ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>
-                        (getApplicationContext(), R.layout.group_list_item, R.id.groupname,
-                                results);
-
-                lv.setAdapter(ad);
-            }
-        });
-        lv.setOnItemClickListener(this);
     }
 
 
@@ -113,11 +93,32 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
     public void onItemClick (AdapterView<?> adapterView, View view,
                              int i, long l)
     {
-        Intent intent = new Intent(this, GroupPage.class);
-        Group group = ((Group) (adapterView.getAdapter().getItem((int) l)));
-        intent.putExtra("group_name", group.getGroupName());
-        intent.putExtra("group_description", group.getDescription());
-        startActivityForResult(intent, REQUEST);
+        switch (currentOption)
+        {
+            case GROUPS:
+            {
+                Intent intent = new Intent(this, GroupPage.class);
+                Group group = ((Group) (adapterView.getAdapter().getItem((int) l)));
+                intent.putExtra("group_name", group.getGroupName());
+                intent.putExtra("group_description", group.getDescription());
+                startActivityForResult(intent, REQUEST);
+                break;
+            }
+            case LIKES:
+            {
+                break;
+            }
+            case USERS:
+            {
+                Intent intent = new Intent(this, Profile.class);
+                User user = ((User) (adapterView.getAdapter().getItem((int) l)));
+                intent.putExtra("gender", user.getGender());
+                intent.putExtra("birthday", user.getBirthday());
+                intent.putExtra("name", user.getName());
+                startActivityForResult(intent, REQUEST);
+                break;
+            }
+        }
     }
 
     /**
@@ -138,6 +139,7 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
     {
         Object item = parent.getItemAtPosition(position);
+        currentOption = SearchOption.selectOption(item.toString());
         Log.d("SPINNER", "Item string: " + item.toString());
     }
 
@@ -149,8 +151,28 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
      * @param parent The AdapterView that now contains no selected item.
      */
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onNothingSelected(AdapterView<?> parent)
+    {
 
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v)
+    {
+        if (v.getId() == R.id.search)
+        {
+            lv.invalidateViews();
+            Bundle extras = new Bundle();
+            extras.putString("request_type", "3");
+            extras.putString("table0", currentOption.getServerColumn());
+            ContentResolver.requestSync(account, getString(R.string.authority), extras);
+            lv.setOnItemClickListener(this);
+        }
     }
 
     /**
@@ -198,14 +220,32 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
             {
                 holder = new ViewHolder();
                 convertView = inflater.inflate(R.layout.group_list_item, null);
-                holder.txt1 = (TextView) convertView.findViewById(R.id.groupname);//FIXME
+                holder.txt1 = (TextView) convertView.findViewById(R.id.groupname);
                 convertView.setTag(holder);
             }
             else
             {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.txt1.setText(((Group) (list.get(position))).getGroupName());
+            switch (currentOption)
+            {
+                case USERS:
+                {
+                    holder.txt1.setText(((User) (list.get(position))).getName());
+                    break;
+                }
+                case LIKES:
+                {
+                    holder.txt1.setText(((Like) (list.get(position))).getLike());
+                    break;
+                }
+                case GROUPS:
+                {
+                    holder.txt1.setText(((Group) (list.get(position))).getGroupName());
+                    break;
+                }
+
+            }
             return convertView;
         }
     }
@@ -221,15 +261,19 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
 
     private enum SearchOption
     {
-        USERS("Users"),
-        GROUPS("Groups"),
-        LIKES("Likes");
+        USERS("users", "USERS", "email"),
+        GROUPS("user_group", "USER_GROUP", "group_name"),
+        LIKES("likes", "LIKES", "like_label");
 
-        private String option;
+        private String serverColumn;
+        private String clientColumn;
+        private String query;
 
-        private SearchOption(String option)
+        private SearchOption(String serverColumn, String clientColumn, String query)
         {
-            this.option = option;
+            this.serverColumn = serverColumn;
+            this.clientColumn = clientColumn;
+            this.query = query;
         }
 
         public static SearchOption selectOption(String option)
@@ -261,9 +305,92 @@ public class Search extends Activity implements AdapterView.OnItemClickListener,
             return returnOption;
         }
 
-        public String toString()
+        public String getServerColumn()
         {
-            return option;
+            return serverColumn;
         }
+
+        public String getClientColumn()
+        {
+            return clientColumn;
+        }
+
+        public String getQuery()
+        {
+            return query;
+        }
+    }
+
+    private class SearchContentObserver extends ContentObserver
+    {
+        public SearchContentObserver(Handler handler)
+        {
+            super(handler);
+
+        }
+
+        @Override
+        public void onChange(boolean selfChange)
+        {
+            super.onChange(selfChange);
+            // Build the list of each picture to be displayed in the listview.
+            Log.d("GROUPS", "Resolver query");
+            String[] projArgs = {editText.getText().toString() + "%"};
+            Cursor cursor = resolver.query(USER_GROUP, null, currentOption.getQuery() + " like ?", projArgs, null);
+            updateListView(cursor, lv);
+        }
+
+
+        private void updateListView(Cursor cursor, ListView lv)
+        {
+            switch (currentOption)
+            {
+                case USERS:
+                {
+                    ArrayList<User> results = new ArrayList<User>();
+                    while (cursor != null && cursor.moveToNext())
+                    {
+                        String birthday = cursor.getString(cursor.getColumnIndex("BIRTHDAY"));
+                        String gender = cursor.getString(cursor.getColumnIndex("GENDER"));
+                        String name = cursor.getString(cursor.getColumnIndex("FULL_NAME"));
+                        results.add(new User(birthday, gender, name));//, eventLocation));
+                    }
+                    ExtendedArrayAdapter<User> ad = new ExtendedArrayAdapter<User>
+                            (getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);
+                    lv.setAdapter(ad);
+                    break;
+                }
+                case LIKES:
+                {
+                    ArrayList<Like> results = new ArrayList<Like>();
+                    while (cursor != null && cursor.moveToNext())
+                    {
+                        String likeLabel = cursor.getString(cursor.getColumnIndex("LIKE_LABEL"));
+                        results.add(new Like(likeLabel));//, eventLocation));
+                    }
+                    ExtendedArrayAdapter<Like> ad = new ExtendedArrayAdapter<Like>
+                            (getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);
+                    lv.setAdapter(ad);
+                    break;
+                }
+                case GROUPS:
+                {
+                    ArrayList<Group> results = new ArrayList<Group>();
+                    while (cursor != null && cursor.moveToNext())
+                    {
+                        String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
+                        String groupDescription = cursor.getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
+                        results.add(new Group(groupName, groupDescription));//, eventLocation));
+                    }
+                    ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>
+                            (getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);
+                    lv.setAdapter(ad);
+                    break;
+                }
+
+            }
+        }
+
+
     }
 }

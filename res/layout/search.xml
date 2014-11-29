@@ -27,7 +27,7 @@ Search page with dynamic lists.
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/editText"
+            android:id="@+id/searchEditText"
             android:layout_weight="5"
             android:layout_gravity="right" />
 
@@ -37,7 +37,7 @@ Search page with dynamic lists.
             android:text="Search"
             android:textSize="15dp"
             android:layout_weight="2"
-            android:id="@+id/button"
+            android:id="@+id/search"
             android:layout_gravity="right" />
     </LinearLayout>
 
