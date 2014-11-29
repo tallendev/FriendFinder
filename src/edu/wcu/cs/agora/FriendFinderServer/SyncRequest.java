@@ -117,13 +117,13 @@ public class SyncRequest extends Request
         int setStringVal = 1;
         if (search != null)
         {
-            System.err.println("SyncRequest: Search is null.");
+            System.err.println("SyncRequest: Search is not null.");
             stmt.setString(setStringVal, search);
             setStringVal++;
         }
         if (user != null) //FIXME not a great design
         {
-            System.err.println("SyncRequest: User is null.");
+            System.err.println("SyncRequest: User is not null.");
             stmt.setString(setStringVal, user);
             setStringVal++;
         }

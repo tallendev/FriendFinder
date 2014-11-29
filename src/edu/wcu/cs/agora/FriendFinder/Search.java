@@ -261,19 +261,19 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
 
     private enum SearchOption
     {
-        USERS("users", "USERS", "email"),
-        GROUPS("user_group", "USER_GROUP", "group_name"),
-        LIKES("likes", "LIKES", "like_label");
+        USERS("users", "USERS", Search.USERS),
+        GROUPS("user_group", "USER_GROUP", USER_GROUP),
+        LIKES("likes", "LIKES",  Search.LIKES);
 
         private String serverColumn;
-        private String clientColumn;
         private String query;
+        private Uri uri;
 
-        private SearchOption(String serverColumn, String clientColumn, String query)
+        private SearchOption(String serverColumn, String query, Uri uri)
         {
             this.serverColumn = serverColumn;
-            this.clientColumn = clientColumn;
             this.query = query;
+            this.uri = uri;
         }
 
         public static SearchOption selectOption(String option)
@@ -310,14 +310,14 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
             return serverColumn;
         }
 
-        public String getClientColumn()
-        {
-            return clientColumn;
-        }
-
         public String getQuery()
         {
             return query;
+        }
+
+        public Uri getUri()
+        {
+            return uri;
         }
     }
 
@@ -336,7 +336,7 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
             // Build the list of each picture to be displayed in the listview.
             Log.d("GROUPS", "Resolver query");
             String[] projArgs = {editText.getText().toString() + "%"};
-            Cursor cursor = resolver.query(USER_GROUP, null, currentOption.getQuery() + " like ?", projArgs, null);
+            Cursor cursor = resolver.query(currentOption.getUri(), null, currentOption.getQuery() + " like ?", projArgs, null);
             updateListView(cursor, lv);
         }
 
