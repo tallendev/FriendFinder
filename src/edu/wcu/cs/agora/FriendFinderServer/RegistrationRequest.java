@@ -44,7 +44,7 @@ public class RegistrationRequest extends Request
             stmt.setString(3, gender);
             stmt.setString(4, pass);
             stmt.setString(5, name);
-            stmt.executeQuery();
+            stmt.executeUpdate();
             out.put("success", true);
         }
     }
