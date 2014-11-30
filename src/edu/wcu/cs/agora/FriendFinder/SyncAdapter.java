@@ -117,6 +117,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     public void onPerformSync (Account account, Bundle extras, String authority,
                                ContentProviderClient provider, SyncResult syncResult)
     {
+        Log.d("SYNC", "Extras: " + extras);
         try
         {
             Log.d("SYNC", "starting sync");
@@ -126,7 +127,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             OutputStream out = sslSocket.getOutputStream();
             AccountManager accountManager = (AccountManager) getContext()
                     .getSystemService(Context.ACCOUNT_SERVICE);
-            String requestType = extras.getString("request_type");
+            Log.d("SYNC", "Extras: " + extras);
+            String requestType = extras.getString("request_type", "3");
             JSONObject json = new JSONObject();
             json.put("request_type", requestType);
             json.put("user", account.name);
@@ -175,8 +177,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             out.write(json.toString().getBytes());
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
-
-
         }
         catch (IOException ioe)
         {

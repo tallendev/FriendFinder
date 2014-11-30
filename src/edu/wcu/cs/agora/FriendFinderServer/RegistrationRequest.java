@@ -39,7 +39,7 @@ public class RegistrationRequest extends Request
             String createUser = "INSERT INTO friendfinder.users VALUES(?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(createUser);
             stmt.setString(1, user);
-            stmt.setString(2, birthday);
+            stmt.setDate(2, Date.valueOf(birthday));
             stmt.setString(3, gender);
             stmt.setString(4, pass);
             stmt.setString(5, name);

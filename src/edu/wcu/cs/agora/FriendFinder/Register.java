@@ -110,7 +110,7 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
                 extras.putString("request_type", "0");
                 extras.putString("user", user.getText().toString());
                 extras.putString("password", user.getText().toString());
-                extras.putString("birthday", datePicker.toString());
+                extras.putString("birthday", datePicker.getYear() + "-" + datePicker.getMonth() + "-" + datePicker.getDay());
                 extras.putString("gender", genderSelected);
                 extras.putString("name", name.getText().toString());
                 Account account = FriendFinder.createSyncAccount(this, user.getText().toString(),
@@ -200,15 +200,19 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
             implements DatePickerDialog.OnDateSetListener
     {
 
+        private int year;
+        private int month;
+        private int day;
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current time as the default values for the picker
             final Calendar c = Calendar.getInstance();
-            final int year = c.get(Calendar.YEAR);
-            final int monthOfYear = c.get(Calendar.MONTH);
-            final int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+            year = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            day = c.get(Calendar.DAY_OF_MONTH);
             // Create a new instance of TimePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, monthOfYear, dayOfMonth);
+            return new DatePickerDialog(getActivity(), this, year, month, day);
         }
 
         /**
@@ -221,7 +225,24 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
         {
+            this.year = year;
+            this.month = monthOfYear;
+            this.day = dayOfMonth;
+        }
 
+        public int getYear()
+        {
+            return year;
+        }
+
+        public int getMonth()
+        {
+            return month;
+        }
+
+        public int getDay()
+        {
+            return day;
         }
     }
 }
