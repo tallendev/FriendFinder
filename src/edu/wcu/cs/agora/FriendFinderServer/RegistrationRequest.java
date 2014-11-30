@@ -37,7 +37,7 @@ public class RegistrationRequest extends Request
         else
         {
             System.err.println("Birthday: " + birthday);
-            String createUser = "INSERT INTO friendfinder.users VALUES(?, ?, ?, ?, ?)";
+            String createUser = "INSERT INTO friendfinder.users VALUES(?, ?, ?, ?, ?);";
             PreparedStatement stmt = conn.prepareStatement(createUser);
             stmt.setString(1, user);
             stmt.setDate(2, Date.valueOf(birthday));
