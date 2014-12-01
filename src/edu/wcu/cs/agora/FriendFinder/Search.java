@@ -114,6 +114,9 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
             {
                 Intent intent = new Intent(this, Profile.class);
                 User user = ((User) (adapterView.getAdapter().getItem((int) l)));
+                boolean owner;
+                owner = user.getEmail().equals(account.name);
+                intent.putExtra("owner", owner);
                 intent.putExtra("gender", user.getGender());
                 intent.putExtra("birthday", user.getBirthday());
                 intent.putExtra("name", user.getName());
@@ -357,10 +360,11 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
                     ArrayList<User> results = new ArrayList<User>();
                     while (cursor != null && cursor.moveToNext())
                     {
+                        String email = cursor.getString(cursor.getColumnIndex("EMAIL"));
                         String birthday = cursor.getString(cursor.getColumnIndex("BIRTHDAY"));
                         String gender = cursor.getString(cursor.getColumnIndex("GENDER"));
                         String name = cursor.getString(cursor.getColumnIndex("FULL_NAME"));
-                        results.add(new User(birthday, gender, name));//, eventLocation));
+                        results.add(new User(email, birthday, gender, name));//, eventLocation));
                     }
                     ExtendedArrayAdapter<User> ad = new ExtendedArrayAdapter<User>
                             (getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);

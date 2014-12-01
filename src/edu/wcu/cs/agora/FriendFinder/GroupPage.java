@@ -8,15 +8,17 @@ import android.widget.TextView;
 /**
  * Created by tyler on 11/27/14.
  */
-public class GroupPage extends Activity {
+public class GroupPage extends Activity
+{
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grouppage);
         Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
         TextView eventName = ((TextView) findViewById(R.id.groupname));
-        eventName.setText(intent.getExtras().getString("group_name", eventName.getText().toString()));
-        ((TextView) findViewById(R.id.group_description)).setText(intent.getExtras().getString("group_description"));
+        eventName.setText(extras.getString("group_name", eventName.getText().toString()));
+        ((TextView) findViewById(R.id.group_description)).setText(extras.getString("group_description"));
     }
 }

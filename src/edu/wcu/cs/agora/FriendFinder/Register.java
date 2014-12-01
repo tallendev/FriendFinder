@@ -183,6 +183,7 @@ public class Register extends Activity implements View.OnClickListener, AdapterV
             else if (intent.getExtras().getBoolean("success", false))
             {
                 Intent i = new Intent(Register.this, Profile.class);
+                i.putExtra("owner", true);
                 startActivity(i);
                 finish();
             }

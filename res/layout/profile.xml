@@ -54,6 +54,24 @@ User view page.
     </LinearLayout>
 
     <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="gender"
+            android:gravity="bottom"
+            android:textColor="@color/gold"
+            android:id="@+id/gender1"
+            android:layout_weight="1" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="birthday"
+            android:gravity="bottom"
+            android:textColor="@color/gold"
+            android:id="@+id/birthday"
+            android:layout_weight="1" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="Likes:"
@@ -72,24 +90,6 @@ User view page.
         android:layout_marginLeft="10dp"
         android:layout_weight="1" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Dislikes:"
-        android:textColor="@color/gold"
-        android:gravity="bottom"
-        android:id="@+id/textView3"
-        android:layout_weight="1" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/editText2"
-        android:text="Your dislikes here"
-        android:textColor="@color/gold"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="1" />
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -98,28 +98,12 @@ User view page.
         android:id="@+id/schedule"
         android:layout_weight="1" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Events:"
-        android:textColor="@color/gold"
-        android:gravity="bottom"
-        android:layout_weight="1" />
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:weightSum="10"
+            android:layout_weight="4"
+            android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Your events here"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/gold"
-        android:layout_weight="1" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Add to Group"
-        android:layout_marginRight="90dp"
-        android:layout_marginLeft="90dp"
-        android:id="@+id/save"
-        android:layout_weight="1" />
 </LinearLayout>

@@ -5,14 +5,16 @@ package edu.wcu.cs.agora.FriendFinder;
  */
 public class User
 {
+    private String email;
     /** User birthdate. */
     private String birthday;
     private String gender;
     private String name;
 
     /** Intializes fields. */
-    public User (String birthday, String gender, String name)
+    public User (String email, String birthday, String gender, String name)
     {
+        this.email = email;
         this.birthday = birthday;
         this.gender = gender;
         this.name = name;
@@ -39,5 +41,10 @@ public class User
     public String getName()
     {
         return name;
+    }
+
+    public String getEmail()
+    {
+        return email;
     }
 }
