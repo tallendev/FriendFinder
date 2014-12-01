@@ -23,8 +23,7 @@ public class FriendFinder extends Application
         Account newAccount = new Account(username, "edu.wcu");
         // Get an instance of the Android account manager
         AccountManager accountManager =
-                (AccountManager) context.getSystemService(
-                        ACCOUNT_SERVICE);
+                (AccountManager) context.getSystemService(ACCOUNT_SERVICE);
         /*
          * Add the account and account type, no password or user data
          * If successful, return the Account object, otherwise report an error.

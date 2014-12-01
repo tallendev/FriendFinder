@@ -55,7 +55,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         lv = (ListView) rootView.findViewById(R.id.listView1);
         spinnerDialog = new LoadingSpinnerDialog();
         resolver = getActivity().getContentResolver();
-        account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
+        account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE)).getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         Bundle extras = new Bundle();
         extras.putString("request_type", "3");
         extras.putString("table0", "event");

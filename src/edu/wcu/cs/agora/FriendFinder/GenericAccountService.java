@@ -18,8 +18,9 @@ import android.util.Log;
  *
  * Singleton, hence getAccount
  */
-public class GenericAccountService extends Service {
-    private static final String ACCOUNT_TYPE = "edu.wcu";
+public class GenericAccountService extends Service
+{
+    public static final String ACCOUNT_TYPE = "edu.wcu";
     private Authenticator authenticator;
     private String accountName;
 

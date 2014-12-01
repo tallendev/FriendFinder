@@ -59,7 +59,7 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         resolver = getContentResolver();
-        account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE)).getAccounts()[0];
+        account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE)).getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         lv = (ListView) findViewById(R.id.listView1);
         editText = (EditText) findViewById(R.id.searchEditText);
         search = (Button) findViewById(R.id.search);
