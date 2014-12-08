@@ -147,9 +147,10 @@ public class RequestServer
         Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
         if (in.hasNext())
         {
+            System.err.println("Read");
             JSONObject json = new JSONObject(in.next());
             JSONObject jsonOut = new JSONObject();
-
+            System.err.println("Build new request.");
             Request request = Request.requestBuilder(json, jsonOut);
             request.getResponse();
             PrintStream out = new PrintStream(client.getOutputStream());
