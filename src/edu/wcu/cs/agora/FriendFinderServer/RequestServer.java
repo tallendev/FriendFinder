@@ -149,6 +149,7 @@ public class RequestServer
         {
             System.err.println("Read");
             JSONObject json = new JSONObject(in.next());
+            System.err.println("Finished read");
             JSONObject jsonOut = new JSONObject();
             System.err.println("Build new request.");
             Request request = Request.requestBuilder(json, jsonOut);
