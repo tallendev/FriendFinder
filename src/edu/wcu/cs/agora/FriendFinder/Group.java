@@ -1,16 +1,28 @@
 package edu.wcu.cs.agora.FriendFinder;
 
 /**
- * Created by tyler on 11/16/14.
+ * @author Tyler Allen
+ * @created 11/16/2014
+ * @version 12/7/2014
+ *
+ * This class represents a Group. It holds a group's name and description. Originally created
+ * to be a data holder object for a ListView.
+ *
  */
 public class Group
 {
-    /** The title of the image. */
+    /**
+     * The title of the image.
+     */
     private String group_name;
-    /** The date of the image. */
+    /**
+     * The date of the image.
+     */
     private String description;
 
-    /** Intializes fields. */
+    /**
+     * Initializes fields.
+     */
     public Group (String group_name, String description)
     {
         this.group_name = group_name;
@@ -19,6 +31,7 @@ public class Group
 
     /**
      * Returns title.
+     *
      * @return title
      */
     public String getGroupName ()
@@ -27,7 +40,8 @@ public class Group
     }
 
     /**
-     * Returns the date
+     * Returns the date.
+     *
      * @return date
      */
     public String getDescription ()

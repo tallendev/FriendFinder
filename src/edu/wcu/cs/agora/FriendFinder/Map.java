@@ -7,18 +7,19 @@ import com.google.android.gms.maps.MapFragment;
 
 
 /**
- * Tyler Allen
- * Karen Dana
- * 09/29/2014
- *
- * Code for functionality on the log in page.
+ * @author Tyler Allen
+ * @created 09/29/2014
+ * @version 12/8/2014
+ * Google maps implementation. Not used as of yet.
  */
-public class Map extends Activity {
+public class Map extends Activity
+{
 
     private GoogleMap map;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 

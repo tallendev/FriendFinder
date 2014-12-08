@@ -21,28 +21,73 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tyler on 11/2/2014.
+ * @author Tyler Allen
+ * @created 11/2/2014
+ * @version 12/8/2014
+ *
+ * This class sets up and performs visual and interactive functions available on the search page.
  */
-public class Search extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener
+public class Search extends Activity
+        implements View.OnClickListener, AdapterView.OnItemClickListener,
+        AdapterView.OnItemSelectedListener
 {
 
-    /** The request status when requesting a PicInfo class.*/
+    /**
+     * The request status when requesting a class.
+     */
     public static final int REQUEST = 1;
 
-    public static final Uri USER_GROUP = Uri.parse(ServerContentProvider.CONTENT_URI + "/user_group");
-    public static final Uri USERS = Uri.parse(ServerContentProvider.CONTENT_URI + "/users");
-    public static final Uri LIKES = Uri.parse(ServerContentProvider.CONTENT_URI + "/likes");
+    /**
+     * URI for the table containing groups.
+     */
+    public static final Uri USER_GROUP = ServerContentProvider.USER_GROUP;
+    /**
+     * URI for the table containing users.
+     */
+    public static final Uri USERS      = ServerContentProvider.USERS;
+    /**
+     * URI for the table containing likes.
+     */
+    public static final Uri LIKES      = ServerContentProvider.LIKES;
 
-    /** Our ArrayList containing each picture to be entered into the listview. */
-    private ContentResolver resolver;
-    private Account account;
-    private Spinner spinner;
-    private ListView lv;
-    private EditText editText;
-    private Button search;
-    private SearchOption currentOption;
+    /**
+     * Our ArrayList containing each picture to be entered into the listview.
+     */
+    private ContentResolver      resolver;
+    /**
+     * The current user's account.
+     */
+    private Account              account;
+    /**
+     * Spinner containing dropdown options for the search parameters.
+     */
+    private Spinner              spinner;
+    /**
+     * The ListView containing our search results.
+     */
+    private ListView             lv;
+    /**
+     * The editText box containing a user's search parameters.
+     */
+    private EditText             editText;
+    /**
+     * Search button.
+     */
+    private Button               search;
+    /**
+     * User's current search option.
+     */
+    private SearchOption         currentOption;
+    /**
+     * Spinner Dialog to display while synchronizing with the server.
+     */
     private LoadingSpinnerDialog spinnerDialog;
 
+    /**
+     * Assigns values to the parameters. Sets up button listeners/
+     *
+     * @param savedInstanceState not used
+     */
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
@@ -51,52 +96,44 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
         spinnerDialog = new LoadingSpinnerDialog();
         spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.search_options_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter
+                .createFromResource(this, R.array.search_options_array,
+                                    android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         resolver = getContentResolver();
-        account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE)).getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
+        account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE))
+                .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         lv = (ListView) findViewById(R.id.listView1);
         editText = (EditText) findViewById(R.id.searchEditText);
         search = (Button) findViewById(R.id.search);
         search.setOnClickListener(this);
         currentOption = SearchOption.USERS;
         Handler handler = new Handler();
+        // register content providers in order to cease showing the spinner dialog when an update
+        // is received.
         resolver.registerContentObserver(USER_GROUP, true, new SearchContentObserver(handler));
         resolver.registerContentObserver(LIKES, true, new SearchContentObserver(handler));
         resolver.registerContentObserver(USERS, true, new SearchContentObserver(handler));
     }
 
     /**
-     * Here we do all the main work of setting up the list, so that it is
-     * regenerated every time we return to this screen in the event of file
-     * system changes from other fragments/activities.
-     */
-    public void onResume()
-    {
-        super.onResume();
-    }
-
-
-    /**
-     * When an item is clicked, the appropriate pic is opened up in the PicInfo
-     * class.
+     * When an item is clicked, the appropriate page is opened.
      *
      * @param adapterView The adapterview for this list view.
-     * @param view        The view that was clicked.
-     * @param i           Not used
-     * @param l           Index of item we are looking for.
+     * @param view The view that was clicked.
+     * @param i Not used
+     * @param l Index of item we are looking for.
      */
     @Override
-    public void onItemClick (AdapterView<?> adapterView, View view,
-                             int i, long l)
+    public void onItemClick (AdapterView<?> adapterView, View view, int i, long l)
     {
         switch (currentOption)
         {
+            // Displays a Groups page.
             case GROUPS:
             {
                 Intent intent = new Intent(this, GroupPage.class);
@@ -106,10 +143,12 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
                 startActivityForResult(intent, REQUEST);
                 break;
             }
+            // Likes do not have their own pages.
             case LIKES:
             {
                 break;
             }
+            // Creates a user page.
             case USERS:
             {
                 Intent intent = new Intent(this, Profile.class);
@@ -127,22 +166,22 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
     }
 
     /**
-     * <p>Callback method to be invoked when an item in this view has been
-     * selected. This callback is invoked only when the newly selected
-     * position is different from the previously selected position or if
-     * there was no selected item.</p>
+     * <p>Callback method to be invoked when an item in this view has been selected. This callback
+     * is invoked only when the newly selected position is different from the previously selected
+     * position or if there was no selected item.</p>
      * <p>
-     * Impelmenters can call getItemAtPosition(position) if they need to access the
-     * data associated with the selected item.
+     * Impelmenters can call getItemAtPosition(position) if they need to access the data associated
+     * with the selected item.
      *
-     * @param parent   The AdapterView where the selection happened
-     * @param view     The view within the AdapterView that was clicked
+     * @param parent The AdapterView where the selection happened
+     * @param view The view within the AdapterView that was clicked
      * @param position The position of the view in the adapter
-     * @param id       The row id of the item that is selected
+     * @param id The row id of the item that is selected
      */
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+    public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
     {
+        // set current item string.
         lv.setAdapter(null);
         Object item = parent.getItemAtPosition(position);
         currentOption = SearchOption.selectOption(item.toString());
@@ -150,16 +189,15 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
     }
 
     /**
-     * Callback method to be invoked when the selection disappears from this
-     * view. The selection can disappear for instance when touch is activated
-     * or when the adapter becomes empty.
+     * Callback method to be invoked when the selection disappears from this view. The selection can
+     * disappear for instance when touch is activated or when the adapter becomes empty.
      *
      * @param parent The AdapterView that now contains no selected item.
      */
     @Override
-    public void onNothingSelected(AdapterView<?> parent)
+    public void onNothingSelected (AdapterView<?> parent)
     {
-
+        //required but not used.
     }
 
     /**
@@ -168,13 +206,14 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
      * @param v The view that was clicked.
      */
     @Override
-    public void onClick(View v)
+    public void onClick (View v)
     {
         if (v.getId() == R.id.search)
         {
             Bundle extras = new Bundle();
+            // generate sync request based on search parameters.
             extras.putString("request_type", "3");
-            extras.putString("table0", currentOption.getServerColumn());
+            extras.putString("table0", currentOption.getTable());
             extras.putString("search", "%" + editText.getText().toString() + "%");
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             lv.setOnItemClickListener(this);
@@ -183,109 +222,56 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
     }
 
     /**
-     * Extension of the ArrayAdapter class, using Websites as an object located
-     * inside each list view item.
-     *
-     * @param <T>
+     * Private enum containing possible searchable options. Allows easy holding of data to provide
+     * to list view.
      */
-    private class ExtendedArrayAdapter<T> extends ArrayAdapter<T>
-    {
-        LayoutInflater inflater;
-        List<T> list;
-
-        /**
-         * Sets the fields.
-         *
-         * @param context   Passed to super.
-         * @param layout    Passed to super.
-         * @param txtLayout The txtLayout we are modifying in the list item
-         *                  view.
-         * @param list      The list of objects we put in our list view.
-         */
-        public ExtendedArrayAdapter (Context context, int layout,
-                                     int txtLayout, List<T> list)
-        {
-            super(context, layout, txtLayout, list);
-            this.list = list;
-            inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        /**
-         * Returns the view requested.
-         *
-         * @param position    Not used
-         * @param convertView the view we are converting.
-         * @param parent      Not used.
-         *
-         * @return The new view.
-         */
-        @Override
-        public View getView (int position, View convertView, ViewGroup parent)
-        {
-            ViewHolder holder = null;
-            if (convertView == null)
-            {
-                holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.group_list_item, null);
-                holder.txt1 = (TextView) convertView.findViewById(R.id.groupname);
-                convertView.setTag(holder);
-            }
-            else
-            {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            switch (currentOption)
-            {
-                case USERS:
-                {
-                    holder.txt1.setText(((User) (list.get(position))).getName());
-                    break;
-                }
-                case LIKES:
-                {
-                    holder.txt1.setText(((Like) (list.get(position))).getLike());
-                    break;
-                }
-                case GROUPS:
-                {
-                    holder.txt1.setText(((Group) (list.get(position))).getGroupName());
-                    break;
-                }
-
-            }
-            return convertView;
-        }
-    }
-
-    /**
-     * Holder pattern object containing a text view.
-     */
-    public static class ViewHolder
-    {
-        /** First text view holding name.*/
-        public TextView txt1;
-    }
-
     private enum SearchOption
     {
+        // Users option.
         USERS("users", "EMAIL", Search.USERS),
+        // Groups option.
         GROUPS("user_group", "GROUP_NAME", USER_GROUP),
-        LIKES("likes", "LIKE_LABEL",  Search.LIKES);
+        // Likes option.
+        LIKES("likes", "LIKE_LABEL", Search.LIKES);
 
-        private String serverColumn;
+        /**
+         * Table related to this query type.
+         */
+        private String table;
+        /**
+         * Column used for query
+         */
         private String query;
-        private Uri uri;
+        /**
+         * Associated table's URI.
+         */
+        private Uri    uri;
 
-        private SearchOption(String serverColumn, String query, Uri uri)
+        /**
+         * Constructor that assigns values for fields.
+         *
+         * @param table Table name.
+         * @param query Relevant Query Column
+         * @param uri URI to access table in ContentProvider.
+         */
+        private SearchOption (String table, String query, Uri uri)
         {
-            this.serverColumn = serverColumn;
+            this.table = table;
             this.query = query;
             this.uri = uri;
         }
 
-        public static SearchOption selectOption(String option)
+        /**
+         * Chooses appropriate object for provided string. Similar to builder method design
+         * pattern.
+         *
+         * @param option The input option.
+         *
+         * @return The object associated with the input option.
+         */
+        public static SearchOption selectOption (String option)
         {
-            SearchOption returnOption= null;
+            SearchOption returnOption = null;
             switch (option)
             {
                 case "Users":
@@ -312,94 +298,240 @@ public class Search extends Activity implements View.OnClickListener, AdapterVie
             return returnOption;
         }
 
-        public String getServerColumn()
+        /**
+         * Getter for table.
+         *
+         * @return table
+         */
+        public String getTable ()
         {
-            return serverColumn;
+            return table;
         }
 
-        public String getQuery()
+        /**
+         * Getter for associated column.
+         *
+         * @return query
+         */
+        public String getQuery ()
         {
             return query;
         }
 
-        public Uri getUri()
+        /**
+         * Getter for associated ContentProvider URI.
+         *
+         * @return uri
+         */
+        public Uri getUri ()
         {
             return uri;
         }
     }
 
+    /**
+     * Holder pattern object containing a text view.
+     */
+    public static class ViewHolder
+    {
+        /**
+         * First text view holding name.
+         */
+        public TextView txt1;
+    }
+
+    /**
+     * Extension of the ArrayAdapter class, using Websites as an object located inside each list
+     * view item.
+     *
+     * @param <T>
+     */
+    private class ExtendedArrayAdapter <T> extends ArrayAdapter<T>
+    {
+        LayoutInflater inflater;
+        List<T>        list;
+
+        /**
+         * Sets the fields.
+         *
+         * @param context Passed to super.
+         * @param layout Passed to super.
+         * @param txtLayout The txtLayout we are modifying in the list item view.
+         * @param list The list of objects we put in our list view.
+         */
+        public ExtendedArrayAdapter (Context context, int layout, int txtLayout, List<T> list)
+        {
+            super(context, layout, txtLayout, list);
+            this.list = list;
+            inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        /**
+         * Returns the view requested.
+         *
+         * @param position Not used
+         * @param convertView the view we are converting.
+         * @param parent Not used.
+         *
+         * @return The new view.
+         */
+        @Override
+        public View getView (int position, View convertView, ViewGroup parent)
+        {
+            ViewHolder holder = null;
+            if (convertView == null)
+            {
+                holder = new ViewHolder();
+                convertView = inflater.inflate(R.layout.group_list_item, null);
+                holder.txt1 = (TextView) convertView.findViewById(R.id.groupname);
+                convertView.setTag(holder);
+            }
+            else
+            {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            // could be refactored to make these types more polymorphic.
+            switch (currentOption)
+            {
+                case USERS:
+                {
+                    holder.txt1.setText(((User) (list.get(position))).getName());
+                    break;
+                }
+                case LIKES:
+                {
+                    holder.txt1.setText(((Like) (list.get(position))).getLike());
+                    break;
+                }
+                case GROUPS:
+                {
+                    holder.txt1.setText(((Group) (list.get(position))).getGroupName());
+                    break;
+                }
+
+            }
+            return convertView;
+        }
+    }
+
+    /**
+     * An observer for a contentProvider. Allows us to register a callback to stop displaying
+     * a spinner dialog and take other action.
+     */
     private class SearchContentObserver extends ContentObserver
     {
-        public SearchContentObserver(Handler handler)
+        public SearchContentObserver (Handler handler)
         {
             super(handler);
 
         }
 
+        /**
+         * Updates the list view and dismissed the dialog.
+         * @param selfChange not used.
+         */
         @Override
-        public void onChange(boolean selfChange)
+        public void onChange (boolean selfChange)
         {
             super.onChange(selfChange);
             // Build the list of each picture to be displayed in the listview.
             Log.d("GROUPS", "Resolver query");
-            //String[] projArgs = {"%" + editText.getText().toString() + "%"};
-            //Cursor cursor = resolver.query(currentOption.getUri(), null, currentOption.getQuery() + " like ?", projArgs, null);
             Cursor cursor = resolver.query(currentOption.getUri(), null, null, null, null);
             updateListView(cursor, lv);
             spinnerDialog.dismiss();
         }
 
 
-        private void updateListView(Cursor cursor, ListView lv)
+        /**
+         * Helper method for refreshing the list view with new data. In the future it may be
+         * possible to refactor the different types of list to fit into one interface or abstract
+         * class so that we may do this polymorphically.
+         *
+         * @param cursor Query information received from content provider to fill new listview.
+         * @param lv Current list view.
+         */
+        private void updateListView (Cursor cursor, ListView lv)
         {
             lv.invalidateViews();
             switch (currentOption)
             {
                 case USERS:
                 {
-                    ArrayList<User> results = new ArrayList<User>();
-                    while (cursor != null && cursor.moveToNext())
-                    {
-                        String email = cursor.getString(cursor.getColumnIndex("EMAIL"));
-                        String birthday = cursor.getString(cursor.getColumnIndex("BIRTHDAY"));
-                        String gender = cursor.getString(cursor.getColumnIndex("GENDER"));
-                        String name = cursor.getString(cursor.getColumnIndex("FULL_NAME"));
-                        results.add(new User(email, birthday, gender, name));//, eventLocation));
-                    }
-                    ExtendedArrayAdapter<User> ad = new ExtendedArrayAdapter<User>
-                            (getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);
-                    lv.setAdapter(ad);
+                    buildUserList(cursor);
                     break;
                 }
                 case LIKES:
                 {
-                    ArrayList<Like> results = new ArrayList<Like>();
-                    while (cursor != null && cursor.moveToNext())
-                    {
-                        String likeLabel = cursor.getString(cursor.getColumnIndex("LIKE_LABEL"));
-                        results.add(new Like(likeLabel));//, eventLocation));
-                    }
-                    ExtendedArrayAdapter<Like> ad = new ExtendedArrayAdapter<Like>
-                            (getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);
-                    lv.setAdapter(ad);
+                    buildLikeList(cursor);
                     break;
                 }
                 case GROUPS:
                 {
-                    ArrayList<Group> results = new ArrayList<Group>();
-                    while (cursor != null && cursor.moveToNext())
-                    {
-                        String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
-                        String groupDescription = cursor.getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
-                        results.add(new Group(groupName, groupDescription));//, eventLocation));
-                    }
-                    ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>
-                            (getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);
-                    lv.setAdapter(ad);
+                    buildGroupList(cursor);
                     break;
                 }
-
             }
+        }
+
+        /**
+         * Helper method for building a list of users.
+         *
+         * @param cursor Contains all groups to add to the list.
+         */
+        private void buildUserList (Cursor cursor)
+        {
+            ArrayList<User> results = new ArrayList<User>();
+            while (cursor != null && cursor.moveToNext())
+            {
+                String email = cursor.getString(cursor.getColumnIndex("EMAIL"));
+                String birthday = cursor.getString(cursor.getColumnIndex("BIRTHDAY"));
+                String gender = cursor.getString(cursor.getColumnIndex("GENDER"));
+                String name = cursor.getString(cursor.getColumnIndex("FULL_NAME"));
+                results.add(new User(email, birthday, gender, name));//, eventLocation));
+            }
+            ExtendedArrayAdapter<User> ad = new ExtendedArrayAdapter<User>(getApplicationContext(),
+                                                                           R.layout.group_list_item,
+                                                                           R.id.groupname, results);
+            lv.setAdapter(ad);
+        }
+
+        /**
+         * Helper method for building a list of likes.
+         *
+         * @param cursor Contains all groups to add to the list.
+         */
+        private void buildLikeList (Cursor cursor)
+        {
+            ArrayList<Like> results = new ArrayList<Like>();
+            while (cursor != null && cursor.moveToNext())
+            {
+                String likeLabel = cursor.getString(cursor.getColumnIndex("LIKE_LABEL"));
+                results.add(new Like(likeLabel));//, eventLocation));
+            }
+            ExtendedArrayAdapter<Like> ad = new ExtendedArrayAdapter<Like>(getApplicationContext(),
+                                                                           R.layout.group_list_item,
+                                                                           R.id.groupname, results);
+            lv.setAdapter(ad);
+        }
+
+        /**
+         * Helper method for building a list of groups.
+         *
+         * @param cursor Contains all groups to add to the list.
+         */
+        private void buildGroupList (Cursor cursor)
+        {
+            ArrayList<Group> results = new ArrayList<Group>();
+            while (cursor != null && cursor.moveToNext())
+            {
+                String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
+                String groupDescription = cursor
+                        .getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
+                results.add(new Group(groupName, groupDescription));//, eventLocation));
+            }
+            ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>(
+                    getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);
+            lv.setAdapter(ad);
         }
     }
 }

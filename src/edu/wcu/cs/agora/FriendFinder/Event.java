@@ -1,18 +1,39 @@
 package edu.wcu.cs.agora.FriendFinder;
 
 /**
- * Created by tyler on 11/16/14.
+ * @author Tyler Allen
+ * @created 11/16/14
+ * @version 12/7/2014
+ *
+ * A representation for an event. Created for use in a ListView.
  */
 public class Event
 {
-    /** The title of the image. */
+    /**
+     * The title of the event.
+     */
     private String eventName;
-    /** The date of the image. */
+    /**
+     * The date of the event.
+     */
     private String eventDate;
+    /**
+     * The time of the event.
+     */
     private String eventTime;
+    /**
+     * A description of the event.
+     */
     private String eventDescription;
 
-    /** Intializes fields. */
+    /**
+     * Initializes fields.
+     *
+     * @param eventName The name of the event.
+     * @param eventDate The date of the event.
+     * @param eventTime The time of the event.
+     * @param eventDescription The event's description as specified by the user.
+     */
     public Event (String eventName, String eventDate, String eventTime, String eventDescription)
     {
         this.eventName = eventName;
@@ -22,26 +43,38 @@ public class Event
     }
 
     /**
-     * Returns title.
-     * @return title
+     * Returns the name of the event.
+     *
+     * @return name
      */
     public String getEventName ()
     {
         return eventName;
     }
 
-    public String getEventDate()
+    /**
+     * Returns the date of the event.
+     *
+     * @return date
+     */
+    public String getEventDate ()
     {
         return eventDate;
     }
 
-    public String getEventTime()
+    /**
+     * Returns the time of the event.
+     *
+     * @return time
+     */
+    public String getEventTime ()
     {
         return eventTime;
     }
 
     /**
      * Returns the date
+     *
      * @return date
      */
     public String getDescription ()

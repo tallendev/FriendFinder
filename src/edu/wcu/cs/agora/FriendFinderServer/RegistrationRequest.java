@@ -6,15 +6,31 @@ import org.json.JSONObject;
 import java.sql.*;
 
 /**
- * Created by tyler on 11/29/14.
+ * @author Tyler Allen
+ * @created 11/29/14
+ * @version 12/8/2014
+ *
+ * Handles a RegistrationRequest from a client.
  */
 public class RegistrationRequest extends Request
 {
+    /**
+     * Default constructor. Calls super.
+     *
+     * @param in Input JSON object from client.
+     * @param out Outgoing JSON object to client.
+     */
     public RegistrationRequest(JSONObject in, JSONObject out)
     {
         super(in, out);
     }
 
+    /**
+     * Attempts to register a user for the application using their provided credentials.
+     *
+     * @throws SQLException In the event of an SQL error.
+     * @throws JSONException In the event of missing information in the JSON in object.
+     */
     @Override
     protected void getResponse() throws SQLException, JSONException
     {
@@ -27,16 +43,18 @@ public class RegistrationRequest extends Request
         String gender = in.getString("gender");
         String name = in.getString("name");
 
-        Connection conn = DriverManager.getConnection("jdbc:postgresql:friendfinder", "tyler",
-                                                      "hadouken!");
+        Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
         ResultSet rs = Authenticator.findUser(conn, user);
+        // user does not exist.
         if (rs.next())
         {
             out.put("success", false);
         }
+        // user does exist.
         else
         {
             System.err.println("Birthday: " + birthday);
+            // Setting up the statement and its parameters.
             String createUser = "INSERT INTO friendfinder.users VALUES(?, ?, ?, ?, ?);";
             PreparedStatement stmt = conn.prepareStatement(createUser);
             stmt.setString(1, user);

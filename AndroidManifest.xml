@@ -43,7 +43,7 @@ Permissions.
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
-                 android:allowBackup="false"
+                 android:allowBackup="false" android:screenOrientation="portrait"
                  android:theme="@android:style/Theme.Holo" android:name=".FriendFinder">
         <activity android:name="Login"
                   android:label="@string/app_name">
@@ -52,15 +52,15 @@ Permissions.
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Register"/>
-        <activity android:name=".Settings"/>
-        <activity android:name=".Privacy"/>
-        <activity android:name=".EventsPage"/>
-        <activity android:name=".Home"/>
-        <activity android:name=".CreateEvent"/>
-        <activity android:name=".Search"/>
-        <activity android:name=".Profile"/>
-        <activity android:name=".GroupPage"/>
+        <activity android:name=".Register" android:screenOrientation="portrait"/>
+        <activity android:name=".Settings" android:screenOrientation="portrait"/>
+        <activity android:name=".Privacy" android:screenOrientation="portrait"/>
+        <activity android:name=".EventsPage" android:screenOrientation="portrait"/>
+        <activity android:name=".Home" android:screenOrientation="portrait"/>
+        <activity android:name=".CreateEvent" android:screenOrientation="portrait"/>
+        <activity android:name=".Search" android:screenOrientation="portrait"/>
+        <activity android:name=".Profile" android:screenOrientation="portrait"/>
+        <activity android:name=".GroupPage" android:screenOrientation="portrait"/>
 
         <service
                 android:name="edu.wcu.cs.agora.FriendFinder.SyncService"

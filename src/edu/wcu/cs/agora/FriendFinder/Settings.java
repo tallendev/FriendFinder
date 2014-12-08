@@ -7,19 +7,21 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 /**
- * Tyler Allen
- * 09/29/2014
- *
+ * @author Tyler Allen
+ * @created 09/29/2014
+ * @version 12/8/2014
  * Code for functionality on the user privacy settings page.
  */
 
 public class Settings extends Activity implements View.OnClickListener
 {
-
+    /**
+     * Button that leads to privacy page.
+     */
     private LinearLayout button;
 
     /**
-     * Currently the default onCreate.
+     * Sets layout and on-click listeners.
      */
     @Override
     public void onCreate (Bundle savedInstanceState)
@@ -38,6 +40,7 @@ public class Settings extends Activity implements View.OnClickListener
     @Override
     public void onClick (View v)
     {
+        // takes user to privacy page.
         if (v.getId() == button.getId())
         {
             Intent i = new Intent(this, Privacy.class);

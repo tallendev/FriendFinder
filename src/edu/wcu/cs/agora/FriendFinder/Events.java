@@ -24,82 +24,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Tyler Allen
- * 09/29/2014
- *
- * Code for functioning the events page.
+ * @author Tyler Allen
+ * @created 09/29/2014
+ * @version 12/7/2014
+ * Code for the Fragment that contains events.
  */
 
 public class Events extends Fragment implements AdapterView.OnItemClickListener
 {
-    /** The request status when requesting a PicInfo class.*/
-    public static final int REQUEST = 1;
-    public static final Uri EVENTS = Uri.parse(ServerContentProvider.CONTENT_URI + "/event");
-
-    private View rootView;
-    /** Our ArrayList containing each picture to be entered into the listview. */
-    private ArrayList<Event> events;
-    private ContentResolver resolver;
-    private Account account;
-    private LoadingSpinnerDialog spinnerDialog;
-    private ListView lv;
-
-    @Override
     /**
-     * Currently the default fragment onCreate.
+     * The request status when requesting an event class.
      */
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        super.onCreateView(inflater, container, savedInstanceState);
-        rootView = inflater.inflate(R.layout.events_list, container, false);
-        lv = (ListView) rootView.findViewById(R.id.listView1);
-        spinnerDialog = new LoadingSpinnerDialog();
-        resolver = getActivity().getContentResolver();
-        account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE)).getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
-        Bundle extras = new Bundle();
-        extras.putString("request_type", "3");
-        extras.putString("table0", "event");
-        extras.putString("search", "%%");
-        resolver.registerContentObserver(EVENTS, true, new ContentObserver(new Handler())
-        {
-            /**
-             * This method is called when a change occurs to the cursor that
-             * is being observed.
-             *
-             * @param selfChange true if the update was caused by a call to <code>commit</code> on the
-             *                   cursor that is being observed.
-             */
-            @Override
-            public void onChange(boolean selfChange)
-            {
-                super.onChange(selfChange);
-                lv.setAdapter(null);
-                Cursor cursor = resolver.query(EVENTS, null, null, null, null);
-                while (cursor != null && cursor.moveToNext())
-                {
-                    Log.d("EVENTS", "cursor != null");
-                    String eventName = cursor.getString(cursor.getColumnIndex("EVENT_NAME"));
-                    String eventDate = cursor.getString(cursor.getColumnIndex("EVENT_DATE"));
-                    String eventTime = cursor.getString(cursor.getColumnIndex("EVENT_TIME"));
-//            String eventLocation = cursor.getString(cursor.getColumnIndex("EVENT_LOCATION"));
-                    events.add(new Event(eventName, eventDate, eventTime, null));//, eventLocation));
-                }
-                // Create our list.
-                Log.d("EVENTS", "ExtendedArray");
-                ExtendedArrayAdapter<Event> ad = new ExtendedArrayAdapter<Event>
-                        (rootView.getContext(), R.layout.events_list_item, R.id.eventname,
-                                events);
+    public static final int REQUEST = 1;
+    /**
+     * URI for making a request from the Events table in the content provider.
+     */
+    public static final Uri EVENTS  = Uri.parse(ServerContentProvider.CONTENT_URI + "/event");
 
-                lv.setAdapter(ad);
-                lv.setOnItemClickListener(Events.this);
-                spinnerDialog.dismiss();
-            }
-        });
-        ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
-        spinnerDialog.show(getFragmentManager(), "Synchronizing...");
-        return rootView;
-    }
+    /**
+     * RootView of this fragment.
+     */
+    private View                 rootView;
+    /**
+     * Our ArrayList containing each event to be entered into the ListView.
+     */
+    private ArrayList<Event>     events;
+    /**
+     * ContentResolver used for retrieving information from the ContentProvider.
+     */
+    private ContentResolver      resolver;
+    /**
+     * Current User's account.
+     */
+    private Account              account;
+    /**
+     * SpinnerDialog that we will display when synchronization is in progress.
+     */
+    private LoadingSpinnerDialog spinnerDialog;
+    /**
+     * ListView containing events.
+     */
+    private ListView             lv;
 
+    /**
+     * Default.
+     * @param savedInstanceState not used
+     */
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
@@ -107,11 +77,40 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     }
 
     /**
-     * Here we do all the main work of setting up the list, so that it is
-     * regenerated every time we return to this screen in the event of file
-     * system changes from other fragments/activities.
+     * Initializes fields and creates a ContentObserver to receive notification of the
+     * ContentProvider completing an update.
+     * @param inflater Used to inflate the view.
+     * @param container View's container.
+     * @param savedInstanceState not used
+     * @return The view created.
      */
-    public void onResume()
+    @Override
+    public View onCreateView (LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState)
+    {
+        super.onCreateView(inflater, container, savedInstanceState);
+        rootView = inflater.inflate(R.layout.events_list, container, false);
+        lv = (ListView) rootView.findViewById(R.id.listView1);
+        spinnerDialog = new LoadingSpinnerDialog();
+        resolver = getActivity().getContentResolver();
+        account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE))
+                .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
+        Bundle extras = new Bundle();
+        extras.putString("request_type", "3");
+        extras.putString("table0", "event");
+        extras.putString("search", "%%");
+        resolver.registerContentObserver(EVENTS, true, new SyncContentObserver(new Handler()));
+        ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
+        spinnerDialog.show(getFragmentManager(), "Synchronizing...");
+        return rootView;
+    }
+
+    /**
+     * Here we do all the main work of setting up the list, so that it is regenerated every time we
+     * return to this screen in the event of file system changes from other fragments/activities.
+     */
+    @Override
+    public void onResume ()
     {
         super.onResume();
         Bundle extras = new Bundle();
@@ -120,23 +119,20 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         extras.putString("search", "%%");
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
         events = new ArrayList<Event>();
-        // Build the list of each picture to be displayed in the listview.
         Log.d("EVENTS", "Resolver query");
     }
 
 
     /**
-     * When an item is clicked, the appropriate pic is opened up in the PicInfo
-     * class.
+     * When an item is clicked, the appropriate event is opened up in the EventPage class.
      *
-     * @param adapterView The adapterview for this list view.
-     * @param view        The view that was clicked.
-     * @param i           Not used
-     * @param l           Index of item we are looking for.
+     * @param adapterView The AdapterView for this list view.
+     * @param view The view that was clicked.
+     * @param i Not used
+     * @param l Index of item we are looking for.
      */
     @Override
-    public void onItemClick (AdapterView<?> adapterView, View view,
-                             int i, long l)
+    public void onItemClick (AdapterView<?> adapterView, View view, int i, long l)
     {
         Intent intent = new Intent(getActivity(), EventsPage.class);
         Event event = ((Event) (adapterView.getAdapter().getItem((int) l)));
@@ -147,40 +143,49 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     }
 
     /**
-     * Extension of the ArrayAdapter class, using Websites as an object located
-     * inside each list view item.
+     * Holder pattern object containing a text view.
+     */
+    public static class ViewHolder
+    {
+        /**
+         * First text view holding name.
+         */
+        public TextView txt1;
+    }
+
+    /**
+     * Extension of the ArrayAdapter class, using Websites as an object located inside each list
+     * view item.
      *
      * @param <T>
      */
-    private class ExtendedArrayAdapter<T> extends ArrayAdapter<T>
+    private class ExtendedArrayAdapter <T> extends ArrayAdapter<T>
     {
         LayoutInflater inflater;
-        List<T> list;
+        List<T>        list;
 
         /**
          * Sets the fields.
          *
-         * @param context   Passed to super.
-         * @param layout    Passed to super.
-         * @param txtLayout The txtLayout we are modifying in the list item
-         *                  view.
-         * @param list      The list of objects we put in our list view.
+         * @param context Passed to super.
+         * @param layout Passed to super.
+         * @param txtLayout The txtLayout we are modifying in the list item view.
+         * @param list The list of objects we put in our list view.
          */
-        public ExtendedArrayAdapter (Context context, int layout,
-                                     int txtLayout, List<T> list)
+        public ExtendedArrayAdapter (Context context, int layout, int txtLayout, List<T> list)
         {
             super(context, layout, txtLayout, list);
             this.list = list;
-            inflater = (LayoutInflater) getActivity().getSystemService(
-                    Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) getActivity()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         /**
          * Returns the view requested.
          *
-         * @param position    Not used
+         * @param position Not used
          * @param convertView the view we are converting.
-         * @param parent      Not used.
+         * @param parent Not used.
          *
          * @return The new view.
          */
@@ -192,8 +197,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             {
                 holder = new ViewHolder();
                 convertView = inflater.inflate(R.layout.events_list_item, null);
-                holder.txt1 =
-                        (TextView) convertView.findViewById(R.id.eventname);
+                holder.txt1 = (TextView) convertView.findViewById(R.id.eventname);
                 convertView.setTag(holder);
             }
             else
@@ -205,12 +209,53 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         }
     }
 
-    /**
-     * Holder pattern object containing a text view.
-     */
-    public static class ViewHolder
+    private class SyncContentObserver extends ContentObserver
     {
-        /** First text view holding name.*/
-        public TextView txt1;
+
+        /**
+         * onChange() will happen on the provider Handler.
+         *
+         * @param handler The handler to run {@link #onChange} on.
+         */
+        public SyncContentObserver (Handler handler)
+        {
+            super(handler);
+        }
+
+        /**
+         * This method is called when a change occurs to the cursor that is being observed.
+         *
+         * @param selfChange true if the update was caused by a call to <code>commit</code> on the
+         * cursor that is being observed.
+         */
+        @Override
+        public void onChange (boolean selfChange)
+        {
+            super.onChange(selfChange);
+            lv.invalidateViews();
+            lv.setAdapter(null);
+            // query content provider
+            Cursor cursor = resolver.query(EVENTS, null, null, null, null);
+            while (cursor != null && cursor.moveToNext())
+            {
+                Log.d("EVENTS", "cursor != null");
+                // retrieve data from content provider element
+                String eventName = cursor.getString(cursor.getColumnIndex("EVENT_NAME"));
+                String eventDate = cursor.getString(cursor.getColumnIndex("EVENT_DATE"));
+                String eventTime = cursor.getString(cursor.getColumnIndex("EVENT_TIME"));
+                //            String eventLocation = cursor.getString(cursor.getColumnIndex
+                // ("EVENT_LOCATION"));
+                events.add(new Event(eventName, eventDate, eventTime, null));//, eventLocation));
+            }
+            Log.d("EVENTS", "ExtendedArray");
+            // Create our list.
+            ExtendedArrayAdapter<Event> ad = new ExtendedArrayAdapter<Event>(rootView.getContext(),
+                                                                             R.layout.events_list_item,
+                                                                             R.id.eventname,
+                                                                             events);
+            lv.setAdapter(ad);
+            lv.setOnItemClickListener(Events.this);
+            spinnerDialog.dismiss();
+        }
     }
 }

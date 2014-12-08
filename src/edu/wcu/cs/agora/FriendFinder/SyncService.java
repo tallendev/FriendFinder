@@ -6,17 +6,23 @@ import android.os.IBinder;
 import android.util.Log;
 
 /**
- * Created by tyler on 10/16/2014.
- *
+ * @author Tyler Allen
+ * @created 10/16/2014
+ * @version 12/8/2014
  * Credit: Android Framework SyncService.java example.
- *
- * Reference: https://developer.android.com/training/sync-adapters/creating-authenticator.html
- * to continue
+ * Reference: https://developer.android.com/training/sync-adapters/creating-authenticator.html to
+ * continue
  */
 public class SyncService extends Service
 {
+    /**
+     * Lock to ensure that we don't have multiple SyncAdapter instances.
+     */
     private static final Object      SYNC_ADAPTER_LOCK = new Object();
-    private static       SyncAdapter syncAdapter     = null;
+    /**
+     * The SyncService's syncAdapter.
+     */
+    private static       SyncAdapter syncAdapter       = null;
 
     /**
      * Thread-safe constructor, creates static {@link SyncAdapter} instance.
@@ -39,21 +45,23 @@ public class SyncService extends Service
     @Override
     /**
      * Logging-only destructor.
-     */
-    public void onDestroy() {
+     */ public void onDestroy ()
+    {
         super.onDestroy();
     }
 
     /**
      * Return Binder handle for IPC communication with {@link SyncAdapter}.
-     *
+     * <p>
      * <p>New sync requests will be sent directly to the SyncAdapter using this channel.
      *
      * @param intent Calling intent
+     *
      * @return Binder handle for {@link SyncAdapter}
      */
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind (Intent intent)
+    {
         return syncAdapter.getSyncAdapterBinder();
     }
 }

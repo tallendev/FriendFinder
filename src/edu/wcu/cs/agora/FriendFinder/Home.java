@@ -3,36 +3,33 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.ContentProvider;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 /**
- * Created by tyler on 11/2/2014.
+ * @author Tyler Allen
+ * @created 11/2/2014
+ * @version 12/7/2014
+ *
+ * The home page containing a list of the user's current events.
  */
 public class Home extends Activity
 {
-    /** The root view of our fragment. */
-    private View rootView;
-    private LayoutInflater inflater;
 
-
+    /**
+     * Creates tabs on page and attaches listeners.
+     *
+     * @param savedInstanceState not used
+     */
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        rootView = findViewById(android.R.id.content);
         Fragment fragment1 = new Events();
         Fragment fragment2 = new Events(); //FIXME should be invitations
 
@@ -55,8 +52,15 @@ public class Home extends Activity
     }
 
 
+    /**
+     * Creates menu when options button is pressed.
+     *
+     * @param menu Menu to be inflated.
+     *
+     * @return True
+     */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
+    public boolean onCreateOptionsMenu (Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.events, menu);
@@ -64,53 +68,56 @@ public class Home extends Activity
     }
 
 
-
+    /**
+     * Determines actions taken when a menu item is selected.
+     * @param item The item that was selected.
+     * @return True
+     */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected (MenuItem item)
     {
-        boolean success;
         // Handle item selection
         Intent i;
         switch (item.getItemId())
         {
             case R.id.create_event:
-                success = true;
                 i = new Intent(this, CreateEvent.class);
                 startActivity(i);
                 break;
 
             case R.id.search:
-                success = true;
                 i = new Intent(this, Search.class);
                 startActivity(i);
                 break;
 
             case R.id.view_profile:
-                success = true;
                 i = new Intent(this, Profile.class);
                 startActivity(i);
                 break;
 
             case R.id.settings:
-                success = true;
                 i = new Intent(this, Settings.class);
                 startActivity(i);
                 break;
 
             case R.id.logout:
-                success = true;
                 logout();
                 break;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
-        return success;
+        return true;
     }
 
-    private void logout()
+    /**
+     * Functionality for logging out of the application.
+     * <p>
+     * TODO: finish me
+     */
+    private void logout ()
     {
-        //FIXME delete user from shared preferences here!
+        //FIXME delete user from shared preferences here
         Intent i = new Intent(getApplicationContext(), Login.class);
         //finish all other existing activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
