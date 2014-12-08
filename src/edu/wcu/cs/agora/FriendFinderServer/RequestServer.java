@@ -37,7 +37,7 @@ public class RequestServer
     public static final int SQL_ERROR    = 300;
 
     /** Amount of time before a socket times out. */
-    public static final int TIMEOUT      = 5000;
+    public static final int TIMEOUT      = 1000;
     /** Default connection port. */
     public static final int DEFAULT_PORT = 1337;
 
