@@ -79,7 +79,7 @@ public abstract class Request
      *
      */
     //protected static Request requestBuilder(Scanner in)
-    protected static void requestBuilder(JSONObject json, JSONObject jsonOut)
+    protected static Request requestBuilder(JSONObject json, JSONObject jsonOut)
             throws MalformedPacketException, SQLException, JSONException
     {
         //short requestType = DEFAULT;
@@ -134,9 +134,8 @@ public abstract class Request
                     throw new MalformedPacketException("Invalid Request Type");
                 }
             }
-            request.getResponse();
-
         }
+        return request;
     }
 
     protected abstract void getResponse() throws SQLException, JSONException;

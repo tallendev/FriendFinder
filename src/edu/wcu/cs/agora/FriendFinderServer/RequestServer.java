@@ -65,7 +65,8 @@ public class RequestServer
             JSONObject json = new JSONObject(in.next());
             JSONObject jsonOut = new JSONObject();
 
-            Request.requestBuilder(json, jsonOut);
+            Request request = Request.requestBuilder(json, jsonOut);
+            request.getResponse();
             PrintStream out = new PrintStream(client.getOutputStream());
             //OutputStream out = client.getOutputStream();
             System.out.println(jsonOut);
