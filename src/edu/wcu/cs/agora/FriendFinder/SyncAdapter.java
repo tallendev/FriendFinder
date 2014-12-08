@@ -319,6 +319,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             // write away
             out.write(json.toString().getBytes());
             out.flush();
+            Log.d("SYNC", "FLUSH DATA");
             Scanner in = new Scanner(sslSocket.getInputStream());
             JSONObject jsonIn = new JSONObject(in.nextLine());
             authenticated = jsonIn.getBoolean("authenticated");

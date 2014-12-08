@@ -77,11 +77,14 @@ public class Authenticator
             throw new MalformedPacketException("Missing password.");
         }
         // create connection with database.
+        System.err.println("Authenticator: Building connection.");
         Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
+        System.err.println("Authenticator: Executing user query.");
         ResultSet rs = findUser(conn, username);
         if (rs.next())
         {
             // validate password.
+            System.err.println("Authenticator: Validating password.");
             success = password.equals(rs.getString("password_token"));
         }
         System.err.println("Account successfully authenticated? " + success);
