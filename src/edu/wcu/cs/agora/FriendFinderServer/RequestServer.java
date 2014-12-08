@@ -144,7 +144,9 @@ public class RequestServer
         Socket client = serverSocket.accept();
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
+        System.err.println("Timeout set");
         Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
+        System.err.println("Scanner made");
         if (in.hasNextLine())
         {
             System.err.println("Read");
