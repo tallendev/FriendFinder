@@ -144,11 +144,11 @@ public class RequestServer
         Socket client = serverSocket.accept();
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
-        Scanner in = new Scanner(client.getInputStream()).useDelimiter("\\A");
-        if (in.hasNext())
+        Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
+        if (in.hasNextLine())
         {
             System.err.println("Read");
-            JSONObject json = new JSONObject(in.next());
+            JSONObject json = new JSONObject(in.nextLine());
             System.err.println("Finished read");
             JSONObject jsonOut = new JSONObject();
             System.err.println("Build new request.");
