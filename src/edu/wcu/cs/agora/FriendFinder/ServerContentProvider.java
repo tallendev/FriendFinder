@@ -48,8 +48,7 @@ public class ServerContentProvider extends ContentProvider
                                                         "(" +
                                                         // The columns in the table
                                                         " EVENT_NAME TEXT PRIMARY KEY ON CONFLICT" +
-                                                        " " +
-                                                        "REPLACE, " +
+                                                        " REPLACE, " +
                                                         " EVENT_DATE TEXT, " +
                                                         " EVENT_TIME TEXT, " +
                                                         " LOCATION_VALUE TEXT," +
@@ -119,7 +118,10 @@ public class ServerContentProvider extends ContentProvider
     {
         String table = getTableName(uri);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        return database.query(table, projection, selection, selectionArgs, null, null, sortOrder);
+        Cursor cursor = database
+                .query(table, projection, selection, selectionArgs, null, null, sortOrder);
+        Log.d("ServerContentProviderQuery", "Cursor count: " + cursor.getCount());
+        return cursor;
     }
 
     /**

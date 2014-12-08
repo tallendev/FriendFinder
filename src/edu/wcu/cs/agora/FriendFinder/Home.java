@@ -92,6 +92,9 @@ public class Home extends Activity
 
             case R.id.view_profile:
                 i = new Intent(this, Profile.class);
+                Bundle extras = new Bundle();
+                extras.putBoolean("owner", true);
+                i.putExtras(extras);
                 startActivity(i);
                 break;
 

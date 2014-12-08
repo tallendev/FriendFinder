@@ -95,13 +95,18 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         resolver = getActivity().getContentResolver();
         account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
-        Bundle extras = new Bundle();
-        extras.putString("request_type", "3");
-        extras.putString("table0", "event");
-        extras.putString("search", "%%");
-        resolver.registerContentObserver(EVENTS, true, new SyncContentObserver(new Handler()));
-        ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
-        spinnerDialog.show(getFragmentManager(), "Synchronizing...");
+        events = new ArrayList<Event>();
+        if (savedInstanceState == null)
+        {
+            Bundle extras = new Bundle();
+            extras.putString("request_type", "3");
+            extras.putString("table0", "event");
+            extras.putString("search", "%%");
+            resolver.registerContentObserver(EVENTS, true, new SyncContentObserver(new Handler()));
+            ContentResolver
+                    .requestSync(account, getActivity().getString(R.string.authority), extras);
+            spinnerDialog.show(getFragmentManager(), "Synchronizing...");
+        }
         return rootView;
     }
 
@@ -118,7 +123,6 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         extras.putString("table0", "event");
         extras.putString("search", "%%");
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
-        events = new ArrayList<Event>();
         Log.d("EVENTS", "Resolver query");
     }
 
@@ -232,11 +236,11 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         public void onChange (boolean selfChange)
         {
             super.onChange(selfChange);
-            lv.invalidateViews();
-            lv.setAdapter(null);
             // query content provider
+            lv.invalidateViews();
             Cursor cursor = resolver.query(EVENTS, null, null, null, null);
-            while (cursor != null && cursor.moveToNext())
+            events = new ArrayList<>();
+            while (cursor.moveToNext())
             {
                 Log.d("EVENTS", "cursor != null");
                 // retrieve data from content provider element
@@ -247,7 +251,11 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                 // ("EVENT_LOCATION"));
                 events.add(new Event(eventName, eventDate, eventTime, null));//, eventLocation));
             }
-            Log.d("EVENTS", "ExtendedArray");
+            Log.d("EVENTS", "ExtendedArray: ");
+            for (Event event : events)
+            {
+                Log.d("EVENTS", event.toString());
+            }
             // Create our list.
             ExtendedArrayAdapter<Event> ad = new ExtendedArrayAdapter<Event>(rootView.getContext(),
                                                                              R.layout.events_list_item,
@@ -255,7 +263,10 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                                                                              events);
             lv.setAdapter(ad);
             lv.setOnItemClickListener(Events.this);
-            spinnerDialog.dismiss();
+            if (spinnerDialog.isVisible())
+            {
+                spinnerDialog.dismiss();
+            }
         }
     }
 }
