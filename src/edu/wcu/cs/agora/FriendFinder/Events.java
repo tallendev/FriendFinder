@@ -62,6 +62,10 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
      */
     private LoadingSpinnerDialog spinnerDialog;
     /**
+     * True if the spinnerDialog is showing.
+     */
+    private boolean spinnerShowing;
+    /**
      * ListView containing events.
      */
     private ListView             lv;
@@ -106,6 +110,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             ContentResolver
                     .requestSync(account, getActivity().getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing...");
+            spinnerShowing = true;
         }
         return rootView;
     }
@@ -180,8 +185,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         {
             super(context, layout, txtLayout, list);
             this.list = list;
-            inflater = (LayoutInflater) getActivity()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         /**
@@ -263,9 +267,10 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                                                                              events);
             lv.setAdapter(ad);
             lv.setOnItemClickListener(Events.this);
-            if (spinnerDialog.isVisible())
+            if (spinnerShowing)
             {
                 spinnerDialog.dismiss();
+                spinnerShowing = false;
             }
         }
     }
