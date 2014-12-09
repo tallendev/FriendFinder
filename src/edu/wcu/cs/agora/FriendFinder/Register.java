@@ -83,7 +83,7 @@ public class Register extends Activity
         this.user = (EditText) findViewById(R.id.email);
         this.password = (EditText) findViewById(R.id.pass);
         this.rpassword = (EditText) findViewById(R.id.repeat_pass);
-        this.name = (EditText) findViewById(R.id.editName);
+        this.name = (EditText) findViewById(R.id.name);
 
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
@@ -158,29 +158,37 @@ public class Register extends Activity
             // Validate matching passwords.
             if (password.getText().toString().equals(rpassword.getText().toString()))
             {
-                String AUTHORITY = getResources().getString(R.string.authority);
-                Bundle extras = new Bundle();
-                // pack bundle with user extras
-                extras.putString("request_type", "0");
-                extras.putString("user", user.getText().toString());
-                extras.putString("password", user.getText().toString());
-                extras.putString("birthday",
-                                 datePicker.getYear() + "-" + datePicker.getMonth() + "-" +
-                                 datePicker.getDay());
-                extras.putString("gender", genderSelected);
-                extras.putString("name", name.getText().toString());
-                // Attempt to create a sync account
-                Account account = FriendFinder.createSyncAccount(this, user.getText().toString(),
-                                                                 user.getText().toString());
-                // Allow synchronization.
-                ContentResolver.setSyncAutomatically(account, AUTHORITY, true);
-                // Attempt to synchronize.
-                ContentResolver.requestSync(account, AUTHORITY, extras);
-                spinnerDialog.show(getFragmentManager(), "Registering User");
-                receiver = new RegistrationReceiver();
-                IntentFilter intentFilter = new IntentFilter();
-                intentFilter.addAction("registration");
-                registerReceiver(receiver, intentFilter);
+                if (!genderSelected.equals("Select"))
+                {
+                    String AUTHORITY = getResources().getString(R.string.authority);
+                    Bundle extras = new Bundle();
+                    // pack bundle with user extras
+                    extras.putString("request_type", "0");
+                    extras.putString("user", user.getText().toString());
+                    extras.putString("password", user.getText().toString());
+                    extras.putString("birthday",
+                                     datePicker.getYear() + "-" + datePicker.getMonth() + "-" +
+                                     datePicker.getDay());
+                    extras.putString("gender", genderSelected);
+                    extras.putString("name", name.getText().toString());
+                    // Attempt to create a sync account
+                    Account account = FriendFinder
+                            .createSyncAccount(this, user.getText().toString(),
+                                               user.getText().toString());
+                    // Allow synchronization.
+                    ContentResolver.setSyncAutomatically(account, AUTHORITY, true);
+                    // Attempt to synchronize.
+                    ContentResolver.requestSync(account, AUTHORITY, extras);
+                    spinnerDialog.show(getFragmentManager(), "Registering User");
+                    receiver = new RegistrationReceiver();
+                    IntentFilter intentFilter = new IntentFilter();
+                    intentFilter.addAction("registration");
+                    registerReceiver(receiver, intentFilter);
+                }
+                else
+                {
+                    Toast.makeText(this, "Please select a gender.", Toast.LENGTH_LONG).show();
+                }
             }
             else
             {

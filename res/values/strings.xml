@@ -60,6 +60,7 @@ String reference file.
     </string-array>
 
     <string-array name="genders">
+        <item>Select</item>
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>

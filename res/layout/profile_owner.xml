@@ -26,7 +26,8 @@ User view page.
                 android:layout_height="match_parent"
                 android:contentDescription="Profile Picture"
                 android:id="@+id/picture"
-                android:layout_weight="3"/>
+                android:layout_weight="3"
+                android:src="@drawable/portrait"/>
 
         <LinearLayout
                 android:orientation="vertical"
@@ -112,15 +113,6 @@ User view page.
             android:id="@+id/schedule"
             android:layout_weight="1" />
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:weightSum="10"
-            android:layout_weight="4"
-            android:layout_gravity="center_horizontal"/>
-
-
     <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -129,4 +121,5 @@ User view page.
             android:layout_marginLeft="90dp"
             android:id="@+id/save"
             android:layout_weight="1" />
+
 </LinearLayout>

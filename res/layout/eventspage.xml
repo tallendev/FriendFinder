@@ -22,7 +22,7 @@ Dynamically generated page representing an event.
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="13"
+            android:layout_weight="17"
             android:weightSum="100">
 
         <TextView
@@ -40,7 +40,7 @@ Dynamically generated page representing an event.
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="8"/>
+            android:layout_weight="4"/>
 
 
     <LinearLayout

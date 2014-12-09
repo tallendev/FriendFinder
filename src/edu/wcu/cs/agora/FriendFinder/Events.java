@@ -185,7 +185,8 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         {
             super(context, layout, txtLayout, list);
             this.list = list;
-            inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) getActivity()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         /**
@@ -266,6 +267,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                                                                              R.id.eventname,
                                                                              events);
             lv.setAdapter(ad);
+
             lv.setOnItemClickListener(Events.this);
             if (spinnerShowing)
             {

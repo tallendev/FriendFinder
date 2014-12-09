@@ -144,6 +144,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
             // Generate SSL socket
             sslSocket = (SSLSocket) sslSocketFactory.createSocket(HOSTNAME, DEFAULT_PORT);
+            sslSocket.setSoTimeout(3000);
             // get an output stream
             out = sslSocket.getOutputStream();
             // Get accountManager to access our current account.
@@ -151,10 +152,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                     .getSystemService(Context.ACCOUNT_SERVICE);
             Log.d("SYNC", "Extras: " + extras);
             // SYNC is default requestType
-            String requestType = extras.getString("request_type", "3");
-            // fill outgoing JSON object with request information.
-            buildOutput(out, sslSocket, account, requestType, extras, accountManager, provider);
-            Log.d("SYNC", "Read");
+            String requestType = extras.getString("request_type", "-1");
+            //validate a valid sync request.
+            if (!requestType.equals("-1"))
+            {
+                // fill outgoing JSON object with request information.
+                buildOutput(out, sslSocket, account, requestType, extras, accountManager, provider);
+                Log.d("SYNC", "Read");
+            }
         }
         catch (IOException ioe)
         {
@@ -321,10 +326,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             out.flush();
             Log.d("SYNC", "FLUSH DATA");
             Scanner in = new Scanner(sslSocket.getInputStream());
-            JSONObject jsonIn = new JSONObject(in.nextLine());
-            authenticated = jsonIn.getBoolean("authenticated");
-            syncDatabaseInsertions(jsonIn, provider);
-
+            if (in.hasNextLine())
+            {
+                JSONObject jsonIn = new JSONObject(in.nextLine());
+                authenticated = jsonIn.getBoolean("authenticated");
+                syncDatabaseInsertions(jsonIn, provider);
+            }
+            else
+            {
+                Log.d("SYNC", "Error with server connection.");
+                ioError = true;
+            }
         }
         catch (IOException ioe)
         {
