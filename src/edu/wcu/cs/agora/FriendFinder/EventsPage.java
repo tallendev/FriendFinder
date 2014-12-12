@@ -10,7 +10,7 @@ import android.widget.TextView;
 /**
  * @author Tyler Allen
  * @created 09/29/2014
- * @version 12/8/2014
+ * @version 12/12/2014
  * Code for functioning specific event instance.
  */
 public class EventsPage extends Activity implements View.OnClickListener
@@ -41,7 +41,7 @@ public class EventsPage extends Activity implements View.OnClickListener
     }
 
     /**
-     * Called when a view has been clicked.
+     * Called when a view has been clicked. Fires map page if clicked.
      *
      * @param v The view that was clicked.
      */

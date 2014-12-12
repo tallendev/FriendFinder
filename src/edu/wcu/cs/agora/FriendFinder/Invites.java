@@ -7,10 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by tyler on 12/12/2014.
+ * @author Tyler Allen
+ * @created 12/12/2014
+ * @version 12/12/2014
+ *
+ * A fragment that will contain a ListView of current pending invitations.
  */
 public class Invites extends Fragment
 {
+    /**
+     * The root layout of this fragment.
+     */
     private View rootView;
 
     @Override
