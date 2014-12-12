@@ -64,7 +64,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     /**
      * True if the spinnerDialog is showing.
      */
-    private boolean spinnerShowing;
+    private boolean              spinnerShowing;
     /**
      * ListView containing events.
      */
@@ -112,6 +112,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             spinnerDialog.show(getFragmentManager(), "Synchronizing...");
             spinnerShowing = true;
         }
+
         return rootView;
     }
 

@@ -31,6 +31,7 @@ Permissions.
             android:name="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.SYNC_FINISHED"/>
     <uses-permission android:name="edu.wcu.cs.agora.tallen.Maps.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -61,6 +62,8 @@ Permissions.
         <activity android:name=".Search" android:screenOrientation="portrait"/>
         <activity android:name=".Profile" android:screenOrientation="portrait"/>
         <activity android:name=".GroupPage" android:screenOrientation="portrait"/>
+        <activity android:name=".Invites" android:screenOrientation="portrait"/>
+        <activity android:name=".Map" android:screenOrientation="portrait"/>
 
         <service
                 android:name="edu.wcu.cs.agora.FriendFinder.SyncService"

@@ -1,6 +1,7 @@
 package edu.wcu.cs.agora.FriendFinder;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -24,7 +25,8 @@ public class Map extends Activity
         setContentView(R.layout.map);
 
         // Get the map fragment
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.layout.map)).getMap();
+        FragmentManager fmanager = getFragmentManager();
+        map = ((MapFragment) fmanager.findFragmentById(R.id.map)).getMap();
         map.setMyLocationEnabled(true);
     }
 }
