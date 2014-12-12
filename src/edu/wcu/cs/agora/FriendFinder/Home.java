@@ -41,8 +41,8 @@ public class Home extends Activity
         actionBar.setDisplayShowTitleEnabled(false);
         // Create Actionbar Tabs
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        ActionBar.Tab tab1 = actionBar.newTab().setIcon(R.drawable.group);
-        ActionBar.Tab tab2 = actionBar.newTab().setIcon(R.drawable.invite);
+        ActionBar.Tab tab1 = actionBar.newTab().setText("Events");//.setIcon(R.drawable.group);
+        ActionBar.Tab tab2 = actionBar.newTab().setText("Invites");//.setIcon(R.drawable.invite);
 
         tab1.setTabListener(new TabListener(fragment1));
         tab2.setTabListener(new TabListener(fragment2));
