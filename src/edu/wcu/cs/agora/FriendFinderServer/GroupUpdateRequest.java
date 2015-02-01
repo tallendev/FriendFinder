@@ -55,6 +55,7 @@ public class GroupUpdateRequest extends Request
             stmt.setString(2, in.getString("groupname"));
             stmt.setString(3, in.getString("user"));
         }
+        out.put("success", success);
     }
 
     /**
@@ -75,7 +76,6 @@ public class GroupUpdateRequest extends Request
         if(rs.next())
         {
             success = false;
-            out.put("success", false);
         }
         else
         {
@@ -93,7 +93,6 @@ public class GroupUpdateRequest extends Request
             stmt.setString(2, name);
             stmt.executeUpdate();
         }
-
         return success;
     }
 }

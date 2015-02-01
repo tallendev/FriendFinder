@@ -232,7 +232,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
      * Cleans up output streams and SSL sockets associated with the server.
      *
      * @param out Output stream used for connecting with server.
-     * @param sslSocket The sslSocket we are using to communiate with the server.
+     * @param sslSocket The sslSocket we are using to communicate with the server.
      */
     private void adapterCleanup (OutputStream out, SSLSocket sslSocket)
     {
@@ -318,11 +318,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         // more data into our outgoing json object.
         json.put("groupname", extras.getString("groupname"));
         json.put("groupdesc", extras.getString("groupdesc"));
-        json.put("create", extras.getString("create"));
+        json.put("create", extras.getBoolean("create"));
         JSONObject jsonIn = null;
         try
         {
             // write and read
+            Log.d("SYNC", json.toString());
             out.write(json.toString().getBytes());
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());

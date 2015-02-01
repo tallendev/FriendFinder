@@ -4,6 +4,9 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
+    <item android:id="@+id/create_group"
+          android:title="@string/create_group"/>
+
     <item android:id="@+id/create_event"
           android:title="@string/create_event"/>
 

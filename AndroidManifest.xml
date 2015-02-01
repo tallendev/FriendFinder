@@ -70,6 +70,7 @@ Permissions.
         <activity android:name=".Map" android:screenOrientation="portrait"/>
         <activity android:name=".EditEvent"/>
         <activity android:name=".EditGroup"/>
+        <activity android:name=".CreateGroup"/>
 
         <service
                 android:name="edu.wcu.cs.agora.FriendFinder.SyncService"
