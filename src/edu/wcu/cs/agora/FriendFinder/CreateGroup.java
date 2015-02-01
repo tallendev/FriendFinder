@@ -99,7 +99,7 @@ public class CreateGroup extends Activity implements View.OnClickListener
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
             receiver = new CreateGroupReceiver();
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("create_group");
+            intentFilter.addAction("group_update");
             registerReceiver(receiver, intentFilter);
         }
     }

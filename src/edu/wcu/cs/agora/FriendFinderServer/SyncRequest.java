@@ -23,8 +23,8 @@ public class SyncRequest extends Request
                                       " WHERE email ILIKE ?";
 
     private static String GROUPS_SQL =
-            " SELECT user_group.group_name, group_description, photo, owner " +
-            " FROM user_group, group_member " +
+            " SELECT user_group.group_name, group_description, group_photo, owner " +
+            " FROM user_group,  group_member " +
             "   WHERE user_group.group_name ILIKE ?";
 
     private static String LIKES_SQL = " SELECT like_label " +
