@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.util.Log;
 
 /**
- * Created by tyler on 10/16/2014.
+ * @author Tyler Allen
+ * @created 10/16/2014
+ * @version 2/1/2015
  * <p>
  * For Reference: http://developer.android.com/training/sync-adapters/creating-stub-provider.html
  */
@@ -61,7 +63,9 @@ public class ServerContentProvider extends ContentProvider
                                                         "(" +
                                                         " GROUP_NAME TEXT PRIMARY KEY ON CONFLICT" +
                                                         " REPLACE," +
-                                                        " GROUP_DESCRIPTION TEXT);";
+                                                        " GROUP_DESCRIPTION TEXT," +
+                                                        " PHOTO INTEGER" +
+                                                        " OWNER TEXT);";
     /**
      * String defines creation of the users table.
      */
@@ -191,7 +195,7 @@ public class ServerContentProvider extends ContentProvider
     public static String getTableName (Uri uri)
     {
         String value = uri.getPath();
-        value = value.replace("/", "");//we need to remove '/'
+        value = value.replace("/", ""); //we need to remove '/'
         return value;
     }
 

@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Tyler Allen
  * @created 11/2/2014
- * @version 12/8/2014
+ * @version 2/1/2015
  *
  * This class sets up and performs visual and interactive functions available on the search page.
  */
@@ -136,8 +136,17 @@ public class Search extends Activity
             // Displays a Groups page.
             case GROUPS:
             {
-                Intent intent = new Intent(this, GroupPage.class);
+                Class page;
                 Group group = ((Group) (adapterView.getAdapter().getItem((int) l)));
+                if (group.getOwner().equals(account.name))
+                {
+                    page = EditGroup.class;
+                }
+                else
+                {
+                    page = GroupPage.class;
+                }
+                Intent intent = new Intent(this, page);
                 intent.putExtra("group_name", group.getGroupName());
                 intent.putExtra("group_description", group.getDescription());
                 startActivityForResult(intent, REQUEST);
@@ -527,7 +536,8 @@ public class Search extends Activity
                 String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
                 String groupDescription = cursor
                         .getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
-                results.add(new Group(groupName, groupDescription));//, eventLocation));
+                String owner = cursor.getString(cursor.getColumnIndex("OWNER"));
+                results.add(new Group(groupName, groupDescription, owner));
             }
             ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>(
                     getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);

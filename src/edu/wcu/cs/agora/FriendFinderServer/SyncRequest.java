@@ -8,7 +8,7 @@ import java.sql.*;
 /**
  * @author Tyler Allen
  * @created 11/16/14
- * @version 12/8/2014
+ * @version 2/1/2015
  */
 public class SyncRequest extends Request
 {
@@ -17,15 +17,19 @@ public class SyncRequest extends Request
                                        "FROM " + "event, attending_event " +
                                        "WHERE " + "event_name ILIKE ?" +
                                        " AND event = id AND attendee = ?;";
-    private static String USERS_SQL  = " SELECT email, birthday, gender, full_name " +
-                                       " FROM users " +
-                                       " WHERE email ILIKE ?";
-    private static String GROUPS_SQL = " SELECT user_group.group_name, group_description " +
-                                       " FROM user_group, group_member " +
-                                       " WHERE user_group.group_name ILIKE ?";
-    private static String LIKES_SQL  = " SELECT like_label " +
-                                       " FROM likes " +
-                                       " WHERE like_label ILIKE ?";
+
+    private static String USERS_SQL = " SELECT email, birthday, gender, full_name " +
+                                      " FROM users " +
+                                      " WHERE email ILIKE ?";
+
+    private static String GROUPS_SQL =
+            " SELECT user_group.group_name, group_description, photo, owner " +
+            " FROM user_group, group_member " +
+            "   WHERE user_group.group_name ILIKE ?";
+
+    private static String LIKES_SQL = " SELECT like_label " +
+                                      " FROM likes " +
+                                      " WHERE like_label ILIKE ?";
 
     /**
      * Default constructor calling super.
@@ -33,7 +37,7 @@ public class SyncRequest extends Request
      * @param in Input JSON object from client.
      * @param out Output JSON object preparing to be sent to client.
      */
-    public SyncRequest(JSONObject in, JSONObject out)
+    public SyncRequest (JSONObject in, JSONObject out)
     {
         super(in, out);
     }

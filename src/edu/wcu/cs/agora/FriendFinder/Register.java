@@ -348,6 +348,7 @@ public class Register extends Activity
                 i.putExtra("owner", true);
                 startActivity(i);
                 finish();
+                cleanupReceiver();
             }
             // Error from server meaning email address is taken.
             else

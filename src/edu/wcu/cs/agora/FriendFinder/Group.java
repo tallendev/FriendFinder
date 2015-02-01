@@ -19,20 +19,25 @@ public class Group
      * The date of the image.
      */
     private String description;
+    /**
+     * Owner of the group.
+     */
+    private String owner;
 
     /**
      * Initializes fields.
      */
-    public Group (String group_name, String description)
+    public Group (String group_name, String description, String owner)
     {
         this.group_name = group_name;
         this.description = description;
+        this.owner = owner;
     }
 
     /**
-     * Returns title.
+     * Returns the name of this group.
      *
-     * @return title
+     * @return group_name
      */
     public String getGroupName ()
     {
@@ -40,12 +45,22 @@ public class Group
     }
 
     /**
-     * Returns the date.
+     * Returns the description of this group.
      *
-     * @return date
+     * @return description
      */
     public String getDescription ()
     {
         return description;
+    }
+
+    /**
+     * Returns the owner of this group.
+     *
+     * @return owner
+     */
+    public String getOwner ()
+    {
+        return owner;
     }
 }

@@ -46,6 +46,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
      */
     private static final String REGISTRATION  = "REGISTRATION";
     /**
+     * Broadcast flag for group update.
+     */
+    private static final String GROUP_UPDATE  = "GROUP_UPDATE";
+    /**
      * Hostname of server to contact.
      */
     private static final String HOSTNAME      = "www.trantracker.com";
@@ -314,6 +318,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         // more data into our outgoing json object.
         json.put("groupname", extras.getString("groupname"));
         json.put("groupdesc", extras.getString("groupdesc"));
+        json.put("create", extras.getString("create"));
         JSONObject jsonIn = null;
         try
         {
@@ -328,6 +333,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             Log.d("SYNC", ioe.getMessage());
             ioError = true;
         }
+        Log.d("SYNC", "Attempting to broadcast");
+        Intent i = new Intent(GROUP_UPDATE);
+
+        // did we succeed?
+        if (jsonIn != null)
+        {
+            i.putExtra("success", jsonIn.getBoolean("success"));
+        }
+        i.putExtra("ioerr", ioError);
+        i.setAction("group_update");
+        getContext().sendBroadcast(i);
     }
 
     /**

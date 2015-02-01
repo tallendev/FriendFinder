@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Author: Tyler Allen
+Created: 2/1/2015
+Last Updated: 2/1/2015
+Group creation page.
+-->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="match_parent" android:weightSum="10">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/create_group"
+            android:textColor="@color/gold"
+            android:textSize="60dp"
+            android:gravity="center"
+            android:id="@+id/textView"
+            android:layout_weight="2"
+            android:layout_gravity="center_horizontal"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/group_name"
+            android:hint="@string/group_name"
+            android:layout_gravity="center_horizontal"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:id="@+id/group_description"
+            android:hint="@string/group_description"
+            android:layout_gravity="center_horizontal"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/update"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:id="@+id/create"
+            android:layout_gravity="center_horizontal"/>
+</LinearLayout>

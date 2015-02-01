@@ -15,10 +15,11 @@ import android.widget.Toast;
 /**
  * @author Tyler Allen
  * @version 2/1/2015
+ *          <p>
+ *          Activity for editing a group if the user is the owner of the group.
  * @created 2/1/2015
- * Page used when a user is creating a group.
  */
-public class CreateGroup extends Activity implements View.OnClickListener
+public class EditGroup extends Activity implements View.OnClickListener
 {
     /**
      * The current user's account.
@@ -31,18 +32,13 @@ public class CreateGroup extends Activity implements View.OnClickListener
     /**
      * Broadcast receiver for confirmation of account synchronization.
      */
-    private CreateGroupReceiver receiver;
+    private EditGroupReceiver    receiver;
 
-    /**
-     * Default onCreate for CreateEvent.
-     *
-     * @param savedInstanceState not used
-     */
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_group);
+        setContentView(R.layout.edit_group);
         account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         spinnerDialog = new LoadingSpinnerDialog();
@@ -92,10 +88,10 @@ public class CreateGroup extends Activity implements View.OnClickListener
             extras.putString("groupdesc",
                              ((EditText) findViewById(R.id.group_description)).getText()
                                                                               .toString());
-            extras.putBoolean("create", true);
+            extras.putBoolean("create", false);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
-            receiver = new CreateGroupReceiver();
+            receiver = new EditGroupReceiver();
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("create_group");
             registerReceiver(receiver, intentFilter);
@@ -106,7 +102,7 @@ public class CreateGroup extends Activity implements View.OnClickListener
      * Inner class for a broadcast receiver used to get registration confirmation from the
      * SyncAdapter.
      */
-    public class CreateGroupReceiver extends BroadcastReceiver
+    public class EditGroupReceiver extends BroadcastReceiver
     {
         /**
          * If registration is successful, we move to the next activity. Otherwise we clean up our
@@ -122,7 +118,7 @@ public class CreateGroup extends Activity implements View.OnClickListener
             // Server error, cleanup and toast.
             if (intent.getExtras().getBoolean("ioerr", false))
             {
-                Toast.makeText(CreateGroup.this, "Error connecting to server.", Toast.LENGTH_LONG)
+                Toast.makeText(EditGroup.this, "Error connecting to server.", Toast.LENGTH_LONG)
                      .show();
                 cleanupReceiver();
             }
@@ -149,7 +145,7 @@ public class CreateGroup extends Activity implements View.OnClickListener
             else
             {
                 cleanupReceiver();
-                Toast.makeText(CreateGroup.this, "Group name is taken.", Toast.LENGTH_LONG).show();
+                Toast.makeText(EditGroup.this, "Group name is taken.", Toast.LENGTH_LONG).show();
             }
         }
     }
