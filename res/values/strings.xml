@@ -41,6 +41,10 @@ String reference file.
     <string name="shared_prefs">edu.wcu.cs.agora.SHARED_PREFERENCES</string>
 
 
+    <string name="create_group">Create Group</string>
+    <string name="group_name">Group Name</string>
+    <string name="group_description">Group Description</string>
+
     <string name="create_event">Create Event</string>
     <string name="search">Search</string>
     <string name="view_profile">View Profile</string>

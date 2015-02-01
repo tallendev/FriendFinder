@@ -18,7 +18,6 @@ public class EventsPage extends Activity implements View.OnClickListener
     /**
      * Map button
      */
-
     private Button map;
 
     /**

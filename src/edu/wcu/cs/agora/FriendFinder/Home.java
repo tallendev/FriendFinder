@@ -80,6 +80,11 @@ public class Home extends Activity
         Intent i;
         switch (item.getItemId())
         {
+            case R.id.create_group:
+                i = new Intent(this, CreateGroup.class);
+                startActivity(i);
+                break;
+
             case R.id.create_event:
                 i = new Intent(this, CreateEvent.class);
                 startActivity(i);
