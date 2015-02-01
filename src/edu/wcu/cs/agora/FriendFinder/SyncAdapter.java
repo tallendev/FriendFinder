@@ -207,6 +207,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 processRegistration(json, extras, out, sslSocket);
                 break;
             }
+            case "1": //case GROUP_UPDATE:
+            {
+                processGroupUpdate(json, extras, out, sslSocket);
+                break;
+            }
             case "3": //case SYNC
             {
                 processSync(json, provider, out, extras, sslSocket);
@@ -289,6 +294,40 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         i.putExtra("ioerr", ioError);
         i.setAction("registration");
         getContext().sendBroadcast(i);
+    }
+
+    /**
+     * Process a group update request.
+     *
+     * @param json Stores outgoing data.
+     * @param extras Contains extras from calling activity containing information to send to
+     * server.
+     * @param out Output stream connected to server.
+     * @param sslSocket SSLSocket maintaining connection to server.
+     *
+     * @throws JSONException
+     */
+    private void processGroupUpdate (JSONObject json, Bundle extras, OutputStream out,
+                                      SSLSocket sslSocket) throws JSONException
+    {
+        boolean ioError = false;
+        // more data into our outgoing json object.
+        json.put("groupname", extras.getString("groupname"));
+        json.put("groupdesc", extras.getString("groupdesc"));
+        JSONObject jsonIn = null;
+        try
+        {
+            // write and read
+            out.write(json.toString().getBytes());
+            Scanner in = new Scanner(sslSocket.getInputStream());
+            jsonIn = new JSONObject(in.nextLine());
+        }
+        catch (IOException ioe)
+        {
+            Log.d("SYNC", "An error occurred while attempting to register");
+            Log.d("SYNC", ioe.getMessage());
+            ioError = true;
+        }
     }
 
     /**

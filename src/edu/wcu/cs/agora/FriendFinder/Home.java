@@ -31,7 +31,7 @@ public class Home extends Activity
         setContentView(R.layout.home);
 
         Fragment fragment1 = new Events();
-        Fragment fragment2 = new Invites(); //FIXME should be invitations
+        Fragment fragment2 = new Invites();
 
         ActionBar actionBar = getActionBar();
 

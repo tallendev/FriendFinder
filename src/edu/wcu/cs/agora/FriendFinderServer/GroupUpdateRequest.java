@@ -11,6 +11,8 @@ import org.json.JSONObject;
  */
 public class GroupUpdateRequest extends Request
 {
+
+
     /**
      * Default constructor to super.
      *
@@ -20,6 +22,7 @@ public class GroupUpdateRequest extends Request
     public GroupUpdateRequest(JSONObject in, JSONObject out)
     {
         super(in, out);
+
     }
 
     /**
@@ -30,6 +33,5 @@ public class GroupUpdateRequest extends Request
     {
         JSONObject in = getJsonIn();
         JSONObject out = getJsonOut();
-        throw new UnsupportedOperationException();
     }
 }

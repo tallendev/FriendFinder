@@ -38,6 +38,10 @@ public abstract class Request
      * Request type indicating some kind of secondary response from the client.
      */
     public static final short RESPONSE       = 4;
+    /**
+     * Request type indicating an update to an event.
+     */
+    public static final short EVENT_UPDATE = 5;
 
     /**
      * JSON object received from the client.
@@ -117,7 +121,8 @@ public abstract class Request
             }
             case ("1")://case (GROUP_UPDATE):
             {
-
+                System.err.println("new group update");
+                request = new GroupUpdateRequest(json, jsonOut);
                 break;
             }
             case ("2")://case (PROFILE_UPDATE):
@@ -131,6 +136,10 @@ public abstract class Request
                 break;
             }
             case ("4")://case (RESPONSE):
+            {
+                break;
+            }
+            case ("5")://case (RESPONSE):
             {
                 break;
             }
