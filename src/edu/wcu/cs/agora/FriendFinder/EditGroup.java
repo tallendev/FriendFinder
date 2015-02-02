@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -40,11 +41,16 @@ public class EditGroup extends Activity implements View.OnClickListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_group);
+        Bundle extras = getIntent().getExtras();
         account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
         ((Button) findViewById(R.id.update)).setOnClickListener(this);
+        ((TextView) findViewById(R.id.title)).setText(extras.getString("group_name"));
+        ((EditText) findViewById(R.id.group_description))
+                .setText(extras.getString("group_description"));
+
     }
 
     /**
@@ -80,13 +86,13 @@ public class EditGroup extends Activity implements View.OnClickListener
     @Override
     public void onClick (View v)
     {
-        if (v.getId() == R.id.create)
+        if (v.getId() == R.id.update)
         {
             Bundle extras = new Bundle();
             // generate sync request based on search parameters.
             extras.putString("request_type", "1");
             extras.putString("groupname",
-                             ((EditText) findViewById(R.id.group_name)).getText().toString());
+                             ((TextView) findViewById(R.id.title)).getText().toString());
             extras.putString("groupdesc",
                              ((EditText) findViewById(R.id.group_description)).getText()
                                                                               .toString());
@@ -134,7 +140,7 @@ public class EditGroup extends Activity implements View.OnClickListener
                     {
                         // Use the Builder class for convenient dialog construction
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(R.string.group_created)
+                        builder.setMessage(R.string.group_update)
                                .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener()
                                {
                                    /**

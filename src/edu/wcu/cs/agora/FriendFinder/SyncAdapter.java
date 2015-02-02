@@ -386,6 +386,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             {
                 JSONObject jsonIn = new JSONObject(in.nextLine());
                 authenticated = jsonIn.getBoolean("authenticated");
+                Log.d("SYNC", jsonIn.toString());
                 syncDatabaseInsertions(jsonIn, provider);
             }
             else
@@ -474,9 +475,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             ContentValues vals = new ContentValues();
             String entries[] = lines[j].split(",");
-            for (int k = 0; k < entries.length; k++)
+            for (String entry : entries)
             {
-                String[] val = entries[k].split("=");
+                String[] val = entry.split("=");
                 vals.put(val[0].toUpperCase(), val[1]);
             }
             try

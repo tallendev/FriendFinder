@@ -45,6 +45,7 @@ String reference file.
     <string name="group_name">Group Name</string>
     <string name="group_description">Group Description</string>
     <string name="group_created">Group was created successfully.</string>
+    <string name="group_update">Group was updated successfully.</string>
     <string name="ok">OK</string>
     <string name="update">Update</string>
 

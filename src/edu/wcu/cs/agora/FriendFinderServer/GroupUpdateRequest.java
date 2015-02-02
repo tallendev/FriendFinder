@@ -54,6 +54,7 @@ public class GroupUpdateRequest extends Request
             stmt.setString(1, in.getString("groupdesc"));
             stmt.setString(2, in.getString("groupname"));
             stmt.setString(3, in.getString("user"));
+            stmt.executeUpdate();
         }
         out.put("success", success);
     }

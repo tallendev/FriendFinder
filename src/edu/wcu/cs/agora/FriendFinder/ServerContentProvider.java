@@ -64,7 +64,7 @@ public class ServerContentProvider extends ContentProvider
                                                         " GROUP_NAME TEXT PRIMARY KEY ON CONFLICT" +
                                                         " REPLACE," +
                                                         " GROUP_DESCRIPTION TEXT," +
-                                                        " PHOTO INTEGER" +
+                                                        " GROUP_PHOTO INTEGER," +
                                                         " OWNER TEXT);";
     /**
      * String defines creation of the users table.
@@ -76,9 +76,9 @@ public class ServerContentProvider extends ContentProvider
                                                         "REPLACE," +
                                                         " FULL_NAME TEXT," +
                                                         " BIRTHDAY TEXT," +
-                                                        "GENDER TEXT);";
+                                                        " GENDER TEXT);";
     /**
-     * String defines creation of the likess table.
+     * String defines creation of the likes table.
      */
     private static final String SQL_CREATE_LIKES      = " CREATE TABLE " +
                                                         "likes" +
@@ -210,7 +210,7 @@ public class ServerContentProvider extends ContentProvider
          */
         MainDatabaseHelper (Context context)
         {
-            super(context, DBNAME, null, 1);
+            super(context, DBNAME, null, 3);
         }
 
         /**
