@@ -89,10 +89,10 @@ public class EditGroup extends Activity implements View.OnClickListener
         {
             Bundle extras = new Bundle();
             // generate sync request based on search parameters.
-            extras.putString("request_type", "1");
-            extras.putString("groupname",
+            extras.putString("request_type", "5");
+            extras.putString("eventname",
                              ((TextView) findViewById(R.id.title)).getText().toString());
-            extras.putString("groupdesc",
+            extras.putString("event",
                              ((EditText) findViewById(R.id.group_description)).getText()
                                                                               .toString());
             extras.putBoolean("create", false);
@@ -139,7 +139,7 @@ public class EditGroup extends Activity implements View.OnClickListener
                     {
                         // Use the Builder class for convenient dialog construction
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(R.string.group_update)
+                        builder.setMessage(R.string.event_update)
                                .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener()
                                {
                                    /**

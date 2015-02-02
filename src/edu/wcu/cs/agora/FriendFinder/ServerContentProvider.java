@@ -49,8 +49,8 @@ public class ServerContentProvider extends ContentProvider
                                                         "event" +          // Table's name
                                                         "(" +
                                                         // The columns in the table
-                                                        " EVENT_NAME TEXT PRIMARY KEY ON CONFLICT" +
-                                                        " REPLACE, " +
+                                                        " EVENT_NAME TEXT," +
+                                                        "ID PRIMARY KEY ON CONFLICT REPLACE," +
                                                         " EVENT_DATE TEXT, " +
                                                         " EVENT_TIME TEXT, " +
                                                         " LOCATION_VALUE TEXT," +
@@ -210,7 +210,7 @@ public class ServerContentProvider extends ContentProvider
          */
         MainDatabaseHelper (Context context)
         {
-            super(context, DBNAME, null, 3);
+            super(context, DBNAME, null, 4);
         }
 
         /**

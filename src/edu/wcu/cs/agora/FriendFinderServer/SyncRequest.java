@@ -12,8 +12,8 @@ import java.sql.*;
  */
 public class SyncRequest extends Request
 {
-    private static String EVENTS_SQL = "SELECT event_name, event_Date, event_time, " +
-                                       "location_value, creator " +
+    private static String EVENTS_SQL = "SELECT event_name, event_Date, event_time,  " +
+                                       "location_value, creator, id " +
                                        "FROM " + "event, attending_event " +
                                        "WHERE " + "event_name ILIKE ?" +
                                        " AND event = id AND attendee = ?;";

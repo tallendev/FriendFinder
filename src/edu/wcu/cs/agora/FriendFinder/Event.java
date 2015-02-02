@@ -25,6 +25,14 @@ public class Event
      * A description of the event.
      */
     private String eventDescription;
+    /**
+     * The owner of the event.
+     */
+    private String creator;
+    /**
+     * The id of the event.
+     */
+    private String id;
 
     /**
      * Initializes fields.
@@ -34,12 +42,15 @@ public class Event
      * @param eventTime The time of the event.
      * @param eventDescription The event's description as specified by the user.
      */
-    public Event (String eventName, String eventDate, String eventTime, String eventDescription)
+    public Event (String eventName, String eventDate, String eventTime, String eventDescription,
+                  String creator, String id)
     {
+        this.creator = creator;
         this.eventName = eventName;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
         this.eventDescription = eventDescription;
+        this.id = id;
     }
 
     /**
@@ -80,5 +91,13 @@ public class Event
     public String getDescription ()
     {
         return eventDescription;
+    }
+
+    /**
+     * Returns the owner of this event.
+     */
+    public String getCreator ()
+    {
+        return creator;
     }
 }

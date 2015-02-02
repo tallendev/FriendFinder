@@ -141,6 +141,8 @@ public abstract class Request
             }
             case ("5")://case (RESPONSE):
             {
+                System.err.println("new event update");
+                request = new EventUpdateRequest(json, jsonOut);
                 break;
             }
             default:

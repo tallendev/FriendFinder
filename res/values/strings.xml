@@ -48,6 +48,11 @@ String reference file.
     <string name="group_update">Group was updated successfully.</string>
     <string name="ok">OK</string>
     <string name="update">Update</string>
+    <string name="event_update">Event was updated successfully.</string>
+    <string name="event_created">Event was created successfully.</string>
+
+    <string name="time">Time</string>
+    <string name="date">Date</string>
 
     <string name="create_event">Create Event</string>
     <string name="search">Search</string>

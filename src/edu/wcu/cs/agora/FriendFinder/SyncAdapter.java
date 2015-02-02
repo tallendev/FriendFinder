@@ -50,6 +50,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
      */
     private static final String GROUP_UPDATE  = "GROUP_UPDATE";
     /**
+     * Broadcast flag for group update.
+     */
+    private static final String EVENT_UPDATE = "EVENT_UPDATE";
+    /**
      * Hostname of server to contact.
      */
     private static final String HOSTNAME      = "www.trantracker.com";
@@ -221,6 +225,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 processSync(json, provider, out, extras, sslSocket);
                 break;
             }
+            case "5": //case EVENT_UPDATE
+            {
+                processEventUpdate(json, extras, out, sslSocket);
+                break;
+            }
             default:
             {
                 Log.d("SYNC", "Invalid request type.");
@@ -312,7 +321,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
      * @throws JSONException
      */
     private void processGroupUpdate (JSONObject json, Bundle extras, OutputStream out,
-                                      SSLSocket sslSocket) throws JSONException
+                                     SSLSocket sslSocket) throws JSONException
     {
         boolean ioError = false;
         // more data into our outgoing json object.
@@ -402,6 +411,55 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             ioError = true;
         }
         syncBroadcast(extras, authenticated, ioError);
+    }
+
+    /**
+     * Process a group update request.
+     *
+     * @param json Stores outgoing data.
+     * @param extras Contains extras from calling activity containing information to send to
+     * server.
+     * @param out Output stream connected to server.
+     * @param sslSocket SSLSocket maintaining connection to server.
+     *
+     * @throws JSONException
+     */
+    private void processEventUpdate (JSONObject json, Bundle extras, OutputStream out,
+                                     SSLSocket sslSocket) throws JSONException
+    {
+        boolean ioError = false;
+        // more data into our outgoing json object.
+        json.put("eventname", extras.getString("eventname"));
+        json.put("description", extras.getString("description"));
+        json.put("time", extras.getString("time"));
+        json.put("date", extras.getString("date"));
+        json.put("create", extras.getBoolean("create"));
+        JSONObject jsonIn = null;
+        try
+        {
+            // write and read
+            Log.d("SYNC", json.toString());
+            out.write(json.toString().getBytes());
+            Scanner in = new Scanner(sslSocket.getInputStream());
+            jsonIn = new JSONObject(in.nextLine());
+        }
+        catch (IOException ioe)
+        {
+            Log.d("SYNC", "An error occurred while attempting to register");
+            Log.d("SYNC", ioe.getMessage());
+            ioError = true;
+        }
+        Log.d("SYNC", "Attempting to broadcast");
+        Intent i = new Intent(EVENT_UPDATE);
+
+        // did we succeed?
+        if (jsonIn != null)
+        {
+            i.putExtra("success", jsonIn.getBoolean("success"));
+        }
+        i.putExtra("ioerr", ioError);
+        i.setAction("event_update");
+        getContext().sendBroadcast(i);
     }
 
     /**

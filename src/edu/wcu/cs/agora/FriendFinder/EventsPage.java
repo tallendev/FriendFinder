@@ -10,7 +10,7 @@ import android.widget.TextView;
 /**
  * @author Tyler Allen
  * @created 09/29/2014
- * @version 12/12/2014
+ * @version 2/1/2015
  * Code for functioning specific event instance.
  */
 public class EventsPage extends Activity implements View.OnClickListener
@@ -33,9 +33,10 @@ public class EventsPage extends Activity implements View.OnClickListener
         TextView eventName = ((TextView) findViewById(R.id.eventname));
         eventName.setText(
                 intent.getExtras().getString("event_name", eventName.getText().toString()));
-        ((TextView) findViewById(R.id.timedate))
-                .setText(intent.getExtras().getString("event_date") + "   " +
-                         intent.getExtras().getString("event_time"));
+        ((TextView) findViewById(R.id.date))
+                .setText(intent.getExtras().getString("event_date"));
+
+        ((TextView) findViewById(R.id.time)).setText(intent.getExtras().getString("event_time"));
         map.setOnClickListener(this);
     }
 

@@ -144,8 +144,18 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     @Override
     public void onItemClick (AdapterView<?> adapterView, View view, int i, long l)
     {
-        Intent intent = new Intent(getActivity(), EventsPage.class);
         Event event = ((Event) (adapterView.getAdapter().getItem((int) l)));
+
+        Class page;
+        if (account.name.equals(event.getCreator()))
+        {
+            page = EditEvent.class;
+        }
+        else
+        {
+            page = EventsPage.class;
+        }
+        Intent intent = new Intent(getActivity(), page);
         intent.putExtra("event_name", event.getEventName());
         intent.putExtra("event_date", event.getEventDate());
         intent.putExtra("event_time", event.getEventTime());
@@ -253,9 +263,11 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                 String eventName = cursor.getString(cursor.getColumnIndex("EVENT_NAME"));
                 String eventDate = cursor.getString(cursor.getColumnIndex("EVENT_DATE"));
                 String eventTime = cursor.getString(cursor.getColumnIndex("EVENT_TIME"));
+                String creator = cursor.getString(cursor.getColumnIndex("CREATOR"));
                 //            String eventLocation = cursor.getString(cursor.getColumnIndex
                 // ("EVENT_LOCATION"));
-                events.add(new Event(eventName, eventDate, eventTime, null));//, eventLocation));
+                events.add(new Event(eventName, eventDate, eventTime, null, creator));//,
+                // eventLocation));
             }
             Log.d("EVENTS", "ExtendedArray: ");
             for (Event event : events)
