@@ -71,7 +71,7 @@ public class EventUpdateRequest extends Request
         int id = 0;
         if (idMax.next())
         {
-            id = idMax.getInt(1);
+            id = idMax.getInt(1) + 1;
         }
         PreparedStatement stmt;
 
