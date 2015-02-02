@@ -89,7 +89,7 @@ public class EventUpdateRequest extends Request
         String addEventAttendee = "INSERT INTO friendfinder.attending_event VALUES(?, ?);";
         stmt = conn.prepareStatement(addEventAttendee);
         stmt.setString(1, in.getString("user"));
-        stmt.setString(2, name);
+        stmt.setInt(2, id);
         stmt.executeUpdate();
         return success;
     }
