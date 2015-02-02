@@ -33,6 +33,16 @@ import java.util.List;
 public class Events extends Fragment implements AdapterView.OnItemClickListener
 {
     /**
+     * Request for result from event.
+     */
+    public static final int EVENT_RESULT = 500;
+
+    /**
+     * Code indicating data invalidation.
+     */
+    public static final int DATA_INVALID = 10000;
+
+    /**
      * The request status when requesting an event class.
      */
     public static final int REQUEST = 1;
@@ -69,6 +79,60 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
      * ListView containing events.
      */
     private ListView             lv;
+
+    /**
+     * When an item is clicked, the appropriate event is opened up in the EventPage class.
+     *
+     * @param adapterView The AdapterView for this list view.
+     * @param view The view that was clicked.
+     * @param i Not used
+     * @param l Index of item we are looking for.
+     */
+    @Override
+    public void onItemClick (AdapterView<?> adapterView, View view, int i, long l)
+    {
+        Event event = ((Event) (adapterView.getAdapter().getItem((int) l)));
+
+        Class page;
+        if (account.name.equals(event.getCreator()))
+        {
+            page = EditEvent.class;
+        }
+        else
+        {
+            page = EventsPage.class;
+        }
+        Intent intent = new Intent(getActivity(), page);
+        intent.putExtra("event_name", event.getEventName());
+        intent.putExtra("event_date", event.getEventDate());
+        intent.putExtra("event_time", event.getEventTime());
+        intent.putExtra("description", event.getDescription());
+        intent.putExtra("id", event.getId());
+        startActivityForResult(intent, REQUEST);
+    }
+
+    @Override
+    public void onActivityResult (int requestCode, int resultCode, Intent data)
+    {
+        // Check which request we're responding to
+        if (requestCode == EVENT_RESULT)
+        {
+            // Make sure the request was successful
+            if (resultCode == DATA_INVALID)
+            {
+                Bundle extras = new Bundle();
+                extras.putString("request_type", "3");
+                extras.putString("table0", "event");
+                extras.putString("search", "%%");
+                resolver.registerContentObserver(EVENTS, true,
+                                                 new SyncContentObserver(new Handler()));
+                ContentResolver
+                        .requestSync(account, getActivity().getString(R.string.authority), extras);
+                spinnerDialog.show(getFragmentManager(), "Synchronizing...");
+                spinnerShowing = true;
+            }
+        }
+    }
 
     /**
      * Default.
@@ -130,36 +194,6 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         extras.putString("search", "%%");
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
         Log.d("EVENTS", "Resolver query");
-    }
-
-
-    /**
-     * When an item is clicked, the appropriate event is opened up in the EventPage class.
-     *
-     * @param adapterView The AdapterView for this list view.
-     * @param view The view that was clicked.
-     * @param i Not used
-     * @param l Index of item we are looking for.
-     */
-    @Override
-    public void onItemClick (AdapterView<?> adapterView, View view, int i, long l)
-    {
-        Event event = ((Event) (adapterView.getAdapter().getItem((int) l)));
-
-        Class page;
-        if (account.name.equals(event.getCreator()))
-        {
-            page = EditEvent.class;
-        }
-        else
-        {
-            page = EventsPage.class;
-        }
-        Intent intent = new Intent(getActivity(), page);
-        intent.putExtra("event_name", event.getEventName());
-        intent.putExtra("event_date", event.getEventDate());
-        intent.putExtra("event_time", event.getEventTime());
-        startActivityForResult(intent, REQUEST);
     }
 
     /**
@@ -265,9 +299,10 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                 String eventTime = cursor.getString(cursor.getColumnIndex("EVENT_TIME"));
                 String creator = cursor.getString(cursor.getColumnIndex("CREATOR"));
                 String id = cursor.getString(cursor.getColumnIndex("ID"));
+                String description = cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
                 //            String eventLocation = cursor.getString(cursor.getColumnIndex
                 // ("EVENT_LOCATION"));
-                events.add(new Event(eventName, eventDate, eventTime, null, creator, id));//,
+                events.add(new Event(eventName, eventDate, eventTime, description, creator, id));//,
                 // eventLocation));
             }
             Log.d("EVENTS", "ExtendedArray: ");

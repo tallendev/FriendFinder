@@ -54,7 +54,8 @@ public class ServerContentProvider extends ContentProvider
                                                         " EVENT_DATE TEXT, " +
                                                         " EVENT_TIME TEXT, " +
                                                         " LOCATION_VALUE TEXT," +
-                                                        " CREATOR TEXT);";
+                                                        " CREATOR TEXT," +
+                                                        " DESCRIPTION TEXT);";
     /**
      * String defines creation of the groups table.
      */
@@ -210,7 +211,7 @@ public class ServerContentProvider extends ContentProvider
          */
         MainDatabaseHelper (Context context)
         {
-            super(context, DBNAME, null, 4);
+            super(context, DBNAME, null, 5);
         }
 
         /**

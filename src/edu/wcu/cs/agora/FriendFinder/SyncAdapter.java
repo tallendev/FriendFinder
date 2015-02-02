@@ -433,6 +433,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         json.put("description", extras.getString("description"));
         json.put("time", extras.getString("time"));
         json.put("date", extras.getString("date"));
+        if (extras.containsKey("id"))
+        {
+            json.put("id", extras.getString("id"));
+        }
         json.put("create", extras.getBoolean("create"));
         JSONObject jsonIn = null;
         try

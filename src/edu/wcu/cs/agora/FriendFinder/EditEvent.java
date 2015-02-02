@@ -38,11 +38,20 @@ public class EditEvent extends Activity implements View.OnClickListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
+        Intent intent = getIntent();
         account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
         ((Button) findViewById(R.id.update)).setOnClickListener(this);
+        EditText eventName = ((EditText) findViewById(R.id.eventname));
+        eventName.setText(
+                intent.getExtras().getString("event_name", eventName.getText().toString()));
+        ((EditText) findViewById(R.id.date)).setText(intent.getExtras().getString("event_date"));
+
+        ((EditText) findViewById(R.id.time)).setText(intent.getExtras().getString("event_time"));
+        ((EditText) findViewById(R.id.description))
+                .setText(intent.getExtras().getString("description"));
     }
 
     /**
@@ -82,13 +91,14 @@ public class EditEvent extends Activity implements View.OnClickListener
         {
             Bundle extras = new Bundle();
             // generate sync request based on search parameters.
-            extras.putString("request_type", "1");
+            extras.putString("request_type", "5");
             extras.putString("eventname",
                              ((EditText) findViewById(R.id.eventname)).getText().toString());
             extras.putString("time", ((EditText) findViewById(R.id.time)).getText().toString());
             extras.putString("date", ((EditText) findViewById(R.id.date)).getText().toString());
             extras.putString("description",
                              ((EditText) findViewById(R.id.description)).getText().toString());
+            extras.putString("id", getIntent().getExtras().getString("id"));
 
             extras.putBoolean("create", false);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);

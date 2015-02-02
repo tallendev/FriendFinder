@@ -37,6 +37,8 @@ public class EventsPage extends Activity implements View.OnClickListener
                 .setText(intent.getExtras().getString("event_date"));
 
         ((TextView) findViewById(R.id.time)).setText(intent.getExtras().getString("event_time"));
+        ((TextView) findViewById(R.id.description))
+                .setText(intent.getExtras().getString("description"));
         map.setOnClickListener(this);
     }
 

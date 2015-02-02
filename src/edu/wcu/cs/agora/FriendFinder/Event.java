@@ -100,4 +100,12 @@ public class Event
     {
         return creator;
     }
+
+    /**
+     * Returns the id of this event.
+     */
+    public String getId ()
+    {
+        return id;
+    }
 }

@@ -16,7 +16,7 @@ import android.widget.Toast;
 /**
  * @author Tyler Allen
  * @created 11/2/2014.
- * @version 12/08/2014
+ * @version 2/1/2015
  *
  * Page used when a user is creating their own event.
  */
@@ -142,13 +142,35 @@ public class CreateEvent extends Activity implements View.OnClickListener
                         // Use the Builder class for convenient dialog construction
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(R.string.event_created)
-                               .setNeutralButton(R.string.ok, null);
+                               .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener()
+                               {
+                                   /**
+                                    * This method will be
+                                    * invoked when a button
+                                    * in the dialog is
+                                    * clicked.
+                                    *
+                                    * @param dialog The
+                                    * dialog that received
+                                    * the click.
+                                    * @param which The
+                                    * button that was
+                                    * clicked (e.g. {@link
+                                    * android.content.DialogInterface#BUTTON1})
+                                    * or the position
+                                    */
+                                   @Override
+                                   public void onClick (DialogInterface dialog, int which)
+                                   {
+                                       getActivity().setResult(Search.DATA_INVALID);
+                                       getActivity().finish();
+                                   }
+                               });
                         // Create the AlertDialog object and return it
                         return builder.create();
                     }
                 };
                 dialog.show(getFragmentManager(), "Success");
-                finish();
             }
             // Error from server meaning group name is taken.
             else
