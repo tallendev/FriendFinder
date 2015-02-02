@@ -36,6 +36,15 @@ public class Search extends Activity
      * The request status when requesting a class.
      */
     public static final int REQUEST = 1;
+    /**
+     * Request for result from group.
+     */
+    public static final int GROUP_RESULT = 500;
+
+    /**
+     * Code indicating data invalidation.
+     */
+    public static final int DATA_INVALID = 10000;
 
     /**
      * URI for the table containing groups.
@@ -120,6 +129,20 @@ public class Search extends Activity
         resolver.registerContentObserver(USERS, true, new SearchContentObserver(handler));
     }
 
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data)
+    {
+        // Check which request we're responding to
+        if (requestCode == GROUP_RESULT)
+        {
+            // Make sure the request was successful
+            if (resultCode == DATA_INVALID)
+            {
+                search.performClick();
+            }
+        }
+    }
+
     /**
      * When an item is clicked, the appropriate page is opened.
      *
@@ -149,7 +172,7 @@ public class Search extends Activity
                 Intent intent = new Intent(this, page);
                 intent.putExtra("group_name", group.getGroupName());
                 intent.putExtra("group_description", group.getDescription());
-                startActivityForResult(intent, REQUEST);
+                startActivityForResult(intent, GROUP_RESULT);
                 break;
             }
             // Likes do not have their own pages.

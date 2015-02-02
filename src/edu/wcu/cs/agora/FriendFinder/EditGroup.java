@@ -17,9 +17,8 @@ import android.widget.Toast;
 /**
  * @author Tyler Allen
  * @version 2/1/2015
- *          <p>
- *          Activity for editing a group if the user is the owner of the group.
  * @created 2/1/2015
+ * Activity for editing a group if the user is the owner of the group.
  */
 public class EditGroup extends Activity implements View.OnClickListener
 {
@@ -161,6 +160,7 @@ public class EditGroup extends Activity implements View.OnClickListener
                                    @Override
                                    public void onClick (DialogInterface dialog, int which)
                                    {
+                                       getActivity().setResult(Search.DATA_INVALID);
                                        getActivity().finish();
                                    }
                                });
