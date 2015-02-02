@@ -90,7 +90,7 @@ public class CreateEvent extends Activity implements View.OnClickListener
         {
             Bundle extras = new Bundle();
             // generate sync request based on search parameters.
-            extras.putString("request_type", "1");
+            extras.putString("request_type", "5");
             extras.putString("eventname",
                              ((EditText) findViewById(R.id.eventname)).getText().toString());
             extras.putString("description",

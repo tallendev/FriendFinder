@@ -49,7 +49,7 @@ public class EventUpdateRequest extends Request
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, in.getString("eventname"));
             stmt.setString(2, in.getString("description"));
-            stmt.setString(3, in.getString("id"));
+            stmt.setInt(3, Integer.parseInt(in.getString("id")));
             stmt.setString(4, in.getString("user"));
             stmt.executeUpdate();
         }

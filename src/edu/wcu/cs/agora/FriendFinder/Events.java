@@ -264,9 +264,10 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                 String eventDate = cursor.getString(cursor.getColumnIndex("EVENT_DATE"));
                 String eventTime = cursor.getString(cursor.getColumnIndex("EVENT_TIME"));
                 String creator = cursor.getString(cursor.getColumnIndex("CREATOR"));
+                String id = cursor.getString(cursor.getColumnIndex("ID"));
                 //            String eventLocation = cursor.getString(cursor.getColumnIndex
                 // ("EVENT_LOCATION"));
-                events.add(new Event(eventName, eventDate, eventTime, null, creator));//,
+                events.add(new Event(eventName, eventDate, eventTime, null, creator, id));//,
                 // eventLocation));
             }
             Log.d("EVENTS", "ExtendedArray: ");

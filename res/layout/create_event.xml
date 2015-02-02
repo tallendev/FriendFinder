@@ -25,7 +25,7 @@ Event creation page.
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/editText"
+        android:id="@+id/eventname"
         android:hint="Event Name"
         android:layout_gravity="center_horizontal" />
 
@@ -33,7 +33,7 @@ Event creation page.
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/editText2"
+        android:id="@+id/time"
         android:hint="Time"
         android:layout_gravity="center_horizontal" />
 
@@ -48,7 +48,7 @@ Event creation page.
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:id="@+id/editText3"
+            android:id="@+id/date"
             android:hint="Date"
             android:layout_gravity="center_horizontal" />
 
@@ -66,7 +66,7 @@ Event creation page.
         android:layout_weight="1"
         android:weightSum="5">
 
-        <EditText
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
@@ -85,17 +85,10 @@ Event creation page.
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:id="@+id/editText5"
+        android:id="@+id/description"
         android:hint="Message"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/invite"
-        android:text="Invite"
-        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
@@ -104,6 +97,6 @@ Event creation page.
         android:text="Create!"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
-        android:id="@+id/button"
+        android:id="@+id/create"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>
