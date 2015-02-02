@@ -1,0 +1,171 @@
+\documentclass[11pt]{article}
+\bibliographystyle{plain}
+\usepackage{graphicx}
+\usepackage[margin=.75in]{geometry}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{url}
+\doublespace
+
+\begin{document}
+\title{CS496 Proposal: FriendFinder}
+\author{Tyler Allen}
+\maketitle
+
+% What is it
+\section{Overview}
+
+The goal of this capstone is to develop a social networking application for 
+the Android mobile platform. The application will allow users to connect with other people and 
+plan events. Users will be able to find people by name or through mutual interests. The application
+will allow users to invite other users to events they are planning. The application will display 
+friends and nearby users on a map. The application will allow users to select 
+a location for their events and have it appear on a map to other users.
+This will provide students with a fun and easy-to-use social networking
+application.\\
+
+\section{Semester One Background}
+The application currently supports basic a basic set of functionality including
+user registration and authentication, secure network communication between 
+a backend server and instances of the client application, and the ability for users 
+to search and view groups and events. Users have their own profiles that contains some basic 
+information about them and their interests. This includes their name, birthdate, 
+gender, and e-mail address. Users can also navigate through the full application,
+despite some features not being implemented yet. All data is stored on a backend database in order
+to synchronize data and prevent unauthorized access of some user data. The backend
+database is accessed by the client application using Transfer Control Protocol (TCP)
+for network communication and Secure Socket Layer (SSL) for the encryption of 
+network data. JavaScript Object Notation (JSON) is used as the protocol for the 
+transfer of application data. Java Database Connectivity (JDBC) is used to 
+access the backend PostgreSQL database. A user-relevant subset of the backend data is 
+stored within the application using a Sqlite3 database. \\
+
+\section{Semester Two}
+The application will allow users to create events and groups, as 
+well as invite other users to events. Users will also be able to modify their group, event, and 
+profile information. In addition, users should be able to upload profile pictures to represent 
+themselves.\\
+
+Users will be able to upload a schedule using the Android Calendar framework\cite{calendar}.
+Users will be able to keep a list of friends; a user may view their friend's schedule through their 
+user profile. To preserve privacy, other users will be able to view if a user is currently busy, 
+according to their schedule, by looking at their profile.\\
+
+Event pages will allow users to view the location of a scheduled event using a Google Map\cite{googlemaps}.
+Users will also be able to view the location of their friends, relative to their own, on a 
+Google Map\cite{googlemaps} interface. The ability to view locations should be relative to a user's 
+position, and extend to a certain radius around that area. Events searches may be limited to a 
+location radius as well. All Google Maps\cite{googlemaps} and location-based information will 
+require a way to transmit location data over the network and store it in a database, or a 
+peer-to-peer system for transmitting this data to other users\cite{location}.\\
+
+\section{Testing}
+With the implementation of a variety of new functionality and frameworks, it is critical that the
+application is regularly tested for regression. Both the application and server backend will require 
+some level of unit testing to be implemented to prevent regression. This will include the user of 
+the standard Java unit testing suite, JUnit\cite{junit}. The application will make use of the 
+standard Android testing framework, which is based on JUnit\cite{androidtest}. Android 
+test devices include an LG G2, an HTC One M8, a Nexus 7, and a Nexus 10 tablet. 
+Testing will include the aesthetic quality of layouts, the functionality of layouts,
+the existance of error checking in the event of unpreventable issues such as 
+network connection loss, and the proper and safe querying, modification, and insertion
+of database entries. Testing will performed during and upon completion of each 
+feature, with Unit Tests being developed incrementally as time allows.
+
+
+%Why is it a good capstone
+\section{Problem Statement}
+
+The remaining functionality to be implemented contain a number of challenging aspects. Presently, 
+the backbone of the project is complete; database and network functionality are implemented. However,
+allowing users to modify profiles, events, and groups requires the implementation of several database
+functionalities. Allowing clients the ability to modify backend database data requires additional
+precautions and careful exposition of functionality in order to prevent inadvertent data destruction. 
+Research will need to be completed on the functionality of the Android testing and calendar frameworks.
+Allowing users to share current location information with their friends will require the ability
+to store location data on the server. Alternatively, it may prove to be too slow, or data intensive,
+so a peer to peer option needs to be investigated for this setting. Applications with a feature similar to this, such as YikYak\cite{yikyak},
+will need to be investigated for this purpose. Unit Testing on mobile devices may also prove difficult when
+it comes to testing user interface elements.
+
+
+\newpage
+\section{Requirements Specification - MoSCoW Analysis}
+
+\subsection{Must Have}
+\begin{itemize}
+\item User creation of groups and events.
+\item User modification of profile, groups, and events.
+\item Map locations of events with markers and touch-event informational pop-up windows.
+\item User schedules and a 'busy/available' status on user profiles..
+\item Providing an interface for visualizing locations of friends.
+\item Extension of user location visualization to events.
+\end{itemize}
+\subsection{Should Have}
+\begin{itemize}
+\item User profile pictures.
+\item Ability for users to enter their own likes instead of selecting from a dropdown menu.
+\item Provide a system for suggesting a like that another user has already created. 
+This would likely be implemented as an autocomplete function.
+\end{itemize}
+\subsection{Could Have}
+\begin{itemize}
+\item An ``I forgot my password'' button.
+\item Token authentication.
+\item Autocomplete for searching and other text fields.
+\end{itemize}
+\subsection{Won't Have}
+\begin{itemize}
+\item Group recommendations.
+\item Web application.
+\item IPhone implementation.
+\end{itemize}
+\newpage
+\section{Schedule of Completion}
+
+\textbf{Tuesday, February 3, 2015}
+\\
+Implementation and testing of group, event creation and modification will be completed.
+Users will be able to create and modify groups and events.
+
+\textbf{Tuesday, February 17, 2015}
+\\  
+Events will support locations and display them on a map. This includes a 
+method for storing and parsing location data. Users will also be able to select
+times and dates from dialogs on their events. User profile modification 
+will be completed. Testings of maps and user profile modification will be 
+complete.
+
+\textbf{Tuesday, March 3, 2015}
+\\	
+Users will be able to maintain a user's schedule inside the application on
+a calendar interface. Busy/Available statuses will be visible on user profiles.
+Testing of user schedules and statuses will be completed.
+
+\textbf{Tuesday, March 24, 2015}
+\\
+Users will be able to visualize locations of their friends. Peer to peer transfer will be
+investigated, and possibly implemented. Unit tests will be caught up to this point.
+ 
+\textbf{Tuesday, April 7th, 2015}
+\\
+User and group pictures will be implemented. Users will be able to submit 
+photos for their group or user account for others to see. Storage of profile pictures on 
+server and client side will be implemented. Testing of picture storage and 
+retrieval will be completed.
+ 
+\textbf{Tuesday, April 21, 2014}
+\\	
+Autocomplete for search fields will be complete. An ``I forgot my password'' button will 
+be available and functional. Users will be able to reset their password from 
+within the application. Testing of autocomplete and ``I forgot my password'' 
+functionality will be completed.
+
+
+\newpage
+\bibliography{capstone_proposal}
+\nocite{}
+\end{document}

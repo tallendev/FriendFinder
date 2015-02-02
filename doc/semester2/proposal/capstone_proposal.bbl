@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+
+\bibitem{junit}
+Junit.
+\newblock Web, 2015.
+\newblock \url{JUnit.org} Accessed: 2015-01-18.
+
+\bibitem{googlemaps}
+Google maps api v2.
+\newblock Web, 2015.
+\newblock \url{https://developer.android.com/maps/documentation/android}
+  Accessed: 2015-01-18.
+
+\bibitem{calendar}
+Android calendar.
+\newblock Web, 2015.
+\newblock \url{https://developer.android.com/reference/java/util/Calendar.html}
+  Accessed: 2015-01-18.
+
+\bibitem{androidtest}
+Android testsuite.
+\newblock Web, 2015.
+\newblock
+  \url{https://developer.android.com/reference/junit/framework/TestSuite.html}
+  Accessed: 2015-01-18.
+
+\bibitem{yikyak}
+Yikyak.
+\newblock Web, 2015.
+\newblock \url{http://yikyakapp.com} Accessed: 2015-01-18.
+
+\bibitem{location}
+Ekhiotz~Jon Vergara, Mihails Prihodko, and Simin Nadjm-Tehrani.
+\newblock Mobile location sharing: An energy consumption study.
+\newblock In {\em Proceedings of the Fourth International Conference on Future
+  Energy Systems}, e-Energy '13, pages 289--290, New York, NY, USA, 2013. ACM.
+
+\end{thebibliography}
