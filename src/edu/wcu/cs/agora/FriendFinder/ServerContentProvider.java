@@ -211,7 +211,7 @@ public class ServerContentProvider extends ContentProvider
          */
         MainDatabaseHelper (Context context)
         {
-            super(context, DBNAME, null, 5);
+            super(context, DBNAME, null, 6);
         }
 
         /**
