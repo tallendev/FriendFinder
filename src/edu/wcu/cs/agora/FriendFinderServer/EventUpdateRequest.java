@@ -65,16 +65,25 @@ public class EventUpdateRequest extends Request
         boolean success = true;
         String name = in.getString("eventname");
         String desc = in.getString("description");
+        Statement max = conn.createStatement();
+        ResultSet idMax = max
+                .executeQuery("SELECT max(friendfinder.event.id) " + "FROM friendfinder.event");
+        int id = 0;
+        if (idMax.next())
+        {
+            id = idMax.getInt(1);
+        }
         PreparedStatement stmt;
 
-        String createEvent = "INSERT INTO friendfinder.event VALUES(?, ?, ?, ?, ?, ?);";
+        String createEvent = "INSERT INTO friendfinder.event VALUES(?, ?, ?, ?, ?, ?, ?);";
         stmt = conn.prepareStatement(createEvent);
-        stmt.setString(1, name);
-        stmt.setDate(2, Date.valueOf("2013-10-22"));  //set default picture since they don't work
-        stmt.setTime(3, Time.valueOf("00:00:00"));
-        stmt.setString(4, "temp");
-        stmt.setString(5, in.getString("user"));
-        stmt.setString(6, desc);
+        stmt.setInt(1, id);
+        stmt.setString(2, name);
+        stmt.setDate(3, Date.valueOf("2013-10-22"));  //set default picture since they don't work
+        stmt.setTime(4, Time.valueOf("00:00:00"));
+        stmt.setString(5, "temp");
+        stmt.setString(6, in.getString("user"));
+        stmt.setString(7, desc);
         stmt.executeUpdate();
 
         String addEventAttendee = "INSERT INTO friendfinder.group_member VALUES(?, ?);";
