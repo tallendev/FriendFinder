@@ -153,7 +153,7 @@ public abstract class Request
                 request = new EventUpdateRequest(json, jsonOut);
                 break;
             }
-            case ("7"): //case (GROUP_DELETE)
+            case ("6"): //case (GROUP_DELETE)
             {
                 System.err.println("Group deleted");
                 request = new GroupDeleteRequest(json, jsonOut);
