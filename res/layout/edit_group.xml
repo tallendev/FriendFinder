@@ -39,4 +39,14 @@ Group creation page.
             android:layout_marginRight="80dp"
             android:id="@+id/update"
             android:layout_gravity="center_horizontal"/>
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/delete"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:id="@+id/delete"
+                android:layout_gravity="center_horizontal"/>
 </LinearLayout>

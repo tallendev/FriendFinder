@@ -46,6 +46,7 @@ String reference file.
     <string name="group_description">Group Description</string>
     <string name="group_created">Group was created successfully.</string>
     <string name="group_update">Group was updated successfully.</string>
+    <string name="group_deleted">Group has been deleted.</string>
     <string name="ok">OK</string>
     <string name="update">Update</string>
     <string name="event_update">Event was updated successfully.</string>
@@ -80,6 +81,10 @@ String reference file.
     </string-array>
 
     <string name="name">Full Name</string>
+
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_sure">Are you sure you want to deleted this group?</string>
 
 
 

@@ -121,7 +121,7 @@ Dynamically generated page representing an event.
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="8"/>
+            android:layout_weight="4"/>
 
 
     <LinearLayout
@@ -166,15 +166,37 @@ Dynamically generated page representing an event.
 
     </LinearLayout>
 
-    <Button
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
-            android:text="@string/update"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
-            android:id="@+id/update"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_weight="14"
+            android:weightSum="100">
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="15"/>
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:text="@string/update"
+                android:id="@+id/update"
+                android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"/>
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:text="@string/delete"
+                android:id="@+id/delete"
+                android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

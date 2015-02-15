@@ -34,7 +34,19 @@ public class EditGroup extends Activity implements View.OnClickListener
      * Broadcast receiver for confirmation of account synchronization.
      */
     private EditGroupReceiver    receiver;
+    /**
+     * If this group is scheduled for deletion.
+     */
+    private boolean  deleted;
+    /**
+     * This activity.
+     */
+    private Activity activity;
 
+
+    /**
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
@@ -49,7 +61,9 @@ public class EditGroup extends Activity implements View.OnClickListener
         ((TextView) findViewById(R.id.title)).setText(extras.getString("group_name"));
         ((EditText) findViewById(R.id.group_description))
                 .setText(extras.getString("group_description"));
-
+        ((Button) findViewById(R.id.delete)).setOnClickListener(this);
+        deleted = false;
+        activity = this;
     }
 
     /**
@@ -103,6 +117,89 @@ public class EditGroup extends Activity implements View.OnClickListener
             intentFilter.addAction("group_update");
             registerReceiver(receiver, intentFilter);
         }
+        else if (v.getId() == R.id.delete)
+        {
+            deleteBuilder().show(getFragmentManager(), getString(R.string.delete_sure));
+        }
+    }
+
+    /**
+     * Creates a dialog fragment to check if the user is sure that they would like to delete the
+     * group.
+     * @return The created dialog fragment.
+     */
+    public DialogFragment deleteBuilder ()
+    {
+        return new DialogFragment()
+        {
+            @Override
+            public Dialog onCreateDialog (Bundle savedInstanceState)
+            {
+                // Use the Builder class for convenient dialog construction
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.delete_sure)
+                       .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+                       {
+                           @Override
+                           public void onClick (DialogInterface dialog, int which)
+                           {
+                               deleted = true;
+                               Bundle extras = new Bundle();
+                               // generate sync request based on search parameters.
+                               extras.putString("request_type", "6");
+                               extras.putString("groupname",
+                                                ((TextView) findViewById(R.id.title)).getText()
+                                                                                     .toString());
+                               ContentResolver
+                                       .requestSync(account, getString(R.string.authority), extras);
+                               spinnerDialog
+                                       .show(getFragmentManager(), "Synchronizing with Server");
+                               receiver = new EditGroupReceiver();
+                               IntentFilter intentFilter = new IntentFilter();
+                               intentFilter.addAction("group_update");
+                               registerReceiver(receiver, intentFilter);
+                           }
+                       }).setNegativeButton(R.string.cancel, null);
+                // Create the AlertDialog object and return it
+                return builder.create();
+            }
+        };
+    }
+
+    /**
+     * Creates a dialog fragment for successful updating or deletion of a group.
+     * @return The created dialog fragment.
+     */
+    private DialogFragment successBuilder ()
+    {
+        return new DialogFragment()
+        {
+            @Override
+            public Dialog onCreateDialog (Bundle savedInstanceState)
+            {
+                // Use the Builder class for convenient dialog construction
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                if (deleted)
+                {
+                    builder.setMessage(R.string.group_deleted);
+                }
+                else
+                {
+                    builder.setMessage(R.string.group_update);
+                }
+                builder.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick (DialogInterface dialog, int which)
+                    {
+                        getActivity().setResult(Search.DATA_INVALID);
+                        getActivity().finish();
+                    }
+                });
+                // Create the AlertDialog object and return it
+                return builder.create();
+            }
+        };
     }
 
     /**
@@ -132,43 +229,13 @@ public class EditGroup extends Activity implements View.OnClickListener
             // Success. Move to next activity and kill this one to preserve state.
             else if (intent.getExtras().getBoolean("success", false))
             {
-                DialogFragment dialog = new DialogFragment()
-                {
-                    @Override
-                    public Dialog onCreateDialog (Bundle savedInstanceState)
-                    {
-                        // Use the Builder class for convenient dialog construction
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(R.string.group_update)
-                               .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener()
-                               {
-                                   /**
-                                    * This method will be
-                                    * invoked when a button
-                                    * in the dialog is
-                                    * clicked.
-                                    *
-                                    * @param dialog The
-                                    * dialog that received
-                                    * the click.
-                                    * @param which The
-                                    * button that was
-                                    * clicked (e.g. {@link
-                                    * android.content.DialogInterface#BUTTON1})
-                                    * or the position
-                                    */
-                                   @Override
-                                   public void onClick (DialogInterface dialog, int which)
-                                   {
-                                       getActivity().setResult(Search.DATA_INVALID);
-                                       getActivity().finish();
-                                   }
-                               });
-                        // Create the AlertDialog object and return it
-                        return builder.create();
-                    }
-                };
+                DialogFragment dialog = successBuilder();
                 dialog.show(getFragmentManager(), "Success");
+                if (deleted)
+                {
+                    activity.setResult(Search.DATA_INVALID);
+                    activity.finish();
+                }
             }
             // Error from server meaning group name is taken.
             else
@@ -176,6 +243,7 @@ public class EditGroup extends Activity implements View.OnClickListener
                 cleanupReceiver();
                 Toast.makeText(EditGroup.this, "Group name is taken.", Toast.LENGTH_LONG).show();
             }
+            deleted = false;
         }
     }
 }
