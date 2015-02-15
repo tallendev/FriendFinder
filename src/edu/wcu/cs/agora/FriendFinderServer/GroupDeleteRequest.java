@@ -42,7 +42,8 @@ public class GroupDeleteRequest extends Request
         boolean success = true;
         String deleteMembers = "DELETE FROM friendfinder.group_member " +
                                "USING friendfinder.user_group " +
-                               "WHERE group_name = ? AND user_group.owner = ?";
+                               "WHERE friendfinder.group_member.group_name = ? AND user_group" +
+                               ".owner = ?";
         PreparedStatement stmt = conn.prepareStatement(deleteMembers);
         stmt.setString(1, in.getString("groupname"));
         stmt.setString(2, in.getString("user"));
