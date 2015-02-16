@@ -38,6 +38,7 @@ public class EventCancelRequest extends Request
     {
         JSONObject in = getJsonIn();
         JSONObject out = getJsonOut();
+        int id = Integer.parseInt(in.getString("id"));
         Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
         boolean success = true;
         String deleteMembers = "DELETE FROM friendfinder.attending_event " +
@@ -45,12 +46,12 @@ public class EventCancelRequest extends Request
                                "WHERE event = ? AND " +
                                "creator = ?";
         PreparedStatement stmt = conn.prepareStatement(deleteMembers);
-        stmt.setString(1, in.getString("id"));
+        stmt.setInt(1, id);
         stmt.setString(2, in.getString("user"));
         stmt.executeUpdate();
         String deleteEvent = "DELETE FROM friendfinder.event " + "WHERE id = ? AND creator = ?";
         stmt = conn.prepareStatement(deleteEvent);
-        stmt.setString(1, in.getString("id"));
+        stmt.setInt(1, id);
         stmt.setString(2, in.getString("user"));
         stmt.executeUpdate();
         out.put("success", success);
