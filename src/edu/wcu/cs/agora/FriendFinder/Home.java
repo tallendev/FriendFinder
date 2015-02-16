@@ -52,6 +52,7 @@ public class Home extends Activity
 
         actionBar.addTab(tab1);
         actionBar.addTab(tab2);
+        actionBar.addTab(tab3);
     }
 
 
