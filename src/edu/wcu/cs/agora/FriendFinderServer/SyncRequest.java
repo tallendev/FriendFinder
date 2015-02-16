@@ -171,6 +171,7 @@ public class SyncRequest extends Request
             case "user_group_self":
             {
                 sql = GROUPS_SELF_SQL;
+                System.err.println("Groups_self_sql");
                 break;
             }
             case "likes":
