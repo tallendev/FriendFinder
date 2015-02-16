@@ -581,6 +581,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             current = jsonIn.getString("table" + i);
             lines = current.split("~");
             String table = lines[0];
+            if (table.equals("user_group_self"))
+            {
+                table = "user_group";
+            }
             // currently we delete the existing table. this can be changed to reduce redundancy
             // by requesting only data that has changed or doesn't exist.
             try
