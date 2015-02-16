@@ -41,15 +41,15 @@ public abstract class Request
     /**
      * Request type indicating an update to an event.
      */
-    public static final short EVENT_UPDATE = 5;
+    public static final short EVENT_UPDATE   = 5;
     /**
      * Request type indicating a group deletion.
      */
-    public static final short GROUP_DELETE = 6;
+    public static final short GROUP_DELETE   = 6;
     /**
      * Request type indicating an event deletion.
      */
-    public static final short EVENT_DELETE = 7;
+    public static final short EVENT_CANCEL   = 7;
 
     /**
      * JSON object received from the client.
@@ -156,6 +156,12 @@ public abstract class Request
             case ("6"): //case (GROUP_DELETE)
             {
                 System.err.println("Group deleted");
+                request = new GroupDeleteRequest(json, jsonOut);
+                break;
+            }
+            case ("7"): //case (GROUP_DELETE)
+            {
+                System.err.println("Event cancelled");
                 request = new GroupDeleteRequest(json, jsonOut);
                 break;
             }

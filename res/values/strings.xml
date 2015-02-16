@@ -85,6 +85,8 @@ String reference file.
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="delete_sure">Are you sure you want to delete this group?</string>
+    <string name="cancel_sure">Are you sure you want to cancel this event?</string>
+    <string name="cancelled">Event cancelled successfully.</string>
 
 
 

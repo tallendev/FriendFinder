@@ -234,6 +234,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             {
                 processGroupDelete(json, extras, out, sslSocket);
             }
+            case "7":
+            {
+                processEventCancel(json, extras, out, sslSocket);
+            }
             default:
             {
                 Log.d("SYNC", "Invalid request type.");
@@ -510,6 +514,49 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         }
         i.putExtra("ioerr", ioError);
         i.setAction("group_update");
+        getContext().sendBroadcast(i);
+    }
+
+    /**
+     * Helper method for deletion of event.
+     *
+     * @param json Stores outgoing data.
+     * @param extras Contains extras from calling activity containing information to send to
+     * server.
+     * @param out Output stream connected to server.
+     * @param sslSocket SSLSocket maintaining connection to server.
+     */
+    private void processEventCancel (JSONObject json, Bundle extras, OutputStream out,
+                                     SSLSocket sslSocket) throws JSONException
+    {
+        boolean ioError = false;
+        // more data into our outgoing json object.
+        json.put("id", extras.getString("id"));
+        JSONObject jsonIn = null;
+        try
+        {
+            // write and read
+            Log.d("SYNC", json.toString());
+            out.write(json.toString().getBytes());
+            Scanner in = new Scanner(sslSocket.getInputStream());
+            jsonIn = new JSONObject(in.nextLine());
+        }
+        catch (IOException ioe)
+        {
+            Log.d("SYNC", "An error occurred while attempting to register");
+            Log.d("SYNC", ioe.getMessage());
+            ioError = true;
+        }
+        Log.d("SYNC", "Attempting to broadcast");
+        Intent i = new Intent(EVENT_UPDATE);
+
+        // did we succeed?
+        if (jsonIn != null)
+        {
+            i.putExtra("success", jsonIn.getBoolean("success"));
+        }
+        i.putExtra("ioerr", ioError);
+        i.setAction("event_update");
         getContext().sendBroadcast(i);
     }
 

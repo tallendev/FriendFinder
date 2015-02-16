@@ -231,11 +231,6 @@ public class EditGroup extends Activity implements View.OnClickListener
             {
                 DialogFragment dialog = successBuilder();
                 dialog.show(getFragmentManager(), "Success");
-                if (deleted)
-                {
-                    activity.setResult(Search.DATA_INVALID);
-                    activity.finish();
-                }
             }
             // Error from server meaning group name is taken.
             else

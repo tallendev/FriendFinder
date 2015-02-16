@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 /**
  * @author Tyler Allen
- * @version 2/1/2015
- * @created 2/1/2015
+ * @version 2/15/2015
+ * @created 2/15/2015
  */
 public class EditEvent extends Activity implements View.OnClickListener
 {
@@ -32,6 +32,14 @@ public class EditEvent extends Activity implements View.OnClickListener
      * Broadcast receiver for confirmation of account synchronization.
      */
     private EditEventReceiver    receiver;
+    /**
+     * If this group is scheduled for deletion.
+     */
+    private boolean  deleted;
+    /**
+     * This activity.
+     */
+    private Activity activity;
 
     @Override
     public void onCreate (Bundle savedInstanceState)
@@ -52,6 +60,7 @@ public class EditEvent extends Activity implements View.OnClickListener
         ((EditText) findViewById(R.id.time)).setText(intent.getExtras().getString("event_time"));
         ((EditText) findViewById(R.id.description))
                 .setText(intent.getExtras().getString("description"));
+        ((Button) findViewById(R.id.cancel)).setOnClickListener(this);
     }
 
     /**
@@ -108,6 +117,51 @@ public class EditEvent extends Activity implements View.OnClickListener
             intentFilter.addAction("event_update");
             registerReceiver(receiver, intentFilter);
         }
+        else if (v.getId() == R.id.cancel)
+        {
+            deleteBuilder().show(getFragmentManager(), "Are you sure?");
+        }
+    }
+
+    /**
+     * Creates a dialog fragment to check if the user is sure that they would like to delete the
+     * group.
+     * @return The created dialog fragment.
+     */
+    public DialogFragment deleteBuilder ()
+    {
+        return new DialogFragment()
+        {
+            @Override
+            public Dialog onCreateDialog (Bundle savedInstanceState)
+            {
+                // Use the Builder class for convenient dialog construction
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.cancel_sure)
+                       .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+                       {
+                           @Override
+                           public void onClick (DialogInterface dialog, int which)
+                           {
+                               deleted = true;
+                               Bundle extras = new Bundle();
+                               // generate sync request based on search parameters.
+                               extras.putString("request_type", "7");
+                               extras.putString("id", getIntent().getExtras().getString("id"));
+                               ContentResolver
+                                       .requestSync(account, getString(R.string.authority), extras);
+                               spinnerDialog
+                                       .show(getFragmentManager(), "Synchronizing with Server");
+                               receiver = new EditEventReceiver();
+                               IntentFilter intentFilter = new IntentFilter();
+                               intentFilter.addAction("event_update");
+                               registerReceiver(receiver, intentFilter);
+                           }
+                       }).setNegativeButton(R.string.cancel, null);
+                // Create the AlertDialog object and return it
+                return builder.create();
+            }
+        };
     }
 
     /**
@@ -144,31 +198,38 @@ public class EditEvent extends Activity implements View.OnClickListener
                     {
                         // Use the Builder class for convenient dialog construction
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(R.string.event_update)
-                               .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener()
-                               {
-                                   /**
-                                    * This method will be
-                                    * invoked when a button
-                                    * in the dialog is
-                                    * clicked.
-                                    *
-                                    * @param dialog The
-                                    * dialog that received
-                                    * the click.
-                                    * @param which The
-                                    * button that was
-                                    * clicked (e.g. {@link
-                                    * android.content.DialogInterface#BUTTON1})
-                                    * or the position
-                                    */
-                                   @Override
-                                   public void onClick (DialogInterface dialog, int which)
-                                   {
-                                       getActivity().setResult(Search.DATA_INVALID);
-                                       getActivity().finish();
-                                   }
-                               });
+                        if (deleted)
+                        {
+                            builder.setMessage(R.string.cancelled);
+                        }
+                        else
+                        {
+                            builder.setMessage(R.string.event_update);
+                        }
+                        builder.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener()
+                        {
+                            /**
+                             * This method will be
+                             * invoked when a button
+                             * in the dialog is
+                             * clicked.
+                             *
+                             * @param dialog The
+                             * dialog that received
+                             * the click.
+                             * @param which The
+                             * button that was
+                             * clicked (e.g. {@link
+                             * android.content.DialogInterface#BUTTON1})
+                             * or the position
+                             */
+                            @Override
+                            public void onClick (DialogInterface dialog, int which)
+                            {
+                                getActivity().setResult(Search.DATA_INVALID);
+                                getActivity().finish();
+                            }
+                        });
                         // Create the AlertDialog object and return it
                         return builder.create();
                     }
@@ -181,6 +242,7 @@ public class EditEvent extends Activity implements View.OnClickListener
                 cleanupReceiver();
                 Toast.makeText(EditEvent.this, "Event error.", Toast.LENGTH_LONG).show();
             }
+            deleted = false;
         }
     }
 }
