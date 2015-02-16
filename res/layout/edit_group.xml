@@ -25,11 +25,20 @@ Group creation page.
     <EditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:id="@+id/group_description"
             android:hint="@string/group_description"
             android:layout_gravity="center_horizontal"/>
 
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/group_members"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:id="@+id/members"
+                android:layout_gravity="center_horizontal"/>
     <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
