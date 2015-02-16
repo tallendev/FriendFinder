@@ -31,7 +31,8 @@ public class Home extends Activity
         setContentView(R.layout.home);
 
         Fragment fragment1 = new Events();
-        Fragment fragment2 = new Invites();
+        Fragment fragment2 = new GroupsTab();
+        Fragment fragment3 = new Invites();
 
         ActionBar actionBar = getActionBar();
 
@@ -42,10 +43,12 @@ public class Home extends Activity
         // Create Actionbar Tabs
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ActionBar.Tab tab1 = actionBar.newTab().setText("Events");//.setIcon(R.drawable.group);
-        ActionBar.Tab tab2 = actionBar.newTab().setText("Invites");//.setIcon(R.drawable.invite);
+        ActionBar.Tab tab2 = actionBar.newTab().setText("Groups");
+        ActionBar.Tab tab3 = actionBar.newTab().setText("Invites");//.setIcon(R.drawable.invite);
 
         tab1.setTabListener(new TabListener(fragment1));
         tab2.setTabListener(new TabListener(fragment2));
+        tab3.setTabListener(new TabListener(fragment3));
 
         actionBar.addTab(tab1);
         actionBar.addTab(tab2);

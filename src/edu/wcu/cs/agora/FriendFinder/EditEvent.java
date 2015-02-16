@@ -187,6 +187,7 @@ public class EditEvent extends Activity implements View.OnClickListener
                 Toast.makeText(EditEvent.this, "Error connecting to server.", Toast.LENGTH_LONG)
                      .show();
                 cleanupReceiver();
+                deleted = false;
             }
             // Success. Move to next activity and kill this one to preserve state.
             else if (intent.getExtras().getBoolean("success", false))
@@ -241,8 +242,8 @@ public class EditEvent extends Activity implements View.OnClickListener
             {
                 cleanupReceiver();
                 Toast.makeText(EditEvent.this, "Event error.", Toast.LENGTH_LONG).show();
+                deleted = false;
             }
-            deleted = false;
         }
     }
 }

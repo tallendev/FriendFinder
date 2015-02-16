@@ -225,6 +225,7 @@ public class EditGroup extends Activity implements View.OnClickListener
                 Toast.makeText(EditGroup.this, "Error connecting to server.", Toast.LENGTH_LONG)
                      .show();
                 cleanupReceiver();
+                deleted = false;
             }
             // Success. Move to next activity and kill this one to preserve state.
             else if (intent.getExtras().getBoolean("success", false))
@@ -237,8 +238,8 @@ public class EditGroup extends Activity implements View.OnClickListener
             {
                 cleanupReceiver();
                 Toast.makeText(EditGroup.this, "Group name is taken.", Toast.LENGTH_LONG).show();
+                deleted = false;
             }
-            deleted = false;
         }
     }
 }
