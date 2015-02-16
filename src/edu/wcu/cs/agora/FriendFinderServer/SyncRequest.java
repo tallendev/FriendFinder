@@ -31,7 +31,7 @@ public class SyncRequest extends Request
             " SELECT user_group.group_name, group_description, group_photo, owner " +
             " FROM user_group, group_member " +
             " WHERE user_group.group_name ILIKE ? " +
-            " AND group_member.member_name = user";
+            " AND group_member.member_name = ?";
 
     private static String LIKES_SQL = " SELECT like_label " +
                                       " FROM likes " +
