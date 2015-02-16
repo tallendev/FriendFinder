@@ -64,6 +64,7 @@ public class EditGroup extends Activity implements View.OnClickListener
         ((Button) findViewById(R.id.delete)).setOnClickListener(this);
         deleted = false;
         activity = this;
+        ((Button) findViewById(R.id.members)).setOnClickListener(this);
     }
 
     /**
@@ -120,6 +121,12 @@ public class EditGroup extends Activity implements View.OnClickListener
         else if (v.getId() == R.id.delete)
         {
             deleteBuilder().show(getFragmentManager(), getString(R.string.delete_sure));
+        }
+        else if (v.equals(findViewById(R.id.members)))
+        {
+            Intent i = new Intent(this, MemberList.class);
+            i.putExtra("group_name", getIntent().getExtras().getString("group_name"));
+            startActivity(i);
         }
     }
 

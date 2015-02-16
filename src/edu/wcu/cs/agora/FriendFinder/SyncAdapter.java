@@ -98,7 +98,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         super(context, autoInitialize, allowParallelSyncs);
         try
         {
-
             KeyStore trustStore = KeyStore.getInstance(KEYSTORE_TYPE);
             //open and load our trustStore
             InputStream trustStoreStream = context.getResources().openRawResource(R.raw.truststore);
@@ -383,6 +382,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         boolean ioError = false;
         try
         {
+            if (extras.containsKey("group_name"))
+            {
+                json.put("group_name", extras.getString("group_name"));
+            }
             // add search parameters
             json.put("search", extras.getString("search", null));
             int i = 0;

@@ -37,6 +37,10 @@ public class SyncRequest extends Request
                                       " FROM likes " +
                                       " WHERE like_label ILIKE ?";
 
+    private static String USERS_GROUP_SQL = " SELECT email, birthday, gender, full_name " +
+                                            " FROM users, group_member " +
+                                            " WHERE group_member.group_name = ?";
+
     /**
      * Default constructor calling super.
      *
@@ -132,7 +136,8 @@ public class SyncRequest extends Request
         System.err.println("buildStatement: jsonIn value: " + in.toString());
         String search = in.has("search") ? in.getString("search") : null;
         String user = in.getString("user");
-        return assignSQL(in, tableNum, conn, user, search);
+        String groupMember = in.has("group_member") ? in.getString("group_member") : null;
+        return assignSQL(in, tableNum, conn, user, search, groupMember);
     }
 
     /**
@@ -150,7 +155,8 @@ public class SyncRequest extends Request
      * @throws SQLException If an error is encountered building the prepared statement.
      */
     private PreparedStatement assignSQL (JSONObject in, int tableNum, Connection conn, String user,
-                                         String search) throws JSONException, SQLException
+                                         String search, String groupMember)
+            throws JSONException, SQLException
     {
         PreparedStatement stmt;
         String sql = null;
@@ -164,7 +170,14 @@ public class SyncRequest extends Request
             }
             case "user_group":
             {
-                sql = GROUPS_SQL;
+                if (groupMember != null)
+                {
+                    sql = USERS_GROUP_SQL;
+                }
+                else
+                {
+                    sql = GROUPS_SQL;
+                }
                 user = null;
                 break;
             }
@@ -188,7 +201,7 @@ public class SyncRequest extends Request
             }
         }
         stmt = conn.prepareStatement(sql);
-        setStatementArguments(search, user, stmt);
+        setStatementArguments(search, user, groupMember, stmt);
         return stmt;
     }
 
@@ -201,7 +214,8 @@ public class SyncRequest extends Request
      *
      * @throws SQLException If there is an error adding the arguments to the SQL query.
      */
-    private void setStatementArguments (String search, String user, PreparedStatement stmt)
+    private void setStatementArguments (String search, String user, String groupMember,
+                                        PreparedStatement stmt)
             throws SQLException
     {
         int setStringVal = 1;
@@ -215,6 +229,12 @@ public class SyncRequest extends Request
         {
             System.err.println("SyncRequest: User is not null.");
             stmt.setString(setStringVal, user);
+            setStringVal++;
+        }
+        if (groupMember != null)
+        {
+            System.err.println("SyncRequest: GroupMember is not null");
+            stmt.setString(setStringVal, groupMember);
             setStringVal++;
         }
     }

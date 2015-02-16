@@ -21,27 +21,32 @@ public class ServerContentProvider extends ContentProvider
     /**
      * Authority for this content provider.
      */
-    public static final  String AUTHORITY             = "edu.wcu.cs.agora.FriendFinder" +
-                                                        ".ServerContentProvider";
+    public static final String AUTHORITY        = "edu.wcu.cs.agora.FriendFinder" +
+                                                  ".ServerContentProvider";
     /**
      * URI for authority.
      */
-    public static final  Uri    CONTENT_URI           = Uri.parse("content://" + AUTHORITY);
+    public static final Uri    CONTENT_URI      = Uri.parse("content://" + AUTHORITY);
     /**
      * URI for the group table.
      */
-    public static final  Uri    USER_GROUP            = Uri
+    public static final Uri    USER_GROUP       = Uri
             .parse(ServerContentProvider.CONTENT_URI + "/user_group");
     /**
      * URI for the users table.
      */
-    public static final  Uri    USERS                 = Uri
+    public static final Uri    USERS            = Uri
             .parse(ServerContentProvider.CONTENT_URI + "/users");
     /**
      * URI for the Likes table.
      */
-    public static final  Uri    LIKES                 = Uri
+    public static final Uri    LIKES            = Uri
             .parse(ServerContentProvider.CONTENT_URI + "/likes");
+    /**
+     * Current version of the database.
+     */
+    public static final int    DATABASE_VERSION = 7;
+
     /**
      * String defines creation of the events table.
      */
@@ -87,10 +92,11 @@ public class ServerContentProvider extends ContentProvider
                                                         " LIKE_LABEL TEXT PRIMARY KEY ON CONFLICT" +
                                                         " " +
                                                         "REPLACE);";
+
     /**
      * Database's name.
      */
-    private static final String DBNAME                = "server_data";
+    private static final String DBNAME = "server_data";
 
     /**
      * Defines the database helper object.
@@ -211,7 +217,7 @@ public class ServerContentProvider extends ContentProvider
          */
         MainDatabaseHelper (Context context)
         {
-            super(context, DBNAME, null, 6);
+            super(context, DBNAME, null, DATABASE_VERSION);
         }
 
         /**

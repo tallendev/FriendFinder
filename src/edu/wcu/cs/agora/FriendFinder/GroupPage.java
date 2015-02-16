@@ -3,6 +3,8 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -12,7 +14,7 @@ import android.widget.TextView;
  *
  * Class containing setup and interaction of the GroupPage.
  */
-public class GroupPage extends Activity
+public class GroupPage extends Activity implements View.OnClickListener
 {
     /**
      * Attempts to overwrite default page text settings with group-specific ones.
@@ -31,5 +33,22 @@ public class GroupPage extends Activity
         groupName.setText(extras.getString("group_name", groupName.getText().toString()));
         ((TextView) findViewById(R.id.group_description))
                 .setText(extras.getString("group_description"));
+        ((Button) findViewById(R.id.members)).setOnClickListener(this);
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick (View v)
+    {
+        if (v.equals(findViewById(R.id.members)))
+        {
+            Intent i = new Intent(this, MemberList.class);
+            i.putExtra("group_name", getIntent().getExtras().getString("group_name"));
+            startActivity(i);
+        }
     }
 }

@@ -121,6 +121,7 @@ Dynamically generated page representing an event.
 
         <!-- Placeholder for maps icon -->
         <Button
+                android:id="@+id/members"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="90"

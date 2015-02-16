@@ -74,6 +74,7 @@ Permissions.
         <activity android:name=".EditEvent"/>
         <activity android:name=".EditGroup"/>
         <activity android:name=".CreateGroup"/>
+        <activity android:name=".MemberList"/>
 
         <service
                 android:name="edu.wcu.cs.agora.FriendFinder.SyncService"
