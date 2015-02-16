@@ -162,7 +162,7 @@ public abstract class Request
             case ("7"): //case (GROUP_DELETE)
             {
                 System.err.println("Event cancelled");
-                request = new GroupDeleteRequest(json, jsonOut);
+                request = new EventCancelRequest(json, jsonOut);
                 break;
             }
             default:
