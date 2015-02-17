@@ -114,7 +114,7 @@ public class GroupPage extends Activity implements View.OnClickListener
         if (v.equals(findViewById(R.id.join)))
         {
             Button join = (Button) v;
-            boolean joining = join.getText().equals("Leave");
+            boolean joining = !join.getText().equals("Leave");
             Bundle extras = new Bundle();
             extras.putString("request_type", "8");
             extras.putString("group_name", extras.getString("group_name"));

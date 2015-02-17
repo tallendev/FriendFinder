@@ -118,7 +118,8 @@ public class SyncRequest extends Request
                         builder.append(",");
                     }
                 }
-                if (in.getString("table" + tableNum).equals("user_group"))
+                if (in.getString("table" + tableNum).equals("user_group") ||
+                    in.getString("table" + tableNum).equals("user_group_self"))
                 {
                     PreparedStatement member = conn.prepareStatement("SELECT email " +
                                                                      "FROM friendfinder" +

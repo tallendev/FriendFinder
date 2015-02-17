@@ -99,7 +99,7 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
         }
         else
         {
-            page = EventsPage.class;
+            page = GroupPage.class;
         }
         Intent intent = new Intent(getActivity(), page);
         intent.putExtra("group_name", group.getGroupName());
@@ -230,7 +230,7 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
         {
             super(context, layout, txtLayout, list);
             this.list = list;
-            inflater = (LayoutInflater) getActivity()
+            inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 

@@ -117,10 +117,10 @@ public class EventsPage extends Activity implements View.OnClickListener
         else if (v.equals(findViewById(R.id.attending)))
         {
             Button join = (Button) v;
-            boolean joining = join.getText().equals("Leave");
+            boolean joining = !join.getText().equals("Leave");
             Bundle extras = new Bundle();
             extras.putString("request_type", "9");
-            extras.putString("id", extras.getString("id"));
+            extras.putString("id", getIntent().getExtras().getString("id"));
             extras.putBoolean("joining", joining);
             ContentResolver.requestSync(account, this.getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
