@@ -197,9 +197,9 @@ public class SyncRequest extends Request
                 else
                 {
                     sql = USERS_SQL;
-                    user = null;
-                    break;
                 }
+                user = null;
+                break;
             }
         }
         stmt = conn.prepareStatement(sql);
