@@ -198,5 +198,6 @@ public abstract class Request
      *                      encountered.
      * @throws JSONException An error with a JSON object has been encountered.
      */
-    protected abstract void getResponse() throws SQLException, JSONException;
+    protected abstract void getResponse ()
+            throws SQLException, JSONException, MalformedPacketException;
 }

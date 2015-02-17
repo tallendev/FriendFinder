@@ -60,7 +60,7 @@ public class SyncRequest extends Request
      * @throws JSONException If an error with a JSONObject was encountered.
      */
     @Override
-    protected void getResponse() throws SQLException, JSONException
+    protected void getResponse () throws SQLException, JSONException, MalformedPacketException
     {
         JSONObject in = getJsonIn();
         JSONObject out = getJsonOut();
@@ -130,7 +130,9 @@ public class SyncRequest extends Request
      * @throws SQLException Thrown with
      * TODO: Would be good to refactor if it can be done without compromising security.
      */
-    private PreparedStatement buildStatement(Connection conn, int tableNum) throws JSONException, SQLException {
+    private PreparedStatement buildStatement (Connection conn, int tableNum)
+            throws JSONException, SQLException, MalformedPacketException
+    {
         PreparedStatement stmt = null;
         JSONObject in = getJsonIn();
         System.err.println("buildStatement: jsonIn value: " + in.toString());
@@ -156,7 +158,7 @@ public class SyncRequest extends Request
      */
     private PreparedStatement assignSQL (JSONObject in, int tableNum, Connection conn, String user,
                                          String search, String groupMember)
-            throws JSONException, SQLException
+            throws JSONException, SQLException, MalformedPacketException
     {
         PreparedStatement stmt;
         String sql = null;
@@ -200,6 +202,10 @@ public class SyncRequest extends Request
                 }
                 user = null;
                 break;
+            }
+            default:
+            {
+                throw new MalformedPacketException("Invalid table query.");
             }
         }
         stmt = conn.prepareStatement(sql);
