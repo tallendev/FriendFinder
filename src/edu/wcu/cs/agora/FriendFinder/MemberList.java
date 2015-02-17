@@ -186,7 +186,7 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
             {
                 holder = new ViewHolder();
                 convertView = inflater.inflate(R.layout.members_list_item, null);
-                holder.txt1 = (TextView) convertView.findViewById(R.id.members);
+                holder.txt1 = (TextView) convertView.findViewById(R.id.membername);
                 convertView.setTag(holder);
             }
             else
