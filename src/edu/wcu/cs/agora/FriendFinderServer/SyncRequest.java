@@ -204,30 +204,34 @@ public class SyncRequest extends Request
         {
             case "event":
             {
+                System.err.println("case event");
                 sql = EVENTS_SQL;
                 break;
             }
             case "user_group":
             {
+                System.err.println("case user_group");
                 sql = GROUPS_SQL;
                 user = null;
                 break;
             }
             case "user_group_self":
             {
+                System.err.println("case user_group_self");
                 sql = GROUPS_SELF_SQL;
                 search = null;
-                System.err.println("Groups_self_sql");
                 break;
             }
             case "likes":
             {
+                System.err.println("case likes");
                 sql = LIKES_SQL;
                 user = null;
                 break;
             }
             case "users":
             {
+                System.err.println("case users");
                 if (groupMember != null)
                 {
                     System.err.println("GroupMember != null");
