@@ -128,9 +128,9 @@ public class SyncRequest extends Request
                                                                          "group_name = ?;");
                         member.setString(1, in.getString("user"));
                         member.setString(2, in.getString("user"));
-                        member.setString(3, in.getString(rs.getString("group_name")));
+                        member.setString(3, (rs.getString("group_name")));
                         ResultSet resultSet = member.executeQuery();
-                        builder.append("member=");
+                        builder.append(",member=");
                         builder.append(resultSet.next());
                     }
                     else if (in.getString("table" + tableNum).equals("event"))
@@ -144,10 +144,10 @@ public class SyncRequest extends Request
                                                                          "event = ?;");
                         member.setString(1, in.getString("user"));
                         member.setString(2, in.getString("user"));
-                        member.setString(3, rs.getString(""));
+                        member.setInt(3, Integer.parseInt(rs.getString("id")));
                         ResultSet resultSet = member.executeQuery();
-                        builder.append("attending=");
-                        builder.append(resultSet);
+                        builder.append(",attending=");
+                        builder.append(resultSet.next());
                     }
                 }
 
