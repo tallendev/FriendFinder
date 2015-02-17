@@ -147,7 +147,7 @@ public class SyncRequest extends Request
                         member.setInt(3, Integer.parseInt(rs.getString("id")));
                         ResultSet resultSet = member.executeQuery();
                         builder.append("attending=");
-                        builder.append(resultSet);
+                        builder.append(resultSet.next());
                     }
                 }
 
