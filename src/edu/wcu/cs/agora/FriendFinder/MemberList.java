@@ -74,7 +74,7 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
         account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         spinnerShowing = false;
-        lv = (ListView) findViewById(R.id.listView1);
+        lv = (ListView) findViewById(R.id.members);
         if (savedInstanceState == null)
         {
             Bundle extras = new Bundle();
