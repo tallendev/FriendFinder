@@ -104,6 +104,7 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
         Intent intent = new Intent(getActivity(), page);
         intent.putExtra("group_name", group.getGroupName());
         intent.putExtra("group_description", group.getDescription());
+        intent.putExtra("member", group.isMember());
         startActivityForResult(intent, REQUEST);
     }
 
@@ -296,10 +297,8 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
                 String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
                 String description = cursor.getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
                 String owner = cursor.getString(cursor.getColumnIndex("OWNER"));
-                //            String eventLocation = cursor.getString(cursor.getColumnIndex
-                // ("EVENT_LOCATION"));
-                groups.add(new Group(groupName, description, owner));//,
-                // eventLocation));
+                boolean member = Boolean.valueOf(cursor.getString(cursor.getColumnIndex("MEMBER")));
+                groups.add(new Group(groupName, description, owner, member));
             }
             Log.d("GROUPS", "ExtendedArray: ");
             for (Group group : groups)

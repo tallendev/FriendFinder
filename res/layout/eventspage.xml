@@ -147,7 +147,7 @@ Dynamically generated page representing an event.
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="20"
+            android:layout_weight="10"
             android:weightSum="100">
 
         <LinearLayout
@@ -162,6 +162,29 @@ Dynamically generated page representing an event.
                 android:textSize="20sp"
                 android:textColor="@color/gold"
                 android:layout_weight="92"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:weightSum="100">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"/>
+
+
+        <!-- Placeholder for maps icon -->
+        <Button
+                android:id="@+id/attending"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="90"
+                android:text="@string/attend"/>
+        <!--android:background="@drawable/go"-->
 
     </LinearLayout>
 

@@ -50,6 +50,14 @@ public abstract class Request
      * Request type indicating an event deletion.
      */
     public static final short EVENT_CANCEL   = 7;
+    /**
+     * Request type to join or leave a group.
+     */
+    public static final short JOIN_GROUP = 8;
+    /**
+     * Request type to attend or unattend an event.
+     */
+    public static final short JOIN_EVENT = 9;
 
     /**
      * JSON object received from the client.
@@ -163,6 +171,18 @@ public abstract class Request
             {
                 System.err.println("Event cancelled");
                 request = new EventCancelRequest(json, jsonOut);
+                break;
+            }
+            case ("8"):
+            {
+                System.err.println("Group join.leave");
+                request = new GroupJoinLeaveRequest(json, jsonOut);
+                break;
+            }
+            case ("9"):
+            {
+                System.err.println("Event join/leave");
+                request = new EventJoinLeaveRequest(json, jsonOut);
                 break;
             }
             default:

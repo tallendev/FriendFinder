@@ -23,15 +23,20 @@ public class Group
      * Owner of the group.
      */
     private String owner;
+    /**
+     * If user is a member of this group.
+     */
+    private boolean member;
 
     /**
      * Initializes fields.
      */
-    public Group (String group_name, String description, String owner)
+    public Group (String group_name, String description, String owner, boolean member)
     {
         this.group_name = group_name;
         this.description = description;
         this.owner = owner;
+        this.member = member;
     }
 
     /**
@@ -62,5 +67,15 @@ public class Group
     public String getOwner ()
     {
         return owner;
+    }
+
+    /**
+     * True if user is a member of this group
+     *
+     * @return member
+     */
+    public boolean isMember ()
+    {
+        return member;
     }
 }

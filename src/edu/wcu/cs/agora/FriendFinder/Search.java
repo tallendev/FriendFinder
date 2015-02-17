@@ -172,6 +172,7 @@ public class Search extends Activity
                 Intent intent = new Intent(this, page);
                 intent.putExtra("group_name", group.getGroupName());
                 intent.putExtra("group_description", group.getDescription());
+                intent.putExtra("member", group.isMember());
                 startActivityForResult(intent, GROUP_RESULT);
                 break;
             }
@@ -560,7 +561,8 @@ public class Search extends Activity
                 String groupDescription = cursor
                         .getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
                 String owner = cursor.getString(cursor.getColumnIndex("OWNER"));
-                results.add(new Group(groupName, groupDescription, owner));
+                boolean member = Boolean.valueOf(cursor.getString(cursor.getColumnIndex("MEMBER")));
+                results.add(new Group(groupName, groupDescription, owner, member));
             }
             ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>(
                     getApplicationContext(), R.layout.group_list_item, R.id.groupname, results);

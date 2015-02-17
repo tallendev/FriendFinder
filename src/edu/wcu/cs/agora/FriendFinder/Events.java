@@ -108,6 +108,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         intent.putExtra("event_time", event.getEventTime());
         intent.putExtra("description", event.getDescription());
         intent.putExtra("id", event.getId());
+        intent.putExtra("attending", event.isAttending());
         startActivityForResult(intent, REQUEST);
     }
 
@@ -300,9 +301,12 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                 String creator = cursor.getString(cursor.getColumnIndex("CREATOR"));
                 String id = cursor.getString(cursor.getColumnIndex("ID"));
                 String description = cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
+                boolean attending = Boolean
+                        .valueOf(cursor.getString(cursor.getColumnIndex("ATTENDING")));
                 //            String eventLocation = cursor.getString(cursor.getColumnIndex
                 // ("EVENT_LOCATION"));
-                events.add(new Event(eventName, eventDate, eventTime, description, creator, id));//,
+                events.add(new Event(eventName, eventDate, eventTime, description, creator, id,
+                                     attending));//,
                 // eventLocation));
             }
             Log.d("EVENTS", "ExtendedArray: ");

@@ -41,6 +41,10 @@ public class SyncRequest extends Request
                                             " FROM users, group_member " +
                                             " WHERE group_member.member_email = users" +
                                             ".email AND group_member.group_name = ?";
+    private String     search;
+    private String     user;
+    private String     groupMember;
+    private Connection conn;
 
     /**
      * Default constructor calling super.
@@ -65,7 +69,7 @@ public class SyncRequest extends Request
     {
         JSONObject in = getJsonIn();
         JSONObject out = getJsonOut();
-        Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
+        conn = DatabaseConnectionBuilder.buildDatabaseConnection();
         Statement statement = conn.createStatement();
         statement.execute("set search_path to friendfinder");
 
@@ -113,7 +117,38 @@ public class SyncRequest extends Request
                     {
                         builder.append(",");
                     }
+                    if (in.getString("table" + tableNum).equals("user_group"))
+                    {
+                        PreparedStatement member = conn.prepareStatement("SELECT email " +
+                                                                         "FROM friendfinder" +
+                                                                         ".users, friendfinder" +
+                                                                         ".group_member " +
+                                                                         "WHERE email = ? AND " +
+                                                                         "member_email = ? AND " +
+                                                                         "group_name = ?;");
+                        member.setString(1, in.getString("user"));
+                        member.setString(2, in.getString("user"));
+                        member.setString(3, in.getString(rs.getString("group_name")));
+                        builder.append("member=");
+                        builder.append(rs.next());
+                    }
+                    else if (in.getString("table" + tableNum).equals("events"))
+                    {
+                        PreparedStatement member = conn.prepareStatement("SELECT email " +
+                                                                         "FROM friendfinder" +
+                                                                         ".users, friendfinder" +
+                                                                         ".attending_event " +
+                                                                         "WHERE email = ? AND " +
+                                                                         "attendee  = ? AND " +
+                                                                         "event = ?;");
+                        member.setString(1, in.getString("user"));
+                        member.setString(2, in.getString("user"));
+                        member.setString(3, in.getString(rs.getString("id")));
+                        builder.append("attending=");
+                        builder.append(rs.next());
+                    }
                 }
+
                 builder.append("~");
             }
             System.err.println("ResultSet:\n" + rs);
@@ -137,10 +172,10 @@ public class SyncRequest extends Request
         PreparedStatement stmt = null;
         JSONObject in = getJsonIn();
         System.err.println("buildStatement: jsonIn value: " + in.toString());
-        String search = in.has("search") ? in.getString("search") : null;
-        String user = in.getString("user");
-        String groupMember = in.has("group_name") ? in.getString("group_name") : null;
-        return assignSQL(in, tableNum, conn, user, search, groupMember);
+        search = in.has("search") ? in.getString("search") : null;
+        user = in.getString("user");
+        groupMember = in.has("group_name") ? in.getString("group_name") : null;
+        return assignSQL(in, tableNum, conn);
     }
 
     /**
@@ -149,16 +184,13 @@ public class SyncRequest extends Request
      * @param in Input JSON object.
      * @param tableNum The current table number.
      * @param conn The connection with the database.
-     * @param user The user field if available and necessary.
-     * @param search The search field if available and necessary.
      *
      * @return A prepared statement with the appropriate query and arguments.
      *
      * @throws JSONException If an error is encountered with a json object.
      * @throws SQLException If an error is encountered building the prepared statement.
      */
-    private PreparedStatement assignSQL (JSONObject in, int tableNum, Connection conn, String user,
-                                         String search, String groupMember)
+    private PreparedStatement assignSQL (JSONObject in, int tableNum, Connection conn)
             throws JSONException, SQLException, MalformedPacketException
     {
         PreparedStatement stmt;
@@ -210,21 +242,17 @@ public class SyncRequest extends Request
             }
         }
         stmt = conn.prepareStatement(sql);
-        setStatementArguments(search, user, groupMember, stmt);
+        setStatementArguments(stmt);
         return stmt;
     }
 
     /**
      * Assign arguments to prepared statement.
-     *
-     * @param search If search string is present, provide argument.
-     * @param user If user string is present, provide argument.
      * @param stmt Statement to apply arguments to.
      *
      * @throws SQLException If there is an error adding the arguments to the SQL query.
      */
-    private void setStatementArguments (String search, String user, String groupMember,
-                                        PreparedStatement stmt)
+    private void setStatementArguments (PreparedStatement stmt)
             throws SQLException
     {
         int setStringVal = 1;

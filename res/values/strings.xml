@@ -89,6 +89,8 @@ String reference file.
     <string name="cancel_sure">Are you sure you want to cancel this event?</string>
     <string name="cancelled">Event cancelled successfully.</string>
     <string name="group_members">Members</string>
+    <string name="join">Join</string>
+    <string name="attend">Attend</string>
 
 
 
