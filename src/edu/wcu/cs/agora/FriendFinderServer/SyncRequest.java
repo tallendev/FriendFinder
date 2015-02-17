@@ -174,6 +174,7 @@ public class SyncRequest extends Request
                 {
                     search = null;
                     sql = USERS_GROUP_SQL;
+                    System.err.println("search: " + search);
                 }
                 else
                 {
