@@ -132,7 +132,7 @@ public class SyncRequest extends Request
                         builder.append("member=");
                         builder.append(rs.next());
                     }
-                    else if (in.getString("table" + tableNum).equals("events"))
+                    else if (in.getString("table" + tableNum).equals("event"))
                     {
                         PreparedStatement member = conn.prepareStatement("SELECT email " +
                                                                          "FROM friendfinder" +
