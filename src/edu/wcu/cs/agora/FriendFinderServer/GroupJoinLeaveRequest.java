@@ -38,6 +38,7 @@ public class GroupJoinLeaveRequest extends Request
         JSONObject in = getJsonIn();
         JSONObject out = getJsonOut();
         Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
+        System.err.println("GroupJoinLeave:\n" + in.toString());
         boolean success = true;
         PreparedStatement stmt;
         String sql;
