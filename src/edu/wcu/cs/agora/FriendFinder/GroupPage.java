@@ -16,7 +16,7 @@ import android.widget.Toast;
 /**
  * @author Tyler Allen
  * @created 11/27/14
- * @version 12/07/2014
+ * @version 2/15/2015
  *
  * Class containing setup and interaction of the GroupPage.
  */

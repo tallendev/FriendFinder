@@ -36,10 +36,6 @@ public class EditEvent extends Activity implements View.OnClickListener
      * If this group is scheduled for deletion.
      */
     private boolean  deleted;
-    /**
-     * This activity.
-     */
-    private Activity activity;
 
     @Override
     public void onCreate (Bundle savedInstanceState)

@@ -16,7 +16,7 @@ import android.widget.Toast;
 /**
  * @author Tyler Allen
  * @created 09/29/2014
- * @version 2/1/2015
+ * @version 2/15/2015
  * Code for functioning specific event instance.
  */
 public class EventsPage extends Activity implements View.OnClickListener
