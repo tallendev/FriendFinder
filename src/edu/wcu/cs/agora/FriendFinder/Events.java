@@ -193,6 +193,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         extras.putString("request_type", "3");
         extras.putString("table0", "event");
         extras.putString("search", "%%");
+        extras.putString("id", extras.getString("id"));
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
         Log.d("EVENTS", "Resolver query");
     }
