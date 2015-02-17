@@ -172,6 +172,7 @@ public class SyncRequest extends Request
             {
                 if (groupMember != null)
                 {
+                    search = null;
                     sql = USERS_GROUP_SQL;
                 }
                 else
