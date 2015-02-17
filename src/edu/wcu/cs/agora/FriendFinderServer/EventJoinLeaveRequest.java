@@ -37,6 +37,7 @@ public class EventJoinLeaveRequest extends Request
     {
         JSONObject in = getJsonIn();
         JSONObject out = getJsonOut();
+        System.err.println("EventJoinLeaveRequest:\n" + in.toString());
         Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
         boolean success = true;
         PreparedStatement stmt;
