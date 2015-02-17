@@ -136,7 +136,7 @@ public class SyncRequest extends Request
         System.err.println("buildStatement: jsonIn value: " + in.toString());
         String search = in.has("search") ? in.getString("search") : null;
         String user = in.getString("user");
-        String groupMember = in.has("group_member") ? in.getString("group_member") : null;
+        String groupMember = in.has("group_name") ? in.getString("group_name") : null;
         return assignSQL(in, tableNum, conn, user, search, groupMember);
     }
 
