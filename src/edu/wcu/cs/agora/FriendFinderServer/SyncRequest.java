@@ -31,8 +31,7 @@ public class SyncRequest extends Request
             " SELECT user_group.group_name, group_description, group_photo, owner " +
             " FROM user_group, group_member " +
             " WHERE user_group.group_name ILIKE ? " +
-            " AND group_member.member_email = ?" +
-            " AND user_group.email = group_member.member_email";
+            " AND group_member.member_email = ?";
 
     private static String LIKES_SQL = " SELECT like_label " +
                                       " FROM likes " +
@@ -117,6 +116,38 @@ public class SyncRequest extends Request
                     if (k++ < columnCount)
                     {
                         builder.append(",");
+                    }
+                    if (in.getString("table" + tableNum).equals("user_group"))
+                    {
+                        PreparedStatement member = conn.prepareStatement("SELECT email " +
+                                                                         "FROM friendfinder" +
+                                                                         ".users, friendfinder" +
+                                                                         ".group_member " +
+                                                                         "WHERE email = ? AND " +
+                                                                         "member_email = ? AND " +
+                                                                         "group_name = ?;");
+                        member.setString(1, in.getString("user"));
+                        member.setString(2, in.getString("user"));
+                        member.setString(3, in.getString(rs.getString("group_name")));
+                        ResultSet resultSet = member.executeQuery();
+                        builder.append("member=");
+                        builder.append(resultSet.next());
+                    }
+                    else if (in.getString("table" + tableNum).equals("event"))
+                    {
+                        PreparedStatement member = conn.prepareStatement("SELECT email " +
+                                                                         "FROM friendfinder" +
+                                                                         ".users, friendfinder" +
+                                                                         ".attending_event " +
+                                                                         "WHERE email = ? AND " +
+                                                                         "attendee  = ? AND " +
+                                                                         "event = ?;");
+                        member.setString(1, in.getString("user"));
+                        member.setString(2, in.getString("user"));
+                        member.setString(3, rs.getString(""));
+                        ResultSet resultSet = member.executeQuery();
+                        builder.append("attending=");
+                        builder.append(resultSet);
                     }
                 }
 
