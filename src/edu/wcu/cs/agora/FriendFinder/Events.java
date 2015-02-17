@@ -232,7 +232,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         {
             super(context, layout, txtLayout, list);
             this.list = list;
-            inflater = (LayoutInflater) getActivity()
+            inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
