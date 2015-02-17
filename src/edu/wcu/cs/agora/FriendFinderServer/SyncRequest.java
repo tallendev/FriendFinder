@@ -117,38 +117,38 @@ public class SyncRequest extends Request
                     {
                         builder.append(",");
                     }
-                    if (in.getString("table" + tableNum).equals("user_group"))
-                    {
-                        PreparedStatement member = conn.prepareStatement("SELECT email " +
-                                                                         "FROM friendfinder" +
-                                                                         ".users, friendfinder" +
-                                                                         ".group_member " +
-                                                                         "WHERE email = ? AND " +
-                                                                         "member_email = ? AND " +
-                                                                         "group_name = ?;");
-                        member.setString(1, in.getString("user"));
-                        member.setString(2, in.getString("user"));
-                        member.setString(3, (rs.getString("group_name")));
-                        ResultSet resultSet = member.executeQuery();
-                        builder.append(",member=");
-                        builder.append(resultSet.next());
-                    }
-                    else if (in.getString("table" + tableNum).equals("event"))
-                    {
-                        PreparedStatement member = conn.prepareStatement("SELECT email " +
-                                                                         "FROM friendfinder" +
-                                                                         ".users, friendfinder" +
-                                                                         ".attending_event " +
-                                                                         "WHERE email = ? AND " +
-                                                                         "attendee  = ? AND " +
-                                                                         "event = ?;");
-                        member.setString(1, in.getString("user"));
-                        member.setString(2, in.getString("user"));
-                        member.setInt(3, Integer.parseInt(rs.getString("id")));
-                        ResultSet resultSet = member.executeQuery();
-                        builder.append(",attending=");
-                        builder.append(resultSet.next());
-                    }
+                }
+                if (in.getString("table" + tableNum).equals("user_group"))
+                {
+                    PreparedStatement member = conn.prepareStatement("SELECT email " +
+                                                                     "FROM friendfinder" +
+                                                                     ".users, friendfinder" +
+                                                                     ".group_member " +
+                                                                     "WHERE email = ? AND " +
+                                                                     "member_email = ? AND " +
+                                                                     "group_name = ?;");
+                    member.setString(1, in.getString("user"));
+                    member.setString(2, in.getString("user"));
+                    member.setString(3, (rs.getString("group_name")));
+                    ResultSet resultSet = member.executeQuery();
+                    builder.append(",member=");
+                    builder.append(resultSet.next());
+                }
+                else if (in.getString("table" + tableNum).equals("event"))
+                {
+                    PreparedStatement member = conn.prepareStatement("SELECT email " +
+                                                                     "FROM friendfinder" +
+                                                                     ".users, friendfinder" +
+                                                                     ".attending_event " +
+                                                                     "WHERE email = ? AND " +
+                                                                     "attendee  = ? AND " +
+                                                                     "event = ?;");
+                    member.setString(1, in.getString("user"));
+                    member.setString(2, in.getString("user"));
+                    member.setInt(3, Integer.parseInt(rs.getString("id")));
+                    ResultSet resultSet = member.executeQuery();
+                    builder.append(",attending=");
+                    builder.append(resultSet.next());
                 }
 
                 builder.append("~");
