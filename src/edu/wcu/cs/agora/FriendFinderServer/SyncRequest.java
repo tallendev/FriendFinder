@@ -29,9 +29,10 @@ public class SyncRequest extends Request
 
     private static String GROUPS_SELF_SQL =
             " SELECT user_group.group_name, group_description, group_photo, owner " +
-            " FROM user_group, group_member " +
+            " FROM users, user_group,  group_member " +
             " WHERE user_group.group_name ILIKE ? " +
-            " AND group_member.member_email = ?";
+            " AND group_member.member_email = ?" +
+            " AND users.email = group_member.member_email";
 
     private static String LIKES_SQL = " SELECT like_label " +
                                       " FROM likes " +
