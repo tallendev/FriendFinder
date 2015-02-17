@@ -31,7 +31,8 @@ public class SyncRequest extends Request
             " SELECT user_group.group_name, group_description, group_photo, owner " +
             " FROM user_group, group_member " +
             " WHERE user_group.group_name ILIKE ? " +
-            " AND group_member.member_email = ?";
+            " AND group_member.member_email = ?" +
+            " AND user_group.email = group_member.member_email";
 
     private static String LIKES_SQL = " SELECT like_label " +
                                       " FROM likes " +
@@ -39,9 +40,8 @@ public class SyncRequest extends Request
 
     private static String USERS_GROUP_SQL = " SELECT email, birthday, gender, full_name " +
                                             " FROM users, group_member " +
-                                            " WHERE group_member.member_email = ?" +
-                                            " AND users.email = ?" +
-                                            "AND group_member.group_name = ?";
+                                            " WHERE group_member.member_email = users" +
+                                            ".email AND group_member.group_name = ?";
     private String     search;
     private String     user;
     private String     groupMember;
@@ -118,39 +118,6 @@ public class SyncRequest extends Request
                     {
                         builder.append(",");
                     }
-                }
-                if (in.getString("table" + tableNum).equals("user_group") ||
-                    in.getString("table" + tableNum).equals("user_group_self"))
-                {
-                    PreparedStatement member = conn.prepareStatement("SELECT email " +
-                                                                     "FROM friendfinder" +
-                                                                     ".users, friendfinder" +
-                                                                     ".group_member " +
-                                                                     "WHERE email = ? AND " +
-                                                                     "member_email = ? AND " +
-                                                                     "group_name = ?;");
-                    member.setString(1, in.getString("user"));
-                    member.setString(2, in.getString("user"));
-                    member.setString(3, (rs.getString("group_name")));
-                    ResultSet resultSet = member.executeQuery();
-                    builder.append(",member=");
-                    builder.append(resultSet.next());
-                }
-                else if (in.getString("table" + tableNum).equals("event"))
-                {
-                    PreparedStatement member = conn.prepareStatement("SELECT email " +
-                                                                     "FROM friendfinder" +
-                                                                     ".users, friendfinder" +
-                                                                     ".attending_event " +
-                                                                     "WHERE email = ? AND " +
-                                                                     "attendee  = ? AND " +
-                                                                     "event = ?;");
-                    member.setString(1, in.getString("user"));
-                    member.setString(2, in.getString("user"));
-                    member.setInt(3, Integer.parseInt(rs.getString("id")));
-                    ResultSet resultSet = member.executeQuery();
-                    builder.append(",attending=");
-                    builder.append(resultSet.next());
                 }
 
                 builder.append("~");
@@ -229,15 +196,15 @@ public class SyncRequest extends Request
             {
                 if (groupMember != null)
                 {
-                    search = user; //null
+                    search = null;
                     sql = USERS_GROUP_SQL;
                     System.err.println("search: " + search);
                 }
                 else
                 {
                     sql = USERS_SQL;
-                    user = null;
                 }
+                user = null;
                 break;
             }
             default:
