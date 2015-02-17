@@ -143,7 +143,7 @@ public class SyncRequest extends Request
                                                                          "event = ?;");
                         member.setString(1, in.getString("user"));
                         member.setString(2, in.getString("user"));
-                        member.setString(3, in.getString(rs.getString("id")));
+                        member.setString(3, in.getString("id"));
                         builder.append("attending=");
                         builder.append(rs.next());
                     }
