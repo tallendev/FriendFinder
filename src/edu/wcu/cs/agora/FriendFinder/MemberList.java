@@ -101,6 +101,7 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
         extras.putString("request_type", "3");
         extras.putString("table0", "event");
         extras.putString("search", "%%");
+        extras.putString("group_name", getIntent().getExtras().getString("group_name"));
         ContentResolver.requestSync(account, this.getString(R.string.authority), extras);
         Log.d("EVENTS", "Resolver query");
     }

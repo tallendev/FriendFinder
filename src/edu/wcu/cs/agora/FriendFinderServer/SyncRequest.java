@@ -230,6 +230,7 @@ public class SyncRequest extends Request
             {
                 if (groupMember != null)
                 {
+                    System.err.println("GroupMember != null");
                     search = null;
                     sql = USERS_GROUP_SQL;
                     System.err.println("search: " + search);

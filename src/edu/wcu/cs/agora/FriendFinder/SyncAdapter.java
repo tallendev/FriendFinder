@@ -390,14 +390,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         boolean ioError = false;
         try
         {
-            /**if (extras.containsKey("group_name"))
+            if (extras.containsKey("group_name"))
             {
                 json.put("group_name", extras.getString("group_name"));
             }
-            else if (extras.containsKey("id"))
-            {
-                json.put("id", extras.getString("id"));
-             }*/
             // add search parameters
             json.put("search", extras.getString("search", null));
             int i = 0;

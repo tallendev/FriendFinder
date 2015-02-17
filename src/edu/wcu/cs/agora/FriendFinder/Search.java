@@ -471,7 +471,10 @@ public class Search extends Activity
             Log.d("GROUPS", "Resolver query");
             Cursor cursor = resolver.query(currentOption.getUri(), null, null, null, null);
             updateListView(cursor, lv);
-            spinnerDialog.dismiss();
+            if (spinnerDialog != null)
+            {
+                spinnerDialog.dismiss();
+            }
         }
 
 
