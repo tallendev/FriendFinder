@@ -170,16 +170,7 @@ public class SyncRequest extends Request
             }
             case "user_group":
             {
-                if (groupMember != null)
-                {
-                    search = null;
-                    sql = USERS_GROUP_SQL;
-                    System.err.println("search: " + search);
-                }
-                else
-                {
-                    sql = GROUPS_SQL;
-                }
+                sql = GROUPS_SQL;
                 user = null;
                 break;
             }
@@ -197,9 +188,18 @@ public class SyncRequest extends Request
             }
             case "users":
             {
-                sql = USERS_SQL;
-                user = null;
-                break;
+                if (groupMember != null)
+                {
+                    search = null;
+                    sql = USERS_GROUP_SQL;
+                    System.err.println("search: " + search);
+                }
+                else
+                {
+                    sql = USERS_SQL;
+                    user = null;
+                    break;
+                }
             }
         }
         stmt = conn.prepareStatement(sql);
