@@ -45,7 +45,7 @@ public class ServerContentProvider extends ContentProvider
     /**
      * Current version of the database.
      */
-    public static final int    DATABASE_VERSION = 8;
+    public static final int    DATABASE_VERSION = 9;
 
     /**
      * String defines creation of the events table.
@@ -60,7 +60,7 @@ public class ServerContentProvider extends ContentProvider
                                                         " EVENT_TIME TEXT, " +
                                                         " LOCATION_VALUE TEXT," +
                                                         " CREATOR TEXT," +
-                                                        " DESCRIPTION TEXT" +
+                                                        " DESCRIPTION TEXT," +
                                                         " ATTENDING TEXT);";
     /**
      * String defines creation of the groups table.
@@ -72,7 +72,7 @@ public class ServerContentProvider extends ContentProvider
                                                         " REPLACE," +
                                                         " GROUP_DESCRIPTION TEXT," +
                                                         " GROUP_PHOTO INTEGER," +
-                                                        " OWNER TEXT" +
+                                                        " OWNER TEXT," +
                                                         " MEMBER TEXT);";
     /**
      * String defines creation of the users table.

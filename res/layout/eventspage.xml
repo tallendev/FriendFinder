@@ -161,7 +161,8 @@ Dynamically generated page representing an event.
                 android:text="@string/placeholder_message"
                 android:textSize="20sp"
                 android:textColor="@color/gold"
-                android:layout_weight="92"/>
+                android:layout_weight="92"
+                android:id="@+id/description"/>
 
     </LinearLayout>
 

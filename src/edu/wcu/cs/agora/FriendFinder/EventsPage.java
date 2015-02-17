@@ -68,6 +68,7 @@ public class EventsPage extends Activity implements View.OnClickListener
                 .setText(intent.getExtras().getString("description"));
         map.setOnClickListener(this);
         Button attend = ((Button) findViewById(R.id.attending));
+        attend.setOnClickListener(this);
         attending = getIntent().getExtras().getBoolean("attending");
         if (getIntent().getExtras().getBoolean("attending"))
         {
