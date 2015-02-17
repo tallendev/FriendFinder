@@ -114,7 +114,7 @@ public class EventsPage extends Activity implements View.OnClickListener
             Intent i = new Intent(this, Map.class);
             startActivity(i);
         }
-        else if (v.equals(findViewById(R.id.join)))
+        else if (v.equals(findViewById(R.id.attending)))
         {
             Button join = (Button) v;
             boolean joining = join.getText().equals("Leave");
