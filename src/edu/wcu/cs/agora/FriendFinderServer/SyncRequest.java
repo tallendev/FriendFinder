@@ -130,7 +130,7 @@ public class SyncRequest extends Request
                         member.setString(2, in.getString("user"));
                         member.setString(3, (rs.getString("group_name")));
                         ResultSet resultSet = member.executeQuery();
-                        builder.append("member=");
+                        builder.append(",member=");
                         builder.append(resultSet.next());
                     }
                     else if (in.getString("table" + tableNum).equals("event"))
@@ -146,7 +146,7 @@ public class SyncRequest extends Request
                         member.setString(2, in.getString("user"));
                         member.setInt(3, Integer.parseInt(rs.getString("id")));
                         ResultSet resultSet = member.executeQuery();
-                        builder.append("attending=");
+                        builder.append(",attending=");
                         builder.append(resultSet.next());
                     }
                 }
