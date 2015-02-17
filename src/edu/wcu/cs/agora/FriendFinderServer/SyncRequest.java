@@ -30,8 +30,7 @@ public class SyncRequest extends Request
     private static String GROUPS_SELF_SQL =
             " SELECT user_group.group_name, group_description, group_photo, owner " +
             " FROM users, user_group,  group_member " +
-            " WHERE user_group.group_name ILIKE ? " +
-            " AND group_member.member_email = ?" +
+            " WHERE group_member.member_email = ?" +
             " AND users.email = group_member.member_email";
 
     private static String LIKES_SQL = " SELECT like_label " +
@@ -216,6 +215,7 @@ public class SyncRequest extends Request
             case "user_group_self":
             {
                 sql = GROUPS_SELF_SQL;
+                search = null;
                 System.err.println("Groups_self_sql");
                 break;
             }
