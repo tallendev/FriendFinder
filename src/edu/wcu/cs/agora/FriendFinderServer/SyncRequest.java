@@ -223,7 +223,7 @@ public class SyncRequest extends Request
         int setStringVal = 1;
         if (search != null)
         {
-            System.err.println("SyncRequest: Search is not null.");
+            System.err.println("SyncRequest: Search is not null: " + search);
             stmt.setString(setStringVal, search);
             setStringVal++;
         }
