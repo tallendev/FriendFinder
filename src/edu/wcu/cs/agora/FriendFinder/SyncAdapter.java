@@ -394,6 +394,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             {
                 json.put("group_name", extras.getString("group_name"));
             }
+            else if (extras.containsKey("id"))
+            {
+                json.put("id", extras.getString("id"));
+            }
             // add search parameters
             json.put("search", extras.getString("search", null));
             int i = 0;
