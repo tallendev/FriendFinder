@@ -403,6 +403,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             {
                 // add tables to outgoing request.
                 json.put("table" + i, current);
+                Log.d("SYNC", "CURRENT: " + json.getString("table" + i));
                 i++;
             }
             // write away
