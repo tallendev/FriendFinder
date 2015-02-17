@@ -40,7 +40,8 @@ public class SyncRequest extends Request
     private static String USERS_GROUP_SQL = " SELECT email, birthday, gender, full_name " +
                                             " FROM users, group_member " +
                                             " WHERE group_member.member_email = users" +
-                                            ".email AND group_member.group_name = ?";
+                                            ".email AND group_member.member_email = ?" +
+                                            "AND group_member.group_name = ?";
     private String     search;
     private String     user;
     private String     groupMember;
@@ -235,8 +236,8 @@ public class SyncRequest extends Request
                 else
                 {
                     sql = USERS_SQL;
+                    user = null;
                 }
-                user = null;
                 break;
             }
             default:

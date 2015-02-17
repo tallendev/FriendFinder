@@ -117,7 +117,7 @@ public class GroupPage extends Activity implements View.OnClickListener
             boolean joining = !join.getText().equals("Leave");
             Bundle extras = new Bundle();
             extras.putString("request_type", "8");
-            extras.putString("group_name", extras.getString("group_name"));
+            extras.putString("group_name", getIntent().getExtras().getString("group_name"));
             extras.putBoolean("joining", joining);
             ContentResolver.requestSync(account, this.getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");

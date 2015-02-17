@@ -592,6 +592,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         boolean ioError = false;
         // more data into our outgoing json object.
         json.put("group_name", extras.getString("group_name"));
+        Log.d("SYNC", "group_name: " + extras.getString("group_name"));
         json.put("joining", extras.getBoolean("joining"));
         JSONObject jsonIn = null;
         try
