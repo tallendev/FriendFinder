@@ -54,7 +54,7 @@ Dynamically generated page representing an event.
                 android:layout_height="match_parent"
                 android:layout_weight="5"/>
 
-        <EditText
+        <Button
                 android:id="@+id/time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@ Dynamically generated page representing an event.
                 android:textSize="30sp"
                 android:textColor="@color/gold"
                 android:layout_weight="50"/>
-        <EditText
+        <Button
                 android:id="@+id/date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

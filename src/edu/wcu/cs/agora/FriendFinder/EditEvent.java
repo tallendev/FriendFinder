@@ -2,16 +2,14 @@ package edu.wcu.cs.agora.FriendFinder;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
+import android.app.*;
 import android.content.*;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
+
+import java.util.Calendar;
 
 /**
  * @author Tyler Allen
@@ -36,7 +34,19 @@ public class EditEvent extends Activity implements View.OnClickListener
      * If this group is scheduled for deletion.
      */
     private boolean  deleted;
+    /**
+     * A datePicker fragment that appears for a user to set their birthday.
+     */
+    private DatePickerFragment datePicker;
+    /**
+     * A datePicker fragment that appears for a user to set their birthday.
+     */
+    private TimePickerFragment timePicker;
 
+
+    /**
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
@@ -51,12 +61,14 @@ public class EditEvent extends Activity implements View.OnClickListener
         EditText eventName = ((EditText) findViewById(R.id.eventname));
         eventName.setText(
                 intent.getExtras().getString("event_name", eventName.getText().toString()));
-        ((EditText) findViewById(R.id.date)).setText(intent.getExtras().getString("event_date"));
+        findViewById(R.id.date).setOnClickListener(this);
 
-        ((EditText) findViewById(R.id.time)).setText(intent.getExtras().getString("event_time"));
+        findViewById(R.id.time).setOnClickListener(this);
         ((EditText) findViewById(R.id.description))
                 .setText(intent.getExtras().getString("description"));
         ((Button) findViewById(R.id.cancel)).setOnClickListener(this);
+        datePicker = new DatePickerFragment();
+        timePicker = new TimePickerFragment();
     }
 
     /**
@@ -99,8 +111,9 @@ public class EditEvent extends Activity implements View.OnClickListener
             extras.putString("request_type", "5");
             extras.putString("eventname",
                              ((EditText) findViewById(R.id.eventname)).getText().toString());
-            extras.putString("time", ((EditText) findViewById(R.id.time)).getText().toString());
-            extras.putString("date", ((EditText) findViewById(R.id.date)).getText().toString());
+            extras.putString("time", timePicker.getHour() + ":" + timePicker.getMinute() + ":00");
+            extras.putString("date", datePicker.getYear() + "-" + datePicker.getMonth() + "-" +
+                                     datePicker.getDay());
             extras.putString("description",
                              ((EditText) findViewById(R.id.description)).getText().toString());
             extras.putString("id", getIntent().getExtras().getString("id"));
@@ -116,6 +129,14 @@ public class EditEvent extends Activity implements View.OnClickListener
         else if (v.getId() == R.id.cancel)
         {
             deleteBuilder().show(getFragmentManager(), "Are you sure?");
+        }
+        else if (v.getId() == R.id.date)
+        {
+            datePicker.show(getFragmentManager(), "Date Picker");
+        }
+        else if (v.getId() == R.id.time)
+        {
+            timePicker.show(getFragmentManager(), "Time Picker");
         }
     }
 
@@ -159,6 +180,139 @@ public class EditEvent extends Activity implements View.OnClickListener
             }
         };
     }
+
+    /**
+     * Class for creating TimePicker dialogs.
+     */
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener
+    {
+        private Calendar c;
+        private int      hour;
+        private int      minute;
+
+        public void onTimeSet (TimePicker view, int hourOfDay, int minute)
+        {
+            this.hour = hourOfDay;
+            this.minute = minute;
+        }
+
+        @Override
+        public Dialog onCreateDialog (Bundle savedInstanceState)
+        {
+            // Use the current time as the default values for the picker
+            c = Calendar.getInstance();
+            hour = c.get(Calendar.HOUR_OF_DAY);
+            minute = c.get(Calendar.MINUTE);
+            TimePickerDialog t = new TimePickerDialog(getActivity(), this, hour, minute,
+                                                      DateFormat.is24HourFormat(getActivity()));
+            // Create a new instance of TimePickerDialog and return it
+            return t;
+        }
+
+        public int getMinute ()
+        {
+            return minute;
+        }
+
+        public int getHour ()
+        {
+            return hour;
+        }
+
+
+    }
+
+    /**
+     * Class for creating DatePicker dialogs.
+     */
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener
+    {
+
+        /**
+         * Currently selected year.
+         */
+        private int year;
+        /**
+         * Currently selected month.
+         */
+        private int month;
+        /**
+         * Currently selected day.
+         */
+        private int day;
+
+        /**
+         * @param view The view associated with this listener.
+         * @param year The year that was set.
+         * @param monthOfYear The month that was set (0-11) for compatibility with {@link
+         * java.util.Calendar}.
+         * @param dayOfMonth The day of the month that was set.
+         */
+        @Override
+        public void onDateSet (DatePicker view, int year, int monthOfYear, int dayOfMonth)
+        {
+            this.year = year;
+            this.month = monthOfYear;
+            this.day = dayOfMonth;
+        }
+
+        /**
+         * Assigns default values to fields. Returns a datePicker dialog.
+         *
+         * @param savedInstanceState not used.
+         *
+         * @return A new DatePickerDialog.
+         */
+        @Override
+        public Dialog onCreateDialog (Bundle savedInstanceState)
+        {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            year = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            day = c.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog d = new DatePickerDialog(getActivity(), this, year, month, day);
+            //d.getDatePicker().setMinDate(new Date().getTime() - 1);
+
+            // Create a new instance of TimePickerDialog and return it
+            return d;
+        }
+
+        /**
+         * Getter for year.
+         *
+         * @return year
+         */
+        public int getYear ()
+        {
+            return year;
+        }
+
+        /**
+         * Getter for month.
+         *
+         * @return month
+         */
+        public int getMonth ()
+        {
+            return month;
+        }
+
+        /**
+         * Getter for day.
+         *
+         * @return day
+         */
+        public int getDay ()
+        {
+            return day;
+        }
+
+
+    }
+
 
     /**
      * Inner class for a broadcast receiver used to get registration confirmation from the

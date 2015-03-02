@@ -2,16 +2,14 @@ package edu.wcu.cs.agora.FriendFinder;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
+import android.app.*;
 import android.content.*;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
+
+import java.util.Calendar;
 
 /**
  * @author Tyler Allen
@@ -35,6 +33,15 @@ public class CreateEvent extends Activity implements View.OnClickListener
      * Broadcast receiver for confirmation of account synchronization.
      */
     private CreateEventReceiver  receiver;
+    /**
+     * A datePicker fragment that appears for a user to set their birthday.
+     */
+    private DatePickerFragment datePicker;
+    /**
+     * A datePicker fragment that appears for a user to set their birthday.
+     */
+    private TimePickerFragment timePicker;
+
 
     /**
      * Default onCreate for CreateEvent.
@@ -51,6 +58,8 @@ public class CreateEvent extends Activity implements View.OnClickListener
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
         ((Button) findViewById(R.id.create)).setOnClickListener(this);
+        findViewById(R.id.date).setOnClickListener(this);
+        findViewById(R.id.time).setOnClickListener(this);
     }
 
     /**
@@ -95,8 +104,9 @@ public class CreateEvent extends Activity implements View.OnClickListener
                              ((EditText) findViewById(R.id.eventname)).getText().toString());
             extras.putString("description",
                              ((EditText) findViewById(R.id.description)).getText().toString());
-            extras.putString("time", ((EditText) findViewById(R.id.time)).getText().toString());
-            extras.putString("date", ((EditText) findViewById(R.id.date)).getText().toString());
+            extras.putString("time", timePicker.getHour() + ":" + timePicker.getMinute() + ":00");
+            extras.putString("date", datePicker.getYear() + "-" + datePicker.getMonth() + "-" +
+                                     datePicker.getDay());
             extras.putBoolean("create", true);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
@@ -105,6 +115,138 @@ public class CreateEvent extends Activity implements View.OnClickListener
             intentFilter.addAction("event_update");
             registerReceiver(receiver, intentFilter);
         }
+    }
+
+    /**
+     * Class for creating TimePicker dialogs.
+     */
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener
+    {
+        private Calendar c;
+        private int      hour;
+        private int      minute;
+
+        public void onTimeSet (TimePicker view, int hourOfDay, int minute)
+        {
+            this.hour = hourOfDay;
+            this.minute = minute;
+        }
+
+        @Override
+        public Dialog onCreateDialog (Bundle savedInstanceState)
+        {
+            // Use the current time as the default values for the picker
+            c = Calendar.getInstance();
+            hour = c.get(Calendar.HOUR_OF_DAY);
+            minute = c.get(Calendar.MINUTE);
+            TimePickerDialog t = new TimePickerDialog(getActivity(), this, hour, minute,
+                                                      DateFormat.is24HourFormat(getActivity()));
+            // Create a new instance of TimePickerDialog and return it
+            return t;
+        }
+
+        public int getMinute ()
+        {
+            return minute;
+        }
+
+        public int getHour ()
+        {
+            return hour;
+        }
+
+
+    }
+
+    /**
+     * Class for creating DatePicker dialogs.
+     */
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener
+    {
+
+        /**
+         * Currently selected year.
+         */
+        private int year;
+        /**
+         * Currently selected month.
+         */
+        private int month;
+        /**
+         * Currently selected day.
+         */
+        private int day;
+
+        /**
+         * @param view The view associated with this listener.
+         * @param year The year that was set.
+         * @param monthOfYear The month that was set (0-11) for compatibility with {@link
+         * java.util.Calendar}.
+         * @param dayOfMonth The day of the month that was set.
+         */
+        @Override
+        public void onDateSet (DatePicker view, int year, int monthOfYear, int dayOfMonth)
+        {
+            this.year = year;
+            this.month = monthOfYear;
+            this.day = dayOfMonth;
+        }
+
+        /**
+         * Assigns default values to fields. Returns a datePicker dialog.
+         *
+         * @param savedInstanceState not used.
+         *
+         * @return A new DatePickerDialog.
+         */
+        @Override
+        public Dialog onCreateDialog (Bundle savedInstanceState)
+        {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            year = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            day = c.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog d = new DatePickerDialog(getActivity(), this, year, month, day);
+            //d.getDatePicker().setMinDate(new Date().getTime() - 1);
+
+            // Create a new instance of TimePickerDialog and return it
+            return d;
+        }
+
+        /**
+         * Getter for year.
+         *
+         * @return year
+         */
+        public int getYear ()
+        {
+            return year;
+        }
+
+        /**
+         * Getter for month.
+         *
+         * @return month
+         */
+        public int getMonth ()
+        {
+            return month;
+        }
+
+        /**
+         * Getter for day.
+         *
+         * @return day
+         */
+        public int getDay ()
+        {
+            return day;
+        }
+
+
     }
 
     /**
