@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 /**
  * @author Tyler Allen
  * @created 12/12/2014
- * @version 12/12/2014
+ * @version 3/1/2015
  *
  * A fragment that will contain a ListView of current pending invitations.
  */
