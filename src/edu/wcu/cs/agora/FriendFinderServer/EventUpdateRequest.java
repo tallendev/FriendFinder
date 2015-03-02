@@ -44,13 +44,14 @@ public class EventUpdateRequest extends Request
         else
         {
             String sql = "UPDATE friendfinder.event " +
-                         " SET event_name = ?, description = ? " +
+                         " SET event_name = ?, description = ?, location_value = ? " +
                          " WHERE id = ? and creator = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, in.getString("eventname"));
             stmt.setString(2, in.getString("description"));
-            stmt.setInt(3, Integer.parseInt(in.getString("id")));
-            stmt.setString(4, in.getString("user"));
+            stmt.setString(3, in.getString("location"));
+            stmt.setInt(4, Integer.parseInt(in.getString("id")));
+            stmt.setString(5, in.getString("user"));
             stmt.executeUpdate();
         }
         out.put("success", success);
@@ -65,6 +66,7 @@ public class EventUpdateRequest extends Request
         boolean success = true;
         String name = in.getString("eventname");
         String desc = in.getString("description");
+        String loc = in.getString("location");
         Statement max = conn.createStatement();
         ResultSet idMax = max
                 .executeQuery("SELECT max(friendfinder.event.id) " + "FROM friendfinder.event");
@@ -82,7 +84,7 @@ public class EventUpdateRequest extends Request
         stmt.setDate(3, Date.valueOf(in.getString("date")));  //set default picture since they don't
         // work
         stmt.setTime(4, Time.valueOf(in.getString("time")));
-        stmt.setString(5, "temp");
+        stmt.setString(5, loc);
         stmt.setString(6, in.getString("user"));
         stmt.setString(7, desc);
         stmt.executeUpdate();

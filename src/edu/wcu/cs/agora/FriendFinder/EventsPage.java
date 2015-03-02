@@ -16,7 +16,7 @@ import android.widget.Toast;
 /**
  * @author Tyler Allen
  * @created 09/29/2014
- * @version 2/15/2015
+ * @version 3/15/2015
  * Code for functioning specific event instance.
  */
 public class EventsPage extends Activity implements View.OnClickListener
@@ -112,6 +112,8 @@ public class EventsPage extends Activity implements View.OnClickListener
         if (v == map)
         {
             Intent i = new Intent(this, Map.class);
+            i.putExtra("owner", false);
+            i.putExtra("location", getIntent().getExtras().getString("location"));
             startActivity(i);
         }
         else if (v.equals(findViewById(R.id.attending)))

@@ -37,6 +37,10 @@ public class Event
      * If user is attending event.
      */
     private boolean attending;
+    /**
+     * Event's location.
+     */
+    private String location;
 
     /**
      * Initializes fields.
@@ -47,7 +51,7 @@ public class Event
      * @param eventDescription The event's description as specified by the user.
      */
     public Event (String eventName, String eventDate, String eventTime, String eventDescription,
-                  String creator, String id, boolean attending)
+                  String creator, String id, boolean attending, String location)
     {
         this.creator = creator;
         this.eventName = eventName;
@@ -56,6 +60,7 @@ public class Event
         this.eventDescription = eventDescription;
         this.id = id;
         this.attending = attending;
+        this.location = location;
     }
 
     /**
@@ -120,6 +125,14 @@ public class Event
     public boolean isAttending ()
     {
         return attending;
+    }
+
+    /**
+     * Returns user's location.
+     */
+    public String getLocation ()
+    {
+        return location;
     }
 
 }

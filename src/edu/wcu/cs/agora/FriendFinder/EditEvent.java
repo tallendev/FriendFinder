@@ -6,6 +6,7 @@ import android.app.*;
 import android.content.*;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
@@ -14,10 +15,15 @@ import java.util.Calendar;
 /**
  * @author Tyler Allen
  * @version 2/15/2015
- * @created 2/15/2015
+ * @created 3/15/2015
  */
 public class EditEvent extends Activity implements View.OnClickListener
 {
+    /**
+     * Map location change.
+     */
+    public static final int MAP_LOCATION = 12345;
+
     /**
      * The current user's account.
      */
@@ -42,6 +48,14 @@ public class EditEvent extends Activity implements View.OnClickListener
      * A datePicker fragment that appears for a user to set their birthday.
      */
     private TimePickerFragment timePicker;
+    /**
+     * Map button
+     */
+    private Button map;
+    /**
+     * Location data
+     */
+    private String location;
 
 
     /**
@@ -57,18 +71,22 @@ public class EditEvent extends Activity implements View.OnClickListener
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
+        map = (Button) findViewById(R.id.map);
         ((Button) findViewById(R.id.update)).setOnClickListener(this);
         EditText eventName = ((EditText) findViewById(R.id.eventname));
         eventName.setText(
                 intent.getExtras().getString("event_name", eventName.getText().toString()));
-        findViewById(R.id.date).setOnClickListener(this);
 
+        findViewById(R.id.date).setOnClickListener(this);
         findViewById(R.id.time).setOnClickListener(this);
+        map.setOnClickListener(this);
+
         ((EditText) findViewById(R.id.description))
                 .setText(intent.getExtras().getString("description"));
         ((Button) findViewById(R.id.cancel)).setOnClickListener(this);
         datePicker = new DatePickerFragment();
         timePicker = new TimePickerFragment();
+        location = getIntent().getExtras().getString("location");
     }
 
     /**
@@ -83,6 +101,21 @@ public class EditEvent extends Activity implements View.OnClickListener
             cleanupReceiver();
         }
     }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MAP_LOCATION)
+        {
+            if (resultCode == MAP_LOCATION)
+            {
+                Log.d("CREATE_EVENT", data.getExtras().toString());
+                location = data.getExtras().getString("location");
+            }
+        }
+    }
+
 
     /**
      * Helper for cleaning up the receiver.
@@ -117,6 +150,7 @@ public class EditEvent extends Activity implements View.OnClickListener
             extras.putString("description",
                              ((EditText) findViewById(R.id.description)).getText().toString());
             extras.putString("id", getIntent().getExtras().getString("id"));
+            extras.putString("location", location);
 
             extras.putBoolean("create", false);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
@@ -137,6 +171,13 @@ public class EditEvent extends Activity implements View.OnClickListener
         else if (v.getId() == R.id.time)
         {
             timePicker.show(getFragmentManager(), "Time Picker");
+        }
+        else if (v == map)
+        {
+            Intent i = new Intent(this, Map.class);
+            i.putExtra("owner", true);
+            i.putExtra("location", location);
+            startActivityForResult(i, MAP_LOCATION);
         }
     }
 
@@ -197,6 +238,11 @@ public class EditEvent extends Activity implements View.OnClickListener
             this.minute = minute;
         }
 
+        public int getMinute ()
+        {
+            return minute;
+        }
+
         @Override
         public Dialog onCreateDialog (Bundle savedInstanceState)
         {
@@ -208,11 +254,6 @@ public class EditEvent extends Activity implements View.OnClickListener
                                                       DateFormat.is24HourFormat(getActivity()));
             // Create a new instance of TimePickerDialog and return it
             return t;
-        }
-
-        public int getMinute ()
-        {
-            return minute;
         }
 
         public int getHour ()
@@ -259,6 +300,16 @@ public class EditEvent extends Activity implements View.OnClickListener
         }
 
         /**
+         * Getter for year.
+         *
+         * @return year
+         */
+        public int getYear ()
+        {
+            return year;
+        }
+
+        /**
          * Assigns default values to fields. Returns a datePicker dialog.
          *
          * @param savedInstanceState not used.
@@ -278,16 +329,6 @@ public class EditEvent extends Activity implements View.OnClickListener
 
             // Create a new instance of TimePickerDialog and return it
             return d;
-        }
-
-        /**
-         * Getter for year.
-         *
-         * @return year
-         */
-        public int getYear ()
-        {
-            return year;
         }
 
         /**

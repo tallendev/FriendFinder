@@ -453,6 +453,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         json.put("description", extras.getString("description"));
         json.put("time", extras.getString("time"));
         json.put("date", extras.getString("date"));
+        json.put("location", extras.getString("location"));
         if (extras.containsKey("id"))
         {
             json.put("id", extras.getString("id"));

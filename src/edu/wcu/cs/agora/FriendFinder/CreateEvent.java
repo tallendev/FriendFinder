@@ -6,6 +6,7 @@ import android.app.*;
 import android.content.*;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
@@ -14,12 +15,16 @@ import java.util.Calendar;
 /**
  * @author Tyler Allen
  * @created 11/2/2014.
- * @version 2/1/2015
+ * @version 3/1/2015
  *
  * Page used when a user is creating their own event.
  */
 public class CreateEvent extends Activity implements View.OnClickListener
 {
+    /**
+     * Map location change.
+     */
+    public static final int MAP_LOCATION = 12345;
 
     /**
      * The current user's account.
@@ -36,11 +41,19 @@ public class CreateEvent extends Activity implements View.OnClickListener
     /**
      * A datePicker fragment that appears for a user to set their birthday.
      */
-    private DatePickerFragment datePicker;
+    private DatePickerFragment   datePicker;
     /**
      * A datePicker fragment that appears for a user to set their birthday.
      */
-    private TimePickerFragment timePicker;
+    private TimePickerFragment   timePicker;
+    /**
+     * Map button
+     */
+    private Button               map;
+    /**
+     * Location data
+     */
+    private String               location;
 
 
     /**
@@ -56,12 +69,15 @@ public class CreateEvent extends Activity implements View.OnClickListener
         account = ((AccountManager) getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         spinnerDialog = new LoadingSpinnerDialog();
+        map = (Button) findViewById(R.id.map);
         receiver = null;
         ((Button) findViewById(R.id.create)).setOnClickListener(this);
         datePicker = new DatePickerFragment();
         timePicker = new TimePickerFragment();
         findViewById(R.id.date).setOnClickListener(this);
         findViewById(R.id.time).setOnClickListener(this);
+        map.setOnClickListener(this);
+        location = getIntent().getExtras().getString("location");
     }
 
     /**
@@ -74,6 +90,20 @@ public class CreateEvent extends Activity implements View.OnClickListener
         if (receiver != null)
         {
             cleanupReceiver();
+        }
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MAP_LOCATION)
+        {
+            if (resultCode == MAP_LOCATION)
+            {
+                Log.d("CREATE_EVENT", data.getExtras().toString());
+                location = data.getExtras().getString("location");
+            }
         }
     }
 
@@ -109,6 +139,7 @@ public class CreateEvent extends Activity implements View.OnClickListener
             extras.putString("time", timePicker.getHour() + ":" + timePicker.getMinute() + ":00");
             extras.putString("date", datePicker.getYear() + "-" + datePicker.getMonth() + "-" +
                                      datePicker.getDay());
+            extras.putString("location", location);
             extras.putBoolean("create", true);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
@@ -124,6 +155,13 @@ public class CreateEvent extends Activity implements View.OnClickListener
         else if (v.getId() == R.id.time)
         {
             timePicker.show(getFragmentManager(), "Time Picker");
+        }
+        else if (v == map)
+        {
+            Intent i = new Intent(this, Map.class);
+            i.putExtra("owner", true);
+            i.putExtra("location", location);
+            startActivityForResult(i, MAP_LOCATION);
         }
     }
 
@@ -215,6 +253,16 @@ public class CreateEvent extends Activity implements View.OnClickListener
         }
 
         /**
+         * Getter for month.
+         *
+         * @return month
+         */
+        public int getMonth ()
+        {
+            return month;
+        }
+
+        /**
          * Assigns default values to fields. Returns a datePicker dialog.
          *
          * @param savedInstanceState not used.
@@ -234,16 +282,6 @@ public class CreateEvent extends Activity implements View.OnClickListener
 
             // Create a new instance of TimePickerDialog and return it
             return d;
-        }
-
-        /**
-         * Getter for month.
-         *
-         * @return month
-         */
-        public int getMonth ()
-        {
-            return month;
         }
 
         /**

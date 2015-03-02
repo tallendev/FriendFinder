@@ -61,6 +61,7 @@ String reference file.
     <string name="option_settings">Settings</string>
     <string name="logout">Logout</string>
 
+    <string name="change_location">Move location here?</string>
     <string name="groupname">Group Name</string>
 
     <string name="members">Members</string>
