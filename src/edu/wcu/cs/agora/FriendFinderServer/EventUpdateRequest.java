@@ -79,8 +79,9 @@ public class EventUpdateRequest extends Request
         stmt = conn.prepareStatement(createEvent);
         stmt.setInt(1, id);
         stmt.setString(2, name);
-        stmt.setDate(3, Date.valueOf("2013-10-22"));  //set default picture since they don't work
-        stmt.setTime(4, Time.valueOf("00:00:00"));
+        stmt.setDate(3, Date.valueOf(in.getString("date")));  //set default picture since they don't
+        // work
+        stmt.setTime(4, Time.valueOf(in.getString("time")));
         stmt.setString(5, "temp");
         stmt.setString(6, in.getString("user"));
         stmt.setString(7, desc);

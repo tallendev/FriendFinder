@@ -58,6 +58,8 @@ public class CreateEvent extends Activity implements View.OnClickListener
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
         ((Button) findViewById(R.id.create)).setOnClickListener(this);
+        datePicker = new DatePickerFragment();
+        timePicker = new TimePickerFragment();
         findViewById(R.id.date).setOnClickListener(this);
         findViewById(R.id.time).setOnClickListener(this);
     }
@@ -114,6 +116,14 @@ public class CreateEvent extends Activity implements View.OnClickListener
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("event_update");
             registerReceiver(receiver, intentFilter);
+        }
+        else if (v.getId() == R.id.date)
+        {
+            datePicker.show(getFragmentManager(), "Date Picker");
+        }
+        else if (v.getId() == R.id.time)
+        {
+            timePicker.show(getFragmentManager(), "Time Picker");
         }
     }
 
@@ -195,6 +205,16 @@ public class CreateEvent extends Activity implements View.OnClickListener
         }
 
         /**
+         * Getter for year.
+         *
+         * @return year
+         */
+        public int getYear ()
+        {
+            return year;
+        }
+
+        /**
          * Assigns default values to fields. Returns a datePicker dialog.
          *
          * @param savedInstanceState not used.
@@ -214,16 +234,6 @@ public class CreateEvent extends Activity implements View.OnClickListener
 
             // Create a new instance of TimePickerDialog and return it
             return d;
-        }
-
-        /**
-         * Getter for year.
-         *
-         * @return year
-         */
-        public int getYear ()
-        {
-            return year;
         }
 
         /**
