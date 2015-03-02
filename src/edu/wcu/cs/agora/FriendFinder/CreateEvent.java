@@ -77,7 +77,7 @@ public class CreateEvent extends Activity implements View.OnClickListener
         findViewById(R.id.date).setOnClickListener(this);
         findViewById(R.id.time).setOnClickListener(this);
         map.setOnClickListener(this);
-        location = getIntent().getExtras().getString("location");
+        location = null;
     }
 
     /**
@@ -263,6 +263,16 @@ public class CreateEvent extends Activity implements View.OnClickListener
         }
 
         /**
+         * Getter for day.
+         *
+         * @return day
+         */
+        public int getDay ()
+        {
+            return day;
+        }
+
+        /**
          * Assigns default values to fields. Returns a datePicker dialog.
          *
          * @param savedInstanceState not used.
@@ -282,16 +292,6 @@ public class CreateEvent extends Activity implements View.OnClickListener
 
             // Create a new instance of TimePickerDialog and return it
             return d;
-        }
-
-        /**
-         * Getter for day.
-         *
-         * @return day
-         */
-        public int getDay ()
-        {
-            return day;
         }
 
 

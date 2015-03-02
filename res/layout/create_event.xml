@@ -78,7 +78,8 @@ Event creation page.
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="13dp"
-            android:text="map"/>
+            android:text="map"
+            android:id="@+id/map"/>
     </LinearLayout>
 
     <EditText

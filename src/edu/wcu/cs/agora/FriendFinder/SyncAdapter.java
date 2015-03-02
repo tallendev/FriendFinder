@@ -52,11 +52,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     /**
      * Broadcast flag for group update.
      */
-    private static final String EVENT_UPDATE = "EVENT_UPDATE";
+    private static final String EVENT_UPDATE  = "EVENT_UPDATE";
     /**
      * Hostname of server to contact.
      */
-    private static final String HOSTNAME      = "www.trantracker.com";
+    private static final String HOSTNAME      = "75.143.177.14";//"www.trantracker.com";
     /**
      * Default server port used by this application.
      */
