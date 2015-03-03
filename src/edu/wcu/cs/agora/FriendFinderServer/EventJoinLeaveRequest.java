@@ -46,7 +46,7 @@ public class EventJoinLeaveRequest extends Request
         {
             sql1 = "INSERT INTO friendfinder.attending_event " + "VALUES (?,?)";
             PreparedStatement rm = conn.prepareStatement("DELETE FROM friendfinder" +
-                                                         ".pending_event_invites " +
+                                                         ".pending_event_invite " +
                                                          "WHERE email = ? AND event = ?");
             rm.setString(1, in.getString("user"));
             rm.setString(2, in.getString("id"));
