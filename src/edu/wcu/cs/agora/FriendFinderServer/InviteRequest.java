@@ -49,7 +49,7 @@ public class InviteRequest extends Request
         test.setString(1, invited_user);
         test.setInt(2, id);
         ResultSet rs = test.executeQuery();
-        success = rs.next();
+        success = !rs.next();
         if (success)
         {
             String sql
