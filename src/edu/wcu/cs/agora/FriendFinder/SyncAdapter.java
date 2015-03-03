@@ -21,7 +21,7 @@ import java.util.Scanner;
 /**
  * @author Tyler Allen
  * @created 10/16/2014
- * @version 12/08/2014
+ * @version 3/3/2015
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter
 {
@@ -232,18 +232,27 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             case "6":
             {
                 processGroupDelete(json, extras, out, sslSocket);
+                break;
             }
             case "7":
             {
                 processEventCancel(json, extras, out, sslSocket);
+                break;
             }
             case "8":
             {
                 processGroupJoinLeave(json, extras, out, sslSocket);
+                break;
             }
             case "9":
             {
                 processEventJoinLeave(json, extras, out, sslSocket);
+                break;
+            }
+            case "10":
+            {
+                processInvite(json, extras, out, sslSocket);
+                break;
             }
             default:
             {
@@ -668,6 +677,53 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     }
 
     /**
+     * Process a group join/leave request.
+     *
+     * @param json Stores outgoing data.
+     * @param extras Contains extras from calling activity containing information to send to
+     * server.
+     * @param out Output stream connected to server.
+     * @param sslSocket SSLSocket maintaining connection to server.
+     *
+     * @throws JSONException
+     */
+    private void processInvite (JSONObject json, Bundle extras, OutputStream out,
+                                SSLSocket sslSocket) throws JSONException
+    {
+        boolean ioError = false;
+        // more data into our outgoing json object.
+        json.put("id", extras.getString("id"));
+        json.put("invited_user", extras.getString("invited_user"));
+        Log.d("SYNC", "id: " + extras.getString("id"));
+        JSONObject jsonIn = null;
+        try
+        {
+            // write and read
+            Log.d("SYNC", json.toString());
+            out.write(json.toString().getBytes());
+            Scanner in = new Scanner(sslSocket.getInputStream());
+            jsonIn = new JSONObject(in.nextLine());
+        }
+        catch (IOException ioe)
+        {
+            Log.d("SYNC", "An error occurred while attempting to register");
+            Log.d("SYNC", ioe.getMessage());
+            ioError = true;
+        }
+        Log.d("SYNC", "Attempting to broadcast");
+        Intent i = new Intent(EVENT_UPDATE);
+
+        // did we succeed?
+        if (jsonIn != null)
+        {
+            i.putExtra("success", jsonIn.getBoolean("success"));
+        }
+        i.putExtra("ioerr", ioError);
+        i.setAction("event_update");
+        getContext().sendBroadcast(i);
+    }
+
+    /**
      * Helper method for inserting data received from server into content provider.
      *
      * @param jsonIn Received JSONObject
@@ -691,6 +747,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             if (table.equals("user_group_self"))
             {
                 table = "user_group";
+            }
+            else if (table.equals("users_not_invited"))
+            {
+                table = "users";
             }
             // currently we delete the existing table. this can be changed to reduce redundancy
             // by requesting only data that has changed or doesn't exist.

@@ -12,8 +12,7 @@ import android.util.Log;
 /**
  * @author Tyler Allen
  * @created 10/16/2014
- * @version 2/1/2015
- * <p>
+ * @version 3/3/2015
  * For Reference: http://developer.android.com/training/sync-adapters/creating-stub-provider.html
  */
 public class ServerContentProvider extends ContentProvider

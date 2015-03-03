@@ -79,6 +79,7 @@ public class EditEvent extends Activity implements View.OnClickListener
 
         findViewById(R.id.date).setOnClickListener(this);
         findViewById(R.id.time).setOnClickListener(this);
+        findViewById(R.id.invite).setOnClickListener(this);
         map.setOnClickListener(this);
 
         ((EditText) findViewById(R.id.description))
@@ -179,6 +180,12 @@ public class EditEvent extends Activity implements View.OnClickListener
             i.putExtra("location", location);
             startActivityForResult(i, MAP_LOCATION);
         }
+        else if (v.getId() == R.id.invite)
+        {
+            Intent i = new Intent(this, SendInvites.class);
+            i.putExtra("id", getIntent().getExtras().getString("id"));
+            startActivity(i);
+        }
     }
 
     /**
@@ -243,6 +250,11 @@ public class EditEvent extends Activity implements View.OnClickListener
             return minute;
         }
 
+        public int getHour ()
+        {
+            return hour;
+        }
+
         @Override
         public Dialog onCreateDialog (Bundle savedInstanceState)
         {
@@ -256,10 +268,7 @@ public class EditEvent extends Activity implements View.OnClickListener
             return t;
         }
 
-        public int getHour ()
-        {
-            return hour;
-        }
+
 
 
     }
@@ -310,6 +319,16 @@ public class EditEvent extends Activity implements View.OnClickListener
         }
 
         /**
+         * Getter for month.
+         *
+         * @return month
+         */
+        public int getMonth ()
+        {
+            return month;
+        }
+
+        /**
          * Assigns default values to fields. Returns a datePicker dialog.
          *
          * @param savedInstanceState not used.
@@ -329,16 +348,6 @@ public class EditEvent extends Activity implements View.OnClickListener
 
             // Create a new instance of TimePickerDialog and return it
             return d;
-        }
-
-        /**
-         * Getter for month.
-         *
-         * @return month
-         */
-        public int getMonth ()
-        {
-            return month;
         }
 
         /**

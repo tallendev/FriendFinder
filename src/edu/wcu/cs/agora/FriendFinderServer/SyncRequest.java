@@ -8,11 +8,11 @@ import java.sql.*;
 /**
  * @author Tyler Allen
  * @created 11/16/14
- * @version 2/15/2015
+ * @version 3/3/2015
  */
 public class SyncRequest extends Request
 {
-    private static String EVENTS_SQL = "SELECT event_name, event_Date, event_time,  " +
+    private static final String EVENTS_SQL = "SELECT event_name, event_Date, event_time,  " +
                                        "location_value, creator, id, description " +
                                        "FROM " + "event, attending_event " +
                                        "WHERE " + "event_name ILIKE ?" +
@@ -24,27 +24,44 @@ public class SyncRequest extends Request
                                        "FROM event, pending_event_invite " +
                                        "WHERE event_name ILIKE ? and event = id  and email = ?;";
 
-    private static String USERS_SQL = " SELECT email, birthday, gender, full_name " +
+    private static final String USERS_SQL = " SELECT email, birthday, gender, full_name " +
                                       " FROM users " +
                                       " WHERE email ILIKE ?";
 
-    private static String GROUPS_SQL =
+    private static final String USERS_NOT_INVITED = " SELECT email, birthday, gender, full_name " +
+                                                    " FROM users WHERE email ILIKE ? and " +
+                                                    "  NOT EXISTS  " +
+                                                    "   (SELECT email, birthday,  gender, " +
+                                                    "full_name" +
+                                                    " FROM users, attending_event " +
+                                                    " WHERE users.email ILIKE ? and" +
+                                                    " " +
+                                                    "attendee = users.email and event = ?" +
+                                                    " UNION SELECT email, birthday, gender, " +
+                                                    "full_name" +
+                                                    " FROM users, pending_event_invite" +
+                                                    " WHERE users.email ILIKE ? and" +
+                                                    " pending_event_invite.email = users" +
+                                                    ".email and event = ?);";
+
+
+    private static final String GROUPS_SQL =
             " SELECT user_group.group_name, group_description, group_photo, owner " +
             " FROM user_group,  group_member " +
             "   WHERE user_group.group_name ILIKE ?";
 
-    private static String GROUPS_SELF_SQL =
+    private static final String GROUPS_SELF_SQL =
             " SELECT user_group.group_name, group_description, group_photo, owner " +
             " FROM users, user_group,  group_member " +
             " WHERE group_member.member_email = ?" +
             " AND users.email = group_member.member_email" +
             " AND group_member.group_name = user_group.group_name";
 
-    private static String LIKES_SQL = " SELECT like_label " +
+    private static final String LIKES_SQL = " SELECT like_label " +
                                       " FROM likes " +
                                       " WHERE like_label ILIKE ?";
 
-    private static String USERS_GROUP_SQL = " SELECT email, birthday, gender, full_name " +
+    private static final String USERS_GROUP_SQL = " SELECT email, birthday, gender, full_name " +
                                             " FROM users, group_member " +
                                             " WHERE group_member.member_email = users" +
                                             ".email AND group_member.group_name = ?";
@@ -214,8 +231,9 @@ public class SyncRequest extends Request
     private PreparedStatement assignSQL (JSONObject in, int tableNum, Connection conn)
             throws JSONException, SQLException, MalformedPacketException
     {
-        PreparedStatement stmt;
+        PreparedStatement stmt = null;
         String sql = null;
+        // boolean basic = true;
         // which search statement do we use?
         switch (in.getString("table" + tableNum))
         {
@@ -263,11 +281,25 @@ public class SyncRequest extends Request
                 user = null;
                 break;
             }
+            /*case "users_not_invited":
+            {
+                basic = false;
+                sql = USERS_NOT_INVITED;
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, in.getString(search));
+                stmt.setString(2, in.getString(search));
+                stmt.setInt(3, Integer.parseInt(in.getString("id")));
+                stmt.setString(4, in.getString(search));
+                stmt.setInt(5, Integer.parseInt(in.getString("id")));
+                break;
+            }*/
             default:
             {
                 throw new MalformedPacketException("Invalid table query.");
             }
         }
+        //if (basic)
+        //{
         stmt = conn.prepareStatement(sql);
         if (in.getString("table" + tableNum).equals("event"))
         {
@@ -275,6 +307,7 @@ public class SyncRequest extends Request
             stmt.setString(4, user);
         }
         setStatementArguments(stmt);
+        //}
         return stmt;
     }
 

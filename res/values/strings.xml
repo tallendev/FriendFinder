@@ -66,6 +66,8 @@ String reference file.
 
     <string name="members">Members</string>
 
+    <string name="invite">Invite</string>
+
     <string name="select_date">Select Date</string>
 
     <string-array name="search_options_array">

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /**
  * @author Tyler Allen
  * @version 2/15/2015
- * @created 2/15/2015
+ * @created 3/3/2015
  * <p>
  * Request type for cancelling an event
  */

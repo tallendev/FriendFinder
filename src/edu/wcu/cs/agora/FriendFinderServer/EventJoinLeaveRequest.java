@@ -10,9 +10,8 @@ import java.sql.SQLException;
 /**
  * @author Tyler Allen
  * @version 2/16/2015
- *          <p>
- *          Request type for a leaving or joining a group.
- * @created 2/16/2015
+ * @created 3/3/2015
+ * Request type for a leaving or joining a group.
  */
 public class EventJoinLeaveRequest extends Request
 {

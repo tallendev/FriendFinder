@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Tyler Allen
  * @created 09/29/2014
- * @version 12/7/2014
+ * @version 3/3/2015
  * Code for the Fragment that contains events.
  */
 
