@@ -49,6 +49,12 @@ public class EventCancelRequest extends Request
         stmt.setInt(1, id);
         stmt.setString(2, in.getString("user"));
         stmt.executeUpdate();
+
+        String deleteInvites = "DELETE FROM friendfinder.pending_event_invite " + "WHERE event = ?";
+        stmt = conn.prepareStatement(deleteInvites);
+        stmt.setInt(1, id);
+        stmt.executeUpdate();
+
         String deleteEvent = "DELETE FROM friendfinder.event " + "WHERE id = ? AND creator = ?";
         stmt = conn.prepareStatement(deleteEvent);
         stmt.setInt(1, id);
