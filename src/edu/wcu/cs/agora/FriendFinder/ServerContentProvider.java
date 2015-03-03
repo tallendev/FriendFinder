@@ -45,7 +45,7 @@ public class ServerContentProvider extends ContentProvider
     /**
      * Current version of the database.
      */
-    public static final int    DATABASE_VERSION = 9;
+    public static final int    DATABASE_VERSION = 10;
 
     /**
      * String defines creation of the events table.

@@ -94,6 +94,7 @@ public class Invites extends Fragment implements AdapterView.OnItemClickListener
         account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         events = new ArrayList<Event>();
+        lv = (ListView) rootView.findViewById(R.id.listView1);
         spinnerDialog = new LoadingSpinnerDialog();
         resolver = getActivity().getContentResolver();
         return rootView;
@@ -246,7 +247,8 @@ public class Invites extends Fragment implements AdapterView.OnItemClickListener
             super.onChange(selfChange);
             // query content provider
             lv.invalidateViews();
-            Cursor cursor = resolver.query(EVENTS, null, "INVITED ilike TRUE", null, null);
+            String[] args = {"true"};
+            Cursor cursor = resolver.query(EVENTS, null, "INVITED = ?", args, null);
             events = new ArrayList<>();
             while (cursor.moveToNext())
             {

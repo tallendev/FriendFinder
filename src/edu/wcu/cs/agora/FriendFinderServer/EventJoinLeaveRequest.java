@@ -41,17 +41,22 @@ public class EventJoinLeaveRequest extends Request
         Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
         boolean success = true;
         PreparedStatement stmt;
-        String sql;
+        String sql1;
         if (in.getBoolean("joining"))
         {
-            sql = "INSERT into friendfinder.attending_event " + "VALUES (?,?)";
-
+            sql1 = "INSERT INTO friendfinder.attending_event " + "VALUES (?,?)";
+            PreparedStatement rm = conn.prepareStatement("DELETE FROM friendfinder" +
+                                                         ".pending_event_invites " +
+                                                         "WHERE email = ? AND event = ?");
+            rm.setString(1, in.getString("user"));
+            rm.setString(2, in.getString("id"));
+            rm.executeUpdate();
         }
         else
         {
-            sql = "DELETE FROM friendfinder.attending_event " + "WHERE attendee = ? and event = ?";
+            sql1 = "DELETE FROM friendfinder.attending_event " + "WHERE attendee = ? AND event = ?";
         }
-        stmt = conn.prepareStatement(sql);
+        stmt = conn.prepareStatement(sql1);
         stmt.setString(1, in.getString("user"));
         stmt.setInt(2, Integer.parseInt(in.getString("id")));
         stmt.executeUpdate();

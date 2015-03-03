@@ -292,7 +292,9 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             super.onChange(selfChange);
             // query content provider
             lv.invalidateViews();
-            Cursor cursor = resolver.query(EVENTS, null, "INVITED ilike FALSE", null, null);
+            String[] args = {"false"};
+            Cursor cursor = resolver.query(EVENTS, null, "INVITED = ?", args, null);
+            //Cursor cursor = resolver.query(EVENTS, null, null, null, null);
             events = new ArrayList<>();
             while (cursor.moveToNext())
             {
@@ -310,11 +312,8 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                 boolean invited = Boolean
                         .valueOf(cursor.getString(cursor.getColumnIndex("INVITED")));
                 Log.d("EVENTS", "ID: " + id);
-                //            String eventLocation = cursor.getString(cursor.getColumnIndex
-                // ("EVENT_LOCATION"));
                 events.add(new Event(eventName, eventDate, eventTime, description, creator, id,
-                                     attending, location, invited));//,
-                // eventLocation));
+                                     attending, location, invited));
             }
             Log.d("EVENTS", "ExtendedArray: ");
             for (Event event : events)
