@@ -37,6 +37,7 @@ public class EventJoinLeaveRequest extends Request
     {
         JSONObject in = getJsonIn();
         JSONObject out = getJsonOut();
+        int id = Integer.parseInt(in.getString("id"));
         System.err.println("EventJoinLeaveRequest:\n" + in.toString());
         Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
         boolean success = true;
@@ -49,7 +50,7 @@ public class EventJoinLeaveRequest extends Request
                                                          ".pending_event_invite " +
                                                          "WHERE email = ? AND event = ?");
             rm.setString(1, in.getString("user"));
-            rm.setString(2, in.getString("id"));
+            rm.setInt(2, id);
             rm.executeUpdate();
         }
         else
@@ -58,7 +59,7 @@ public class EventJoinLeaveRequest extends Request
         }
         stmt = conn.prepareStatement(sql1);
         stmt.setString(1, in.getString("user"));
-        stmt.setInt(2, Integer.parseInt(in.getString("id")));
+        stmt.setInt(2, id);
         stmt.executeUpdate();
 
         out.put("success", success);
