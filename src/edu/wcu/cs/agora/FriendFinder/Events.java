@@ -292,7 +292,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             super.onChange(selfChange);
             // query content provider
             lv.invalidateViews();
-            Cursor cursor = resolver.query(EVENTS, null, "INVITED ilike TRUE", null, null);
+            Cursor cursor = resolver.query(EVENTS, null, "INVITED ilike FALSE", null, null);
             events = new ArrayList<>();
             while (cursor.moveToNext())
             {

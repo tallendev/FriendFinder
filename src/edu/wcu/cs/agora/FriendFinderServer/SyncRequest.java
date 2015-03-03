@@ -157,7 +157,7 @@ public class SyncRequest extends Request
                     ResultSet resultSet = member.executeQuery();
                     builder.append(",attending=");
                     builder.append(resultSet.next());
-                    member = conn.prepareStatement("SELECT email " +
+                    member = conn.prepareStatement("SELECT users.email " +
                                                    "FROM friendfinder.users, " +
                                                    "friendfinder.pending_event_invite " +
                                                    "WHERE users.email = ? AND " +
