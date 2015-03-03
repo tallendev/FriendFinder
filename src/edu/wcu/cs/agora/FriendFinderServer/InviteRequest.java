@@ -52,13 +52,25 @@ public class InviteRequest extends Request
         success = !rs.next();
         if (success)
         {
-            String sql
-                    = "INSERT INTO friendfinder.pending_event_invite (email, event) VALUES (?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, invited_user);
-            stmt.setInt(2, id);
-            int status = stmt.executeUpdate();
-            success = status != 0;
+            test = conn.prepareStatement("SELECT email " +
+                                         "FROM friendfinder.pending_event_invite " +
+                                         "WHERE email = ? AND event = ?");
+            test.setString(1, invited_user);
+            test.setInt(2, id);
+            rs = test.executeQuery();
+            success = !rs.next();
+            if (success)
+            {
+
+                String sql
+                        = "INSERT INTO friendfinder.pending_event_invite (email, event) VALUES " +
+                          "(?, ?)";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, invited_user);
+                stmt.setInt(2, id);
+                int status = stmt.executeUpdate();
+                success = status != 0;
+            }
         }
         out.put("success", success);
     }
