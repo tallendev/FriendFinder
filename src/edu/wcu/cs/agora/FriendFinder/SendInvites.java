@@ -24,8 +24,7 @@ import java.util.List;
 /**
  * @author Tyler Allen
  * @version 3/3/2015
- *          <p>
- *          Activity allowing user to search and invite users.
+ * Activity allowing user to search and invite users.
  * @created 3/3/015
  */
 public class SendInvites extends Activity
@@ -161,7 +160,7 @@ public class SendInvites extends Activity
             {
                 // Use the Builder class for convenient dialog construction
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(R.string.change_location)
+                builder.setMessage("Invite user?")
                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
                        {
                            @Override
@@ -174,8 +173,6 @@ public class SendInvites extends Activity
                                extras.putString("invited_user", user.getEmail());
                                ContentResolver
                                        .requestSync(account, getString(R.string.authority), extras);
-                               spinnerDialog
-                                       .show(getFragmentManager(), "Synchronizing with Server");
                                search.performClick();
                            }
                        }).setNegativeButton(R.string.cancel, null);

@@ -58,6 +58,10 @@ public abstract class Request
      * Request type to attend or unattend an event.
      */
     public static final short JOIN_EVENT = 9;
+    /**
+     * Event invitation.
+     */
+    public static final short INVITE = 10;
 
     /**
      * JSON object received from the client.
@@ -183,6 +187,12 @@ public abstract class Request
             {
                 System.err.println("Event join/leave");
                 request = new EventJoinLeaveRequest(json, jsonOut);
+                break;
+            }
+            case ("10"):
+            {
+                System.err.println("Invite");
+                request = new InviteRequest(json, jsonOut);
                 break;
             }
             default:
