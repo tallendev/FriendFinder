@@ -131,10 +131,6 @@ public class SendInvites extends Activity
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             lv.setOnItemClickListener(this);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
-            receiver = new SendInvitesReceiver();
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("event_update");
-            registerReceiver(receiver, intentFilter);
         }
     }
 
@@ -173,6 +169,10 @@ public class SendInvites extends Activity
                                extras.putString("invited_user", user.getEmail());
                                ContentResolver
                                        .requestSync(account, getString(R.string.authority), extras);
+                               receiver = new SendInvitesReceiver();
+                               IntentFilter intentFilter = new IntentFilter();
+                               intentFilter.addAction("event_invite");
+                               registerReceiver(receiver, intentFilter);
                                search.performClick();
                            }
                        }).setNegativeButton(R.string.cancel, null);
@@ -352,6 +352,7 @@ public class SendInvites extends Activity
                 };
                 dialog.show(getFragmentManager(), "Success");
             }
+            cleanupReceiver();
         }
     }
 

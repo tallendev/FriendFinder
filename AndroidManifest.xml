@@ -26,6 +26,9 @@ Android manifest.
     <permission
             android:name="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.EVENT_UPDATE"
             android:protectionLevel="signature"/>
+    <permission
+            android:name="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.EVENT_INVITE"
+            android:protectionLevel="signature"/>
 
     <uses-feature
             android:glEsVersion="0x00020000"
@@ -145,6 +148,14 @@ Maps setup.
                 android:exported="false"
                 android:name="edu.wcu.cs.agora.FriendFinder.CreateEvent$CreateEventReceiver"
                 android:permission="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.EVENT_UPDATE"
+                android:process="edu.wcu.cs.agora.FriendFinder">
+        </receiver>
+
+        <receiver
+                android:enabled="true"
+                android:exported="false"
+                android:name="edu.wcu.cs.agora.FriendFinder.SendInvites$SendInvitesReceiver"
+                android:permission="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.EVENT_INVITE"
                 android:process="edu.wcu.cs.agora.FriendFinder">
         </receiver>
 

@@ -719,7 +719,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             i.putExtra("success", jsonIn.getBoolean("success"));
         }
         i.putExtra("ioerr", ioError);
-        i.setAction("event_update");
+        i.setAction("event_invite");
         getContext().sendBroadcast(i);
     }
 
