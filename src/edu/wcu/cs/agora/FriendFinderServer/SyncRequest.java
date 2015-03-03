@@ -20,7 +20,7 @@ public class SyncRequest extends Request
                                        " UNION " +
                                        "SELECT event_name, event_Date, event_time, " +
                                        "location_value," +
-                                       " creator, id, description" +
+                                       " creator, id, description " +
                                        "FROM event, pending_event_invite " +
                                        "WHERE event_name ILIKE ? and event = id  and email = ?;";
 
