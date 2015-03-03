@@ -61,7 +61,8 @@ public class ServerContentProvider extends ContentProvider
                                                         " LOCATION_VALUE TEXT," +
                                                         " CREATOR TEXT," +
                                                         " DESCRIPTION TEXT," +
-                                                        " ATTENDING TEXT);";
+                                                        " ATTENDING TEXT, " +
+                                                        " INVITED TEXT);";
     /**
      * String defines creation of the groups table.
      */

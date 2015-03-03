@@ -16,7 +16,13 @@ public class SyncRequest extends Request
                                        "location_value, creator, id, description " +
                                        "FROM " + "event, attending_event " +
                                        "WHERE " + "event_name ILIKE ?" +
-                                       " AND event = id AND attendee = ?;";
+                                       " AND event = id AND attendee = ?" +
+                                       " UNION " +
+                                       "SELECT event_name, event_Date, event_time, " +
+                                       "location_value," +
+                                       " creator, id, description" +
+                                       "FROM event, pending_event_invite " +
+                                       "WHERE event_name ILIKE ? and event = id  and email = ?;";
 
     private static String USERS_SQL = " SELECT email, birthday, gender, full_name " +
                                       " FROM users " +
@@ -151,6 +157,17 @@ public class SyncRequest extends Request
                     ResultSet resultSet = member.executeQuery();
                     builder.append(",attending=");
                     builder.append(resultSet.next());
+                    member = conn.prepareStatement("SELECT email " +
+                                                   "FROM friendfinder.users, " +
+                                                   "friendfinder.pending_event_invite " +
+                                                   "WHERE users.email = ? AND " +
+                                                   "pending_event_invite.email = ? AND event = ?;");
+                    member.setString(1, in.getString("user"));
+                    member.setString(2, in.getString("user"));
+                    member.setInt(3, Integer.parseInt(rs.getString("id")));
+                    resultSet = member.executeQuery();
+                    builder.append(",invited=");
+                    builder.append(resultSet.next());
                 }
 
                 builder.append("~");
@@ -252,6 +269,11 @@ public class SyncRequest extends Request
             }
         }
         stmt = conn.prepareStatement(sql);
+        if (in.getString("table" + tableNum).equals("event"))
+        {
+            stmt.setString(3, search);
+            stmt.setString(4, user);
+        }
         setStatementArguments(stmt);
         return stmt;
     }
