@@ -235,6 +235,7 @@ public class SyncRequest extends Request
         stmt.setDate(1, new java.sql.Date(cal.getTimeInMillis()));
         stmt.setTime(2, new java.sql.Time(cal.getTimeInMillis()));
         stmt.setString(3, curUser);
+        System.err.println("curUser: " + curUser);
         return stmt.executeQuery().next();
     }
 
