@@ -43,7 +43,7 @@ public class CalendarRequest extends Request
         Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
         PreparedStatement stmt = conn
                 .prepareStatement("DELETE FROM friendfinder.calendar WHERE " + "email = ?");
-        stmt.setString(1, in.getString("id"));
+        stmt.setString(1, in.getString("user"));
         stmt.executeUpdate();
 
         String events = in.getString("events");
@@ -54,7 +54,7 @@ public class CalendarRequest extends Request
             stmt = conn.prepareStatement("INSERT INTO friendfinder.calendar " +
                                          "(email, date_start, date_end, time_start, " +
                                          "time_end) VALUES (?,?,?,?,?)");
-            stmt.setString(1, in.getString("id"));
+            stmt.setString(1, in.getString("user"));
             stmt.setDate(2, Date.valueOf(times[DATE_START]));
             stmt.setDate(3, Date.valueOf(times[DATE_END]));
             stmt.setTime(4, Time.valueOf(times[TIME_START]));
