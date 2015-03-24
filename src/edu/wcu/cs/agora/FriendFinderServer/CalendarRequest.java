@@ -58,15 +58,16 @@ public class CalendarRequest extends Request
         for (String event : eventsArray)
         {
             java.util.Calendar cal = new GregorianCalendar();
+            DateFormat julian = new SimpleDateFormat("yyyyD");
             String[] times = event.split(",");
             stmt = conn.prepareStatement("INSERT INTO friendfinder.calendar " +
                                          "(email, date_start, date_end, time_start, " +
                                          "time_end) VALUES (?,?,?,?,?)");
             stmt.setString(1, in.getString("user"));
-            cal.setTimeInMillis(Long.parseLong(times[DATE_START]));
-            stmt.setDate(2, new java.sql.Date(cal.getTime().getDate()));
-            cal.setTimeInMillis(Long.parseLong(times[DATE_END]));
-            stmt.setDate(3, new java.sql.Date(cal.getTime().getDate()));
+            //cal.setTimeInMillis(Long.parseLong(times[DATE_START]));
+            stmt.setDate(2, new java.sql.Date(Date.parse(julian.format(times[DATE_START]))));
+            //cal.setTimeInMillis(Long.parseLong(times[DATE_END]));
+            stmt.setDate(3, new java.sql.Date(Date.parse(julian.format(times[DATE_END]))));
 
             long mins = Long.parseLong(times[TIME_START]);
             DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
