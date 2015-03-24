@@ -24,9 +24,8 @@ public class Calendar extends Activity implements CalendarView.OnDateChangeListe
     public static final long     FIVE_MINUTES    = 300000;
     public static final Uri      CALENDAR_URI    = Uri
             .parse("content://com.android.calendar/instances/when");
-    public static final String[] CALENDAR_FIELDS = {CalendarContract.Instances.START_DAY,
-            CalendarContract.Instances.START_MINUTE, CalendarContract.Instances.END_DAY,
-            CalendarContract.Instances.END_MINUTE};
+    public static final String[] CALENDAR_FIELDS = {CalendarContract.Instances.BEGIN,
+            CalendarContract.Instances.END};
     /**
      * Last time the calendar was synced.
      */
@@ -82,8 +81,7 @@ public class Calendar extends Activity implements CalendarView.OnDateChangeListe
         String string = "";
         while (cursor.moveToNext())
         {
-            string += (cursor.getString(0) + "," + cursor.getString(1) + "," + cursor.getString(2) +
-                     "," + cursor.getString(3) + ";");
+            string += (cursor.getString(0) + "," + cursor.getString(1) + ";");
         }
         cursor.close();
         return string;
