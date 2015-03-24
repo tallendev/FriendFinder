@@ -6,7 +6,10 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by tyler on 3/24/2015.
@@ -65,13 +68,33 @@ public class CalendarRequest extends Request
             stmt.setDate(3, new java.sql.Date(cal.getTime().getDate()));
 
             long mins = Long.parseLong(times[TIME_START]);
+            DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             String hhmm = String.format("%02d:%02d", mins / 60, mins % 60) + ":00";
             System.err.println("hhmm: " + hhmm);
-            stmt.setTime(4, new java.sql.Time(Time.parse(hhmm)));
+            Date dt;
+            try
+            {
+                dt = formatter.parse(hhmm);
+            }
+            catch (ParseException e)
+            {
+                throw new MalformedPacketException("Invalid date");
+            }
+            cal.setTime(dt);
+            stmt.setTime(4, new java.sql.Time(cal.getTime().getTime()));
 
             mins = Long.parseLong(times[TIME_START]);
             hhmm = String.format("%02d:%02d", mins / 60, mins % 60) + ":00";
-            stmt.setTime(5, new java.sql.Time(Time.parse(hhmm)));
+            try
+            {
+                dt = formatter.parse(hhmm);
+            }
+            catch (ParseException e)
+            {
+                throw new MalformedPacketException("Invalid date");
+            }
+            cal.setTime(dt);
+            stmt.setTime(5, new java.sql.Time(cal.getTime().getTime()));
             stmt.executeUpdate();
         }
         out.put("success", true);
