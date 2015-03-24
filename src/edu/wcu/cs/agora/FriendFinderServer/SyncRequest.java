@@ -4,8 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -230,11 +228,8 @@ public class SyncRequest extends Request
                                                        " FROM friendfinder.calendar" +
                                                        " WHERE ? BETWEEN date_start AND date_end " +
                                                        "AND ? BETWEEN time_start AND time_end;");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd"); //HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-        stmt.setDate(1, Date.valueOf(dateFormat.format(cal.getTime())));
-        dateFormat = new SimpleDateFormat("HH:mm:ss");
-        stmt.setTime(2, Time.valueOf(dateFormat.format(cal.getTime())));
+        stmt.setTime(2, new java.sql.Time(cal.getTime().getTime()));
         return stmt.executeQuery().next();
     }
 
