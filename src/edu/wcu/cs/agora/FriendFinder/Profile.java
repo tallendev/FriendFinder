@@ -1,7 +1,9 @@
 package edu.wcu.cs.agora.FriendFinder;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,7 +17,7 @@ import android.widget.TextView;
  * Contains screen generating information about the profile page. Determines if the page should
  * be modifiable or not.
  */
-public class Profile extends Activity
+public class Profile extends Activity implements View.OnClickListener
 {
 
     /**
@@ -41,6 +43,7 @@ public class Profile extends Activity
                                         android.R.layout.simple_spinner_item);
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            findViewById(R.id.schedule).setOnClickListener(this);
         }
         // if not owner
         else
@@ -52,6 +55,22 @@ public class Profile extends Activity
             name.setText(extras.getString("name"));
             birthday.setText(extras.getString("birthday"));
             gender.setText(extras.getString("gender"));
+        }
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick (View v)
+    {
+        if (v.getId() == R.id.schedule)
+        {
+            Bundle extras = null;
+            Intent i = new Intent(this, Calendar.class);
+            startActivity(i);
         }
     }
 }

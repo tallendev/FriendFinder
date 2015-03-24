@@ -79,6 +79,7 @@ Permissions.
         <activity android:name=".CreateGroup"/>
         <activity android:name=".MemberList"/>
         <activity android:name=".SendInvites"/>
+        <activity android:name=".Calendar"/>
 
         <service
                 android:name="edu.wcu.cs.agora.FriendFinder.SyncService"
