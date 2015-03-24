@@ -66,6 +66,7 @@ public class CalendarRequest extends Request
 
             long mins = Long.parseLong(times[TIME_START]);
             String hhmm = String.format("%02d:%02d", mins / 60, mins % 60) + ":00";
+            System.err.println("hhmm: " + hhmm);
             stmt.setTime(4, new java.sql.Time(Time.parse(hhmm)));
 
             mins = Long.parseLong(times[TIME_START]);
