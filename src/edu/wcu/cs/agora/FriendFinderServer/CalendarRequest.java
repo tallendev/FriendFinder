@@ -65,10 +65,16 @@ public class CalendarRequest extends Request
                                          "time_end) VALUES (?,?,?,?,?)");
             stmt.setString(1, in.getString("user"));
             //cal.setTimeInMillis(Long.parseLong(times[DATE_START]));
-            stmt.setDate(2, new java.sql.Date(Date.parse(julian.format(times[DATE_START]))));
+            try
+            {
+                stmt.setDate(2, new java.sql.Date(julian.parse(times[DATE_START]).getDate()));
             //cal.setTimeInMillis(Long.parseLong(times[DATE_END]));
-            stmt.setDate(3, new java.sql.Date(Date.parse(julian.format(times[DATE_END]))));
-
+                stmt.setDate(3, new java.sql.Date(julian.parse(times[DATE_END]).getDate()));
+            }
+            catch (ParseException e)
+            {
+                throw new MalformedPacketException("Invalid date");
+            }
             long mins = Long.parseLong(times[TIME_START]);
             DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             String hhmm = String.format("%02d:%02d", mins / 60, mins % 60) + ":00";
