@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by tyler on 3/24/2015.
@@ -56,7 +57,7 @@ public class CalendarRequest extends Request
         String[] eventsArray = events.split(";");
         for (String event : eventsArray)
         {
-            java.util.Calendar cal = java.util.Calendar.getInstance();
+            java.util.Calendar cal = new GregorianCalendar();
             String[] times = event.split(",");
             stmt = conn.prepareStatement("INSERT INTO friendfinder.calendar " +
                                          "(email, date_start, date_end, time_start, " +
@@ -83,7 +84,7 @@ public class CalendarRequest extends Request
             cal.setTime(dt);
             stmt.setTime(4, new java.sql.Time(cal.getTime().getTime()));
 
-            mins = Long.parseLong(times[TIME_START]);
+            mins = Long.parseLong(times[TIME_END]);
             hhmm = String.format("%02d:%02d", mins / 60, mins % 60) + ":00";
             try
             {

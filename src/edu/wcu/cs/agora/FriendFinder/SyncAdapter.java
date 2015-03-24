@@ -151,7 +151,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
             // Generate SSL socket
             sslSocket = (SSLSocket) sslSocketFactory.createSocket(HOSTNAME, DEFAULT_PORT);
-            sslSocket.setSoTimeout(3000);
+            sslSocket.setSoTimeout(5000);
             // get an output stream
             out = sslSocket.getOutputStream();
             // Get accountManager to access our current account.
@@ -257,6 +257,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             case "11":
             {
                 calendarUpdate(json, extras, out, sslSocket);
+                break;
             }
             default:
             {
@@ -748,8 +749,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             // write and read
             out.write(json.toString().getBytes());
-            Scanner in = new Scanner(sslSocket.getInputStream());
-            jsonIn = new JSONObject(in.nextLine());
+            //    Scanner in = new Scanner(sslSocket.getInputStream());
+            //jsonIn = new JSONObject(in.nextLine());
         }
         catch (IOException ioe)
         {
