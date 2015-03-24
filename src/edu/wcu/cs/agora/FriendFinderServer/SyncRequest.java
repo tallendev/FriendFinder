@@ -190,7 +190,7 @@ public class SyncRequest extends Request
                 else if (in.getString("table" + tableNum).equals("users"))
                 {
                     builder.append(",busy=");
-                    builder.append(isBusy(in, conn));
+                    builder.append(isBusy(in, conn, rs.getString("email")));
                 }
 
                 builder.append("~");
@@ -222,7 +222,7 @@ public class SyncRequest extends Request
         return assignSQL(in, tableNum, conn);
     }
 
-    private boolean isBusy (JSONObject in, Connection conn) throws SQLException
+    private boolean isBusy (JSONObject in, Connection conn, String curUser) throws SQLException
     {
         PreparedStatement stmt = conn.prepareStatement("SELECT index " +
                                                        " FROM friendfinder.calendar" +
@@ -234,7 +234,7 @@ public class SyncRequest extends Request
         System.err.println("Time: " + new java.sql.Time(cal.getTimeInMillis()));
         stmt.setDate(1, new java.sql.Date(cal.getTimeInMillis()));
         stmt.setTime(2, new java.sql.Time(cal.getTimeInMillis()));
-        stmt.setString(3, user);
+        stmt.setString(3, curUser);
         return stmt.executeQuery().next();
     }
 
