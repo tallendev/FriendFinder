@@ -45,8 +45,8 @@ public class CalendarRequest extends Request
                 .prepareStatement("DELETE FROM friendfinder.calendar WHERE " + "email = ?");
         stmt.setString(1, in.getString("user"));
         stmt.executeUpdate();
-
         String events = in.getString("events");
+        System.err.println("Calendar events: " + events);
         String[] eventsArray = events.split(";");
         for (String event : eventsArray)
         {
