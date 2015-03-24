@@ -68,7 +68,8 @@ public class CalendarRequest extends Request
             try
             {
                 System.err.println("date: " + julian.parse(times[DATE_START]));
-                stmt.setDate(2, new java.sql.Date(julian.parse(times[DATE_START]).getDate()));
+                cal.setTime(julian.parse(times[DATE_START]));
+                stmt.setDate(2, new java.sql.Date(cal.getTime().getDate()));
             //cal.setTimeInMillis(Long.parseLong(times[DATE_END]));
                 stmt.setDate(3, new java.sql.Date(julian.parse(times[DATE_END]).getDate()));
             }
