@@ -70,7 +70,7 @@ public class CalendarRequest extends Request
             long mins = Long.parseLong(times[TIME_START]);
             DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             String hhmm = String.format("%02d:%02d", mins / 60, mins % 60) + ":00";
-            System.err.println("hhmm: " + hhmm);
+            //System.err.println("hhmm: " + hhmm);
             Date dt;
             try
             {
