@@ -60,7 +60,7 @@ public class CalendarRequest extends Request
             //cal.setTimeInMillis(Long.parseLong(times[DATE_START]));
             cal.setTimeInMillis(Long.parseLong(times[DATE_START]));
             System.err.println("Cal: " + cal.getTime().getDate());
-            stmt.setDate(2, new java.sql.Date(cal.getTime().getDate()));
+            stmt.setDate(2, new java.sql.Date(Long.parseLong(times[DATE_START])));
             stmt.setTime(4, new java.sql.Time(cal.getTime().getTime()));
             cal.setTimeInMillis(Long.parseLong(times[DATE_END]));
             stmt.setDate(3, new java.sql.Date(cal.getTime().getDate()));
