@@ -3,7 +3,10 @@ package edu.wcu.cs.agora.FriendFinderServer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
 
 /**
  * Created by tyler on 3/24/2015.
@@ -50,15 +53,24 @@ public class CalendarRequest extends Request
         String[] eventsArray = events.split(";");
         for (String event : eventsArray)
         {
+            java.util.Calendar cal = java.util.Calendar.getInstance();
             String[] times = event.split(",");
             stmt = conn.prepareStatement("INSERT INTO friendfinder.calendar " +
                                          "(email, date_start, date_end, time_start, " +
                                          "time_end) VALUES (?,?,?,?,?)");
             stmt.setString(1, in.getString("user"));
-            stmt.setDate(2, Date.valueOf(times[DATE_START]));
-            stmt.setDate(3, Date.valueOf(times[DATE_END]));
-            stmt.setTime(4, Time.valueOf(times[TIME_START]));
-            stmt.setTime(5, Time.valueOf(times[TIME_END]));
+            cal.setTimeInMillis(Long.parseLong(times[DATE_START]));
+            stmt.setDate(2, new java.sql.Date(cal.getTime().getDate()));
+            cal.setTimeInMillis(Long.parseLong(times[DATE_END]));
+            stmt.setDate(3, new java.sql.Date(cal.getTime().getDate()));
+
+            long mins = Long.parseLong(times[TIME_START]);
+            String hhmm = String.format("%02d:%02d", mins / 60, mins % 60);
+            stmt.setTime(4, new java.sql.Time(Time.parse(hhmm)));
+
+            mins = Long.parseLong(times[TIME_START]);
+            hhmm = String.format("%02d:%02d", mins / 60, mins % 60);
+            stmt.setTime(5, new java.sql.Time(Time.parse(hhmm)));
             stmt.executeUpdate();
         }
         out.put("success", true);
