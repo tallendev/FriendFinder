@@ -52,6 +52,7 @@ Permissions.
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
                  android:allowBackup="false" android:screenOrientation="portrait"

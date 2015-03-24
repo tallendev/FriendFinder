@@ -11,9 +11,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.text.format.DateUtils;
 import android.widget.CalendarView;
 
-import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by tyler on 3/23/2015.
@@ -22,7 +23,7 @@ public class Calendar extends Activity implements CalendarView.OnDateChangeListe
 {
     public static final long     FIVE_MINUTES    = 300000;
     public static final Uri      CALENDAR_URI    = Uri
-            .parse("content://com.android.calendar/calendars");
+            .parse("content://com.android.calendar/instances/when");
     public static final String[] CALENDAR_FIELDS = {CalendarContract.Instances.START_DAY,
             CalendarContract.Instances.START_MINUTE, CalendarContract.Instances.END_DAY,
             CalendarContract.Instances.END_MINUTE};
@@ -59,26 +60,33 @@ public class Calendar extends Activity implements CalendarView.OnDateChangeListe
         {
             lastCalled = calendar.getDate();
             Bundle extras = new Bundle();
-            ArrayList<String> events = getEvents();
 
             // generate sync request based on search parameters.
             extras.putString("request_type", "11");
-            extras.putStringArrayList("events", events);
+            extras.putString("events", getEvents());
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
         }
     }
 
-    private ArrayList<String> getEvents ()
+    private String getEvents ()
     {
-        Cursor cursor = getContentResolver().query(CALENDAR_URI, CALENDAR_FIELDS, null, null, null);
-        ArrayList<String> list = new ArrayList<>();
+        Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when")
+                                 .buildUpon();
+        long now = new Date().getTime();
+
+        ContentUris.appendId(builder, now - DateUtils.DAY_IN_MILLIS * 10000);
+        ContentUris.appendId(builder, now + DateUtils.DAY_IN_MILLIS * 10000);
+
+        Cursor cursor = getContentResolver()
+                .query(builder.build(), CALENDAR_FIELDS, null, null, null);
+        String string = "";
         while (cursor.moveToNext())
         {
-            list.add(cursor.getString(0) + "," + cursor.getString(1) + "," + cursor.getString(2) +
+            string += (cursor.getString(0) + "," + cursor.getString(1) + "," + cursor.getString(2) +
                      "," + cursor.getString(3) + ";");
         }
         cursor.close();
-        return list;
+        return string;
     }
 
     /**

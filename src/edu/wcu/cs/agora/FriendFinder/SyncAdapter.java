@@ -742,13 +742,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                                  SSLSocket sslSocket) throws JSONException
     {
         boolean ioError = false;
-        StringBuilder events = new StringBuilder();
-        // more data into our outgoing json object.
-        for (String string : extras.getStringArray("events"))
-        {
-            events.append(string);
-        }
-        json.put("events", events.toString());
+        json.put("events", extras.getString("events"));
         JSONObject jsonIn = null;
         try
         {

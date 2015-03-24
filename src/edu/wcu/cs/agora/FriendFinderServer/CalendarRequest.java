@@ -39,6 +39,7 @@ public class CalendarRequest extends Request
     protected void getResponse () throws SQLException, JSONException, MalformedPacketException
     {
         JSONObject in = getJsonIn();
+        JSONObject out = getJsonOut();
         Connection conn = DatabaseConnectionBuilder.buildDatabaseConnection();
         PreparedStatement stmt = conn
                 .prepareStatement("DELETE FROM friendfinder.calendar WHERE " + "email = ?");
@@ -60,5 +61,6 @@ public class CalendarRequest extends Request
             stmt.setTime(5, Time.valueOf(times[TIME_END]));
             stmt.executeUpdate();
         }
+        out.put("success", true);
     }
 }

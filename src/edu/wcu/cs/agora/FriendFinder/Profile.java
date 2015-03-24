@@ -36,15 +36,6 @@ public class Profile extends Activity implements View.OnClickListener
     {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
-        busy = (TextView) findViewById(R.id.busy);
-        if (extras.getBoolean("busy"))
-        {
-            busy.setText("Busy");
-        }
-        else
-        {
-            busy.setText("Available");
-        }
         // if owner
         if (owner = extras.getBoolean("owner", false))
         {
@@ -69,6 +60,15 @@ public class Profile extends Activity implements View.OnClickListener
             name.setText(extras.getString("name"));
             birthday.setText(extras.getString("birthday"));
             gender.setText(extras.getString("gender"));
+        }
+        busy = (TextView) findViewById(R.id.busy);
+        if (extras.getBoolean("busy"))
+        {
+            busy.setText("Busy");
+        }
+        else
+        {
+            busy.setText("Available");
         }
     }
 
