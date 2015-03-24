@@ -195,6 +195,12 @@ public abstract class Request
                 request = new InviteRequest(json, jsonOut);
                 break;
             }
+            case ("11"):
+            {
+                System.err.println("Calendar");
+                request = new CalendarRequest(json, jsonOut);
+                break;
+            }
             default:
             {
                 throw new MalformedPacketException("Invalid Request Type");

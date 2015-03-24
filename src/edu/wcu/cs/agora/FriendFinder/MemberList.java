@@ -129,6 +129,7 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
         intent.putExtra("gender", user.getGender());
         intent.putExtra("birthday", user.getBirthday());
         intent.putExtra("name", user.getName());
+        intent.putExtra("busy", user.isBusy());
         startActivityForResult(intent, REQUEST);
     }
 
@@ -232,10 +233,12 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
                 String birthday = cursor.getString(cursor.getColumnIndex("BIRTHDAY"));
                 String gender = cursor.getString(cursor.getColumnIndex("GENDER"));
                 String name = cursor.getString(cursor.getColumnIndex("FULL_NAME"));
-                members.add(new User(email, birthday, gender, name));//, eventLocation));
+                boolean busy = Boolean.getBoolean(cursor.getString(cursor.getColumnIndex("BUSY")));
+                members.add(new User(email, birthday, gender, name, busy));//, eventLocation));
                 ;//,
                 // eventLocation));
             }
+            cursor.close();
             // Create our list.
             ExtendedArrayAdapter<User> ad = new ExtendedArrayAdapter<User>(MemberList.this,
                                                                            R.layout.members_list_item,

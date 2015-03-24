@@ -254,6 +254,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 processInvite(json, extras, out, sslSocket);
                 break;
             }
+            case "11":
+            {
+                calendarUpdate(json, extras, out, sslSocket);
+            }
             default:
             {
                 Log.d("SYNC", "Invalid request type.");
@@ -721,6 +725,44 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         i.putExtra("ioerr", ioError);
         i.setAction("event_invite");
         getContext().sendBroadcast(i);
+    }
+
+    /**
+     * Process a group join/leave request.
+     *
+     * @param json Stores outgoing data.
+     * @param extras Contains extras from calling activity containing information to send to
+     * server.
+     * @param out Output stream connected to server.
+     * @param sslSocket SSLSocket maintaining connection to server.
+     *
+     * @throws JSONException
+     */
+    private void calendarUpdate (JSONObject json, Bundle extras, OutputStream out,
+                                 SSLSocket sslSocket) throws JSONException
+    {
+        boolean ioError = false;
+        StringBuilder events = new StringBuilder();
+        // more data into our outgoing json object.
+        for (String string : extras.getStringArray("events"))
+        {
+            events.append(string);
+        }
+        json.put("events", events.toString());
+        JSONObject jsonIn = null;
+        try
+        {
+            // write and read
+            out.write(json.toString().getBytes());
+            Scanner in = new Scanner(sslSocket.getInputStream());
+            jsonIn = new JSONObject(in.nextLine());
+        }
+        catch (IOException ioe)
+        {
+            Log.d("SYNC", "An error occurred while attempting to register");
+            Log.d("SYNC", ioe.getMessage());
+            ioError = true;
+        }
     }
 
     /**

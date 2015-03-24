@@ -44,7 +44,7 @@ public class ServerContentProvider extends ContentProvider
     /**
      * Current version of the database.
      */
-    public static final int    DATABASE_VERSION = 10;
+    public static final int    DATABASE_VERSION = 11;
 
     /**
      * String defines creation of the events table.
@@ -84,7 +84,8 @@ public class ServerContentProvider extends ContentProvider
                                                         "REPLACE," +
                                                         " FULL_NAME TEXT," +
                                                         " BIRTHDAY TEXT," +
-                                                        " GENDER TEXT);";
+                                                        " GENDER TEXT," +
+                                                        " BUSY TEXT);";
     /**
      * String defines creation of the likes table.
      */
@@ -133,7 +134,6 @@ public class ServerContentProvider extends ContentProvider
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database
                 .query(table, projection, selection, selectionArgs, null, null, sortOrder);
-        Log.d("ServerContentProviderQuery", "Cursor count: " + cursor.getCount());
         return cursor;
     }
 

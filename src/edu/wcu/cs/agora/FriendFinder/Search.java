@@ -192,6 +192,7 @@ public class Search extends Activity
                 intent.putExtra("gender", user.getGender());
                 intent.putExtra("birthday", user.getBirthday());
                 intent.putExtra("name", user.getName());
+                intent.putExtra("busy", user.isBusy());
                 startActivityForResult(intent, REQUEST);
                 break;
             }
@@ -523,7 +524,8 @@ public class Search extends Activity
                 String birthday = cursor.getString(cursor.getColumnIndex("BIRTHDAY"));
                 String gender = cursor.getString(cursor.getColumnIndex("GENDER"));
                 String name = cursor.getString(cursor.getColumnIndex("FULL_NAME"));
-                results.add(new User(email, birthday, gender, name));//, eventLocation));
+                boolean busy = Boolean.getBoolean(cursor.getString(cursor.getColumnIndex("BUSY")));
+                results.add(new User(email, birthday, gender, name, busy));//, eventLocation));
             }
             ExtendedArrayAdapter<User> ad = new ExtendedArrayAdapter<User>(getApplicationContext(),
                                                                            R.layout.group_list_item,

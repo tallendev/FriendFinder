@@ -4,6 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * @author Tyler Allen
@@ -186,6 +189,11 @@ public class SyncRequest extends Request
                     builder.append(",invited=");
                     builder.append(resultSet.next());
                 }
+                else if (in.getString("table" + tableNum).equals("users"))
+                {
+                    builder.append(",busy=");
+                    builder.append(isBusy(in, conn));
+                }
 
                 builder.append("~");
             }
@@ -214,6 +222,20 @@ public class SyncRequest extends Request
         user = in.getString("user");
         groupMember = in.has("group_name") ? in.getString("group_name") : null;
         return assignSQL(in, tableNum, conn);
+    }
+
+    private boolean isBusy (JSONObject in, Connection conn) throws SQLException
+    {
+        PreparedStatement stmt = conn.prepareStatement("SELECT index " +
+                                                       " FROM friendfinder.calendar" +
+                                                       " WHERE ? BETWEEN date_start AND date_end " +
+                                                       "AND ? BETWEEN time_start AND time_end;");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd"); //HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        stmt.setDate(1, Date.valueOf(dateFormat.format(cal.getTime())));
+        dateFormat = new SimpleDateFormat("HH:mm:ss");
+        stmt.setTime(2, Time.valueOf(dateFormat.format(cal.getTime())));
+        return stmt.executeQuery().next();
     }
 
     /**

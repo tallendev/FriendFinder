@@ -50,7 +50,8 @@ User view page.
                 android:layout_height="0dp"
                 android:text="Busy"
                 android:textColor="@color/gold"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:id="@+id/busy"/>
         </LinearLayout>
     </LinearLayout>
 

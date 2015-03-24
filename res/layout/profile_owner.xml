@@ -46,6 +46,7 @@ User view page.
                     android:id="@+id/editName"
                     android:layout_weight="1" />
             <TextView
+                    android:id="@+id/busy"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:text="Busy"

@@ -3,34 +3,41 @@ package edu.wcu.cs.agora.FriendFinder;
 /**
  * @author Tyler Allen
  * @created 11/28/14
- * @version 12/7/2014
+ * @version 3/24/2015
  */
 public class User
 {
     /**
      * User's email address. Unique Identifier.
      */
-    private String email;
-    /** User birthdate. */
-    private String birthday;
+    private String  email;
+    /**
+     * User birth date.
+     */
+    private String  birthday;
     /**
      * User's gender.
      */
-    private String gender;
+    private String  gender;
     /**
      * User's full name.
      */
-    private String name;
+    private String  name;
+    /**
+     * Determines if user is busy or not.
+     */
+    private boolean busy;
 
     /**
      * Initializes fields.
      */
-    public User (String email, String birthday, String gender, String name)
+    public User (String email, String birthday, String gender, String name, boolean busy)
     {
         this.email = email;
         this.birthday = birthday;
         this.gender = gender;
         this.name = name;
+        this.busy = busy;
     }
 
     /**
@@ -71,5 +78,15 @@ public class User
     public String getEmail ()
     {
         return email;
+    }
+
+    /**
+     * Returns if the user is busy or not.
+     *
+     * @return busy
+     */
+    public boolean isBusy ()
+    {
+        return busy;
     }
 }

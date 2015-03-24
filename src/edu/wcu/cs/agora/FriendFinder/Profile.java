@@ -26,11 +26,25 @@ public class Profile extends Activity implements View.OnClickListener
      */
     private boolean owner;
 
+    /**
+     * Field if user is busy or not.
+     */
+    private TextView busy;
+
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
+        busy = (TextView) findViewById(R.id.busy);
+        if (extras.getBoolean("busy"))
+        {
+            busy.setText("Busy");
+        }
+        else
+        {
+            busy.setText("Available");
+        }
         // if owner
         if (owner = extras.getBoolean("owner", false))
         {
