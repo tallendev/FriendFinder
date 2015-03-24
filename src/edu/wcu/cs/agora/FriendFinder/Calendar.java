@@ -17,7 +17,9 @@ import android.widget.CalendarView;
 import java.util.Date;
 
 /**
- * Created by tyler on 3/23/2015.
+ * @author Tyler Allen
+ * @created 3/23/2015
+ * @version 3/24/2015
  */
 public class Calendar extends Activity implements CalendarView.OnDateChangeListener
 {

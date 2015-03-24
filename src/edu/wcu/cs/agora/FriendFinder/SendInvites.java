@@ -294,7 +294,7 @@ public class SendInvites extends Activity
                 String birthday = cursor.getString(cursor.getColumnIndex("BIRTHDAY"));
                 String gender = cursor.getString(cursor.getColumnIndex("GENDER"));
                 String name = cursor.getString(cursor.getColumnIndex("FULL_NAME"));
-                boolean busy = Boolean.getBoolean(cursor.getString(cursor.getColumnIndex("BUSY")));
+                boolean busy = Boolean.valueOf(cursor.getString(cursor.getColumnIndex("BUSY")));
                 results.add(new User(email, birthday, gender, name, busy));
             }
             ExtendedArrayAdapter<User> ad = new ExtendedArrayAdapter<User>(getApplicationContext(),
