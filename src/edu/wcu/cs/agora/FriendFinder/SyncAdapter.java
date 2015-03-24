@@ -56,7 +56,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     /**
      * Hostname of server to contact.
      */
-    private static final String HOSTNAME      = "75.143.177.14";//"www.trantracker.com";
+    private static final String HOSTNAME      = "www.trantracker.com";
     /**
      * Default server port used by this application.
      */
