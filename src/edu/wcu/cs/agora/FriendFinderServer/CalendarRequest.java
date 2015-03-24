@@ -65,11 +65,11 @@ public class CalendarRequest extends Request
             stmt.setDate(3, new java.sql.Date(cal.getTime().getDate()));
 
             long mins = Long.parseLong(times[TIME_START]);
-            String hhmm = String.format("%02d:%02d", mins / 60, mins % 60);
+            String hhmm = String.format("%02d:%02d", mins / 60, mins % 60) + ":00";
             stmt.setTime(4, new java.sql.Time(Time.parse(hhmm)));
 
             mins = Long.parseLong(times[TIME_START]);
-            hhmm = String.format("%02d:%02d", mins / 60, mins % 60);
+            hhmm = String.format("%02d:%02d", mins / 60, mins % 60) + ":00";
             stmt.setTime(5, new java.sql.Time(Time.parse(hhmm)));
             stmt.executeUpdate();
         }

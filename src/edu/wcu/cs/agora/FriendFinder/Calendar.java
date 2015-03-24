@@ -74,7 +74,7 @@ public class Calendar extends Activity implements CalendarView.OnDateChangeListe
                                  .buildUpon();
         long now = new Date().getTime();
 
-        ContentUris.appendId(builder, now - DateUtils.DAY_IN_MILLIS * 10000);
+        ContentUris.appendId(builder, now);
         ContentUris.appendId(builder, now + DateUtils.DAY_IN_MILLIS * 10000);
 
         Cursor cursor = getContentResolver()
