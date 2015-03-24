@@ -227,12 +227,14 @@ public class SyncRequest extends Request
         PreparedStatement stmt = conn.prepareStatement("SELECT index " +
                                                        " FROM friendfinder.calendar" +
                                                        " WHERE ? BETWEEN date_start AND date_end " +
-                                                       "AND ? BETWEEN time_start AND time_end;");
+                                                       "AND ? BETWEEN time_start AND time_end " +
+                                                       "AND ? = email;");
         Calendar cal = Calendar.getInstance();
         System.err.println("Date: " + new java.sql.Date(cal.getTimeInMillis()));
         System.err.println("Time: " + new java.sql.Time(cal.getTimeInMillis()));
         stmt.setDate(1, new java.sql.Date(cal.getTimeInMillis()));
         stmt.setTime(2, new java.sql.Time(cal.getTimeInMillis()));
+        stmt.setString(3, user);
         return stmt.executeQuery().next();
     }
 
