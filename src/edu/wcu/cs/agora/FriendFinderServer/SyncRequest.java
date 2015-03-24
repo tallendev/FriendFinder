@@ -229,10 +229,10 @@ public class SyncRequest extends Request
                                                        " WHERE ? BETWEEN date_start AND date_end " +
                                                        "AND ? BETWEEN time_start AND time_end;");
         Calendar cal = Calendar.getInstance();
-        System.err.println("Date: " + cal.getTime().getDate());
-        System.err.println("Time: " + cal.getTime().getTime());
-        stmt.setDate(1, new java.sql.Date(cal.getTime().getDate()));
-        stmt.setTime(2, new java.sql.Time(cal.getTime().getTime()));
+        System.err.println("Date: " + new java.sql.Date(cal.getTimeInMillis()));
+        System.err.println("Time: " + new java.sql.Time(cal.getTimeInMillis()));
+        stmt.setDate(1, new java.sql.Date(cal.getTimeInMillis()));
+        stmt.setTime(2, new java.sql.Time(cal.getTimeInMillis()));
         return stmt.executeQuery().next();
     }
 
