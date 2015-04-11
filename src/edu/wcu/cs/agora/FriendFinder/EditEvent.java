@@ -72,7 +72,7 @@ public class EditEvent extends Activity implements View.OnClickListener
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
         map = (Button) findViewById(R.id.map);
-        ((Button) findViewById(R.id.update)).setOnClickListener(this);
+        findViewById(R.id.update).setOnClickListener(this);
         EditText eventName = ((EditText) findViewById(R.id.eventname));
         eventName.setText(
                 intent.getExtras().getString("event_name", eventName.getText().toString()));
@@ -84,7 +84,7 @@ public class EditEvent extends Activity implements View.OnClickListener
 
         ((EditText) findViewById(R.id.description))
                 .setText(intent.getExtras().getString("description"));
-        ((Button) findViewById(R.id.cancel)).setOnClickListener(this);
+        findViewById(R.id.cancel).setOnClickListener(this);
         datePicker = new DatePickerFragment();
         timePicker = new TimePickerFragment();
         location = getIntent().getExtras().getString("location");
@@ -329,6 +329,14 @@ public class EditEvent extends Activity implements View.OnClickListener
         }
 
         /**
+         * Getter for day.
+         *
+         * @return day
+         */
+        public int getDay ()
+        {
+            return day;
+        }        /**
          * Assigns default values to fields. Returns a datePicker dialog.
          *
          * @param savedInstanceState not used.
@@ -350,15 +358,7 @@ public class EditEvent extends Activity implements View.OnClickListener
             return d;
         }
 
-        /**
-         * Getter for day.
-         *
-         * @return day
-         */
-        public int getDay ()
-        {
-            return day;
-        }
+
 
 
     }

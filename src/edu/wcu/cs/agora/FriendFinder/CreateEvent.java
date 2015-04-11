@@ -71,7 +71,7 @@ public class CreateEvent extends Activity implements View.OnClickListener
         spinnerDialog = new LoadingSpinnerDialog();
         map = (Button) findViewById(R.id.map);
         receiver = null;
-        ((Button) findViewById(R.id.create)).setOnClickListener(this);
+        findViewById(R.id.create).setOnClickListener(this);
         datePicker = new DatePickerFragment();
         timePicker = new TimePickerFragment();
         findViewById(R.id.date).setOnClickListener(this);

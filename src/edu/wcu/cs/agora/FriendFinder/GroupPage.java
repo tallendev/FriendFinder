@@ -62,7 +62,7 @@ public class GroupPage extends Activity implements View.OnClickListener
         groupName.setText(extras.getString("group_name", groupName.getText().toString()));
         ((TextView) findViewById(R.id.group_description))
                 .setText(extras.getString("group_description"));
-        ((Button) findViewById(R.id.members)).setOnClickListener(this);
+        findViewById(R.id.members).setOnClickListener(this);
         Button join = ((Button) findViewById(R.id.join));
         member = extras.getBoolean("member");
         if (member)

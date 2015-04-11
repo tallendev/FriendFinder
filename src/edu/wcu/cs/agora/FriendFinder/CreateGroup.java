@@ -9,7 +9,6 @@ import android.app.DialogFragment;
 import android.content.*;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -48,7 +47,7 @@ public class CreateGroup extends Activity implements View.OnClickListener
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
-        ((Button) findViewById(R.id.create)).setOnClickListener(this);
+        findViewById(R.id.create).setOnClickListener(this);
     }
 
     /**

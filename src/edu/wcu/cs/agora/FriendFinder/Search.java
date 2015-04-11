@@ -288,7 +288,7 @@ public class Search extends Activity
          * @param query Relevant Query Column
          * @param uri URI to access table in ContentProvider.
          */
-        private SearchOption (String table, String query, Uri uri)
+        SearchOption (String table, String query, Uri uri)
         {
             this.table = table;
             this.query = query;

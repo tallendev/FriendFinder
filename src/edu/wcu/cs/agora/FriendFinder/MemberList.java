@@ -235,7 +235,7 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
                 String name = cursor.getString(cursor.getColumnIndex("FULL_NAME"));
                 boolean busy = Boolean.valueOf(cursor.getString(cursor.getColumnIndex("BUSY")));
                 members.add(new User(email, birthday, gender, name, busy));//, eventLocation));
-                ;//,
+                //,
                 // eventLocation));
             }
             cursor.close();

@@ -9,7 +9,6 @@ import android.app.DialogFragment;
 import android.content.*;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,14 +56,14 @@ public class EditGroup extends Activity implements View.OnClickListener
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         spinnerDialog = new LoadingSpinnerDialog();
         receiver = null;
-        ((Button) findViewById(R.id.update)).setOnClickListener(this);
+        findViewById(R.id.update).setOnClickListener(this);
         ((TextView) findViewById(R.id.title)).setText(extras.getString("group_name"));
         ((EditText) findViewById(R.id.group_description))
                 .setText(extras.getString("group_description"));
-        ((Button) findViewById(R.id.delete)).setOnClickListener(this);
+        findViewById(R.id.delete).setOnClickListener(this);
         deleted = false;
         activity = this;
-        ((Button) findViewById(R.id.members)).setOnClickListener(this);
+        findViewById(R.id.members).setOnClickListener(this);
     }
 
     /**
