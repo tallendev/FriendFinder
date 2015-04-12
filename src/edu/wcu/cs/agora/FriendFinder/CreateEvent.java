@@ -77,7 +77,7 @@ public class CreateEvent extends Activity implements View.OnClickListener
         findViewById(R.id.date).setOnClickListener(this);
         findViewById(R.id.time).setOnClickListener(this);
         map.setOnClickListener(this);
-        location = null;
+        location = Map.getDefaultLocation();
     }
 
     /**

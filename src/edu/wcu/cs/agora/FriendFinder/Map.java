@@ -33,6 +33,11 @@ public class Map extends Activity implements GoogleMap.OnMarkerDragListener
     private LatLng location;
     private Marker mark;
 
+    public static String getDefaultLocation ()
+    {
+        return DEFAULT_LAT_LNG.latitude + " " + DEFAULT_LAT_LNG.longitude;
+    }
+
     @Override
     protected void onCreate (Bundle savedInstanceState)
     {
