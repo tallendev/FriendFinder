@@ -54,7 +54,7 @@ Permissions.
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
+    <application android:label="@string/app_name" android:icon="@drawable/icon"
                  android:allowBackup="false" android:screenOrientation="portrait"
                  android:theme="@android:style/Theme.Holo" android:name=".FriendFinder">
         <activity android:name="Login"
