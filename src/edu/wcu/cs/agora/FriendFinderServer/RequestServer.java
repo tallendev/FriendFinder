@@ -147,24 +147,49 @@ public class RequestServer
         System.err.println("Timeout set");
         Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
         System.err.println("Scanner made");
-        if (in.hasNextLine())
+        Thread thread = new Thread(new Runnable()
         {
-            System.err.println("Read");
-            JSONObject json = new JSONObject(in.nextLine());
-            System.err.println("Finished read");
-            JSONObject jsonOut = new JSONObject();
-            System.err.println("Build new request.");
-            Request request = Request.requestBuilder(json, jsonOut);
-            request.getResponse();
-            PrintStream out = new PrintStream(client.getOutputStream());
-            System.out.println(jsonOut);
-            out.println(jsonOut);
-            out.flush();
-            System.err.println("Sent JSON response");
-        }
-        else
-        {
-            System.err.println("No message received from client.");
-        }
+            @Override
+            public void run ()
+            {
+                if (in.hasNextLine())
+                {
+                    System.err.println("Read");
+                    JSONObject json = null;
+                    JSONObject jsonOut = new JSONObject();
+                    System.err.println("Build new request.");
+                    Request request = null;
+                    try
+                    {
+                        json = new JSONObject(in.nextLine());
+                        System.err.println("Finished read");
+                        request = Request.requestBuilder(json, jsonOut);
+                        request.getResponse();
+                    }
+                    catch (MalformedPacketException | SQLException | JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    PrintStream out = null;
+                    try
+                    {
+                        out = new PrintStream(client.getOutputStream());
+                        System.out.println(jsonOut);
+                        out.println(jsonOut);
+                        out.flush();
+                        System.err.println("Sent JSON response");
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    System.err.println("No message received from client.");
+                }
+            }
+        });
+        thread.start();
     }
 }
