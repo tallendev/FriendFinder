@@ -141,11 +141,11 @@ public class RequestServer
     public void listen () throws SQLException, IOException, JSONException
     {
         System.err.println("RequestServer listening for new connection.");
-        Socket client = serverSocket.accept();
+        final Socket client = serverSocket.accept();
         System.err.println("RequestServer accepted new connection.");
         client.setSoTimeout(TIMEOUT);
         System.err.println("Timeout set");
-        Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
+        final Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
         System.err.println("Scanner made");
         Thread thread = new Thread(new Runnable()
         {
