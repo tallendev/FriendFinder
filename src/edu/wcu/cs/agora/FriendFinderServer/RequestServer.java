@@ -14,7 +14,7 @@ import java.util.Scanner;
 /**
  * @author Tyler Allen
  * @created 9/29/2014
- * @version 12/8/2014
+ * @version 4/13/2015
  *
  * The server for the application. This class listens for connections from clients and executes
  * their requests.
@@ -142,48 +142,43 @@ public class RequestServer
     {
         System.err.println("RequestServer listening for new connection.");
         final Socket client = serverSocket.accept();
-        Thread thread = new Thread(new Runnable()
-        {
-            @Override
-            public void run ()
+        Thread thread = new Thread(() -> {
+            try
             {
-                try
+                System.err.println("RequestServer accepted new connection.");
+                client.setSoTimeout(TIMEOUT);
+                System.err.println("Timeout set");
+                Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
+                System.err.println("Scanner made");
+                if (in.hasNextLine())
                 {
-                    System.err.println("RequestServer accepted new connection.");
-                    client.setSoTimeout(TIMEOUT);
-                    System.err.println("Timeout set");
-                    Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
-                    System.err.println("Scanner made");
-                    if (in.hasNextLine())
-                    {
 
-                        System.err.println("Read");
-                        JSONObject json = null;
-                        JSONObject jsonOut = new JSONObject();
-                        System.err.println("Build new request.");
-                        Request request = null;
+                    System.err.println("Read");
+                    JSONObject json = null;
+                    JSONObject jsonOut = new JSONObject();
+                    System.err.println("Build new request.");
+                    Request request = null;
 
-                        json = new JSONObject(in.nextLine());
-                        System.err.println("Finished read");
-                        request = Request.requestBuilder(json, jsonOut);
-                        request.getResponse();
-                        PrintStream out = null;
-                        out = new PrintStream(client.getOutputStream());
-                        System.out.println(jsonOut);
-                        out.println(jsonOut);
-                        out.flush();
-                        System.err.println("Sent JSON response");
+                    json = new JSONObject(in.nextLine());
+                    System.err.println("Finished read");
+                    request = Request.requestBuilder(json, jsonOut);
+                    request.getResponse();
+                    PrintStream out = null;
+                    out = new PrintStream(client.getOutputStream());
+                    System.out.println(jsonOut);
+                    out.println(jsonOut);
+                    out.flush();
+                    System.err.println("Sent JSON response");
 
-                    }
-                    else
-                    {
-                        System.err.println("No message received from client.");
-                    }
                 }
-                catch (SQLException | JSONException | IOException e)
+                else
                 {
-                    e.printStackTrace();
+                    System.err.println("No message received from client.");
                 }
+            }
+            catch (SQLException | JSONException | IOException e)
+            {
+                e.printStackTrace();
             }
         });
         thread.start();
