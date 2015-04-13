@@ -141,46 +141,51 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
     public void onPerformSync (Account account, Bundle extras, String authority,
                                ContentProviderClient provider, SyncResult syncResult)
     {
-        OutputStream out = null;
-        SSLSocket sslSocket = null;
-        Log.d("SYNC", "Extras: " + extras);
-        try
+        if (extras != null && extras.containsKey("request_type"))
         {
-            Log.d("SYNC", "starting sync");
-            // Create SSL socket factory.
-            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-            // Generate SSL socket
-            sslSocket = (SSLSocket) sslSocketFactory.createSocket(HOSTNAME, DEFAULT_PORT);
-            sslSocket.setSoTimeout(5000);
-            // get an output stream
-            out = sslSocket.getOutputStream();
-            // Get accountManager to access our current account.
-            AccountManager accountManager = (AccountManager) getContext()
-                    .getSystemService(Context.ACCOUNT_SERVICE);
+            OutputStream out = null;
+            SSLSocket sslSocket = null;
             Log.d("SYNC", "Extras: " + extras);
-            // SYNC is default requestType
-            String requestType = extras.getString("request_type", "-1");
-            //validate a valid sync request.
-            if (!requestType.equals("-1"))
+            try
             {
-                // fill outgoing JSON object with request information.
-                buildOutput(out, sslSocket, account, requestType, extras, accountManager, provider);
-                Log.d("SYNC", "Read");
+                Log.d("SYNC", "starting sync");
+                // Create SSL socket factory.
+                SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+                // Generate SSL socket
+                sslSocket = (SSLSocket) sslSocketFactory.createSocket(HOSTNAME, DEFAULT_PORT);
+                sslSocket.setSoTimeout(5000);
+                // get an output stream
+                out = sslSocket.getOutputStream();
+                // Get accountManager to access our current account.
+                AccountManager accountManager = (AccountManager) getContext()
+                        .getSystemService(Context.ACCOUNT_SERVICE);
+                Log.d("SYNC", "Extras: " + extras);
+                // SYNC is default requestType
+                String requestType = extras.getString("request_type", "-1");
+                //validate a valid sync request.
+                if (!requestType.equals("-1"))
+                {
+                    // fill outgoing JSON object with request information.
+                    buildOutput(out, sslSocket, account, requestType, extras, accountManager,
+                                provider);
+                    Log.d("SYNC", "Read");
+                }
             }
-        }
-        catch (IOException ioe)
-        {
-            Log.d("SYNC", "An error occurred while attempting to sync");
-            Log.d("SYNC", ioe.getMessage());
-        }
-        catch (JSONException e)
-        {
-            Log.d("SYNC", "JSON error:\n" + e.getMessage());
-            e.printStackTrace();
-        }
-        finally
-        {
-            adapterCleanup(out, sslSocket);
+            catch (IOException ioe)
+            {
+                Log.d("SYNC", "An error occurred while attempting to sync");
+                Log.d("SYNC", ioe.getMessage());
+            }
+            catch (JSONException e)
+            {
+                Log.d("SYNC", "JSON error:\n" + e.getMessage());
+                e.printStackTrace();
+            }
+            finally
+            {
+                adapterCleanup(out, sslSocket);
+                Log.d("SYNC", "SYNC COMPLETE");
+            }
         }
     }
 

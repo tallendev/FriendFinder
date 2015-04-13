@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,6 +129,9 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                 extras.putString("search", "%%");
                 resolver.registerContentObserver(EVENTS, true,
                                                  new SyncContentObserver(new Handler()));
+                extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+                extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+                extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
                 ContentResolver
                         .requestSync(account, getActivity().getString(R.string.authority), extras);
                 spinnerDialog.show(getFragmentManager(), "Synchronizing...");
@@ -166,18 +170,7 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         events = new ArrayList<Event>();
-        if (savedInstanceState == null)
-        {
-            Bundle extras = new Bundle();
-            extras.putString("request_type", "3");
-            extras.putString("table0", "event");
-            extras.putString("search", "%%");
-            resolver.registerContentObserver(EVENTS, true, new SyncContentObserver(new Handler()));
-            ContentResolver
-                    .requestSync(account, getActivity().getString(R.string.authority), extras);
-            spinnerDialog.show(getFragmentManager(), "Synchronizing...");
-            spinnerShowing = true;
-        }
+        Log.d("EVENTS", "OnCreateView");
 
         return rootView;
     }
@@ -190,10 +183,20 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     public void onResume ()
     {
         super.onResume();
+        spinnerDialog.show(getFragmentManager(), "Synchronizing...");
+        spinnerShowing = true;
         Bundle extras = new Bundle();
         extras.putString("request_type", "3");
         extras.putString("table0", "event");
         extras.putString("search", "%%");
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        resolver.registerContentObserver(EVENTS, true, new SyncContentObserver(new Handler()));
+        Log.d("EVENTS", "FIRST SYNC");
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
     }
 

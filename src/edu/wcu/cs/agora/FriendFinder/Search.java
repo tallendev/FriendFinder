@@ -249,6 +249,9 @@ public class Search extends Activity
             extras.putString("request_type", "3");
             extras.putString("table0", currentOption.getTable());
             extras.putString("search", "%" + editText.getText().toString() + "%");
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             lv.setOnItemClickListener(this);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");

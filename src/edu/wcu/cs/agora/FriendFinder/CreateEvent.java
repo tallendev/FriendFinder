@@ -142,6 +142,9 @@ public class CreateEvent extends Activity implements View.OnClickListener
                                      "-" + datePicker.getDay());
             extras.putString("location", location);
             extras.putBoolean("create", true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
             receiver = new CreateEventReceiver();

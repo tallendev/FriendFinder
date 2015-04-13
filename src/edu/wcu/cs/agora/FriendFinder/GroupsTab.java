@@ -122,6 +122,9 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
                 extras.putString("search", "%%");
                 resolver.registerContentObserver(GROUPS, true,
                                                  new SyncContentObserver(new Handler()));
+                extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+                extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+                extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
                 ContentResolver
                         .requestSync(account, getActivity().getString(R.string.authority), extras);
                 spinnerDialog.show(getFragmentManager(), "Synchronizing...");
@@ -163,18 +166,6 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
         account = ((AccountManager) getActivity().getSystemService(Context.ACCOUNT_SERVICE))
                 .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
         groups = new ArrayList<Group>();
-        if (savedInstanceState == null)
-        {
-            Bundle extras = new Bundle();
-            extras.putString("request_type", "3");
-            extras.putString("table0", "user_group_self");
-            extras.putString("search", "%%");
-            resolver.registerContentObserver(GROUPS, true, new SyncContentObserver(new Handler()));
-            ContentResolver
-                    .requestSync(account, getActivity().getString(R.string.authority), extras);
-            spinnerDialog.show(getFragmentManager(), "Synchronizing...");
-            spinnerShowing = true;
-        }
 
         return rootView;
     }
@@ -187,10 +178,16 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
     public void onResume ()
     {
         super.onResume();
+        spinnerDialog.show(getFragmentManager(), "Synchronizing...");
+        spinnerShowing = true;
         Bundle extras = new Bundle();
         extras.putString("request_type", "3");
         extras.putString("table0", "user_group_self");
         extras.putString("search", "%%");
+        resolver.registerContentObserver(GROUPS, true, new SyncContentObserver(new Handler()));
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
     }
 

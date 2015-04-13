@@ -178,6 +178,9 @@ public class Register extends Activity
                     // Allow synchronization.
                     ContentResolver.setSyncAutomatically(account, AUTHORITY, true);
                     // Attempt to synchronize.
+                    extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+                    extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+                    extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
                     ContentResolver.requestSync(account, AUTHORITY, extras);
                     spinnerDialog.show(getFragmentManager(), "Registering User");
                     receiver = new RegistrationReceiver();

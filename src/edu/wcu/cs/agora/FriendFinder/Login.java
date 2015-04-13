@@ -101,13 +101,13 @@ public class Login extends Activity implements View.OnClickListener
         {
             spinnerDialog.dismiss();
         }
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
         if (receiver != null)
         {
             unregisterReceiver(receiver);
             receiver = null;
         }
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
         finish();
     }
 
@@ -172,7 +172,9 @@ public class Login extends Activity implements View.OnClickListener
             intentFilter.addAction("first_sync");
             registerReceiver(receiver, intentFilter);
             ContentResolver.setSyncAutomatically(account, AUTHORITY, true);
-
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
             ContentResolver.requestSync(account, AUTHORITY, extras);
             Log.d("LOGIN", "SYNC_REQUESTED");
             spinnerDialog.show(getFragmentManager(), "Attempting to Log In");

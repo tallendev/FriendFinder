@@ -110,6 +110,9 @@ public class EditGroup extends Activity implements View.OnClickListener
                              ((EditText) findViewById(R.id.group_description)).getText()
                                                                               .toString());
             extras.putBoolean("create", false);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
             receiver = new EditGroupReceiver();
@@ -156,6 +159,9 @@ public class EditGroup extends Activity implements View.OnClickListener
                                extras.putString("groupname",
                                                 ((TextView) findViewById(R.id.title)).getText()
                                                                                      .toString());
+                               extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+                               extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+                               extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
                                ContentResolver
                                        .requestSync(account, getString(R.string.authority), extras);
                                spinnerDialog

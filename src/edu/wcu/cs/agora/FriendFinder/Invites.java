@@ -111,8 +111,10 @@ public class Invites extends Fragment implements AdapterView.OnItemClickListener
         extras.putString("request_type", "3");
         extras.putString("table0", "event");
         extras.putString("search", "%%");
-        ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
         resolver.registerContentObserver(EVENTS, true, new SyncContentObserver(new Handler()));
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
         spinnerDialog.show(getFragmentManager(), "Synchronizing...");
         spinnerShowing = true;

@@ -82,6 +82,9 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
             extras.putString("search", "%%");
             extras.putString("group_name", getIntent().getExtras().getString("group_name"));
             resolver.registerContentObserver(MEMBERS, true, new SyncContentObserver(new Handler()));
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
             ContentResolver.requestSync(account, this.getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing...");
             spinnerShowing = true;
@@ -101,6 +104,9 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
         extras.putString("table0", "users");
         extras.putString("search", "%%");
         extras.putString("group_name", getIntent().getExtras().getString("group_name"));
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         ContentResolver.requestSync(account, this.getString(R.string.authority), extras);
     }
 

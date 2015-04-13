@@ -119,6 +119,9 @@ public class GroupPage extends Activity implements View.OnClickListener
             extras.putString("request_type", "8");
             extras.putString("group_name", getIntent().getExtras().getString("group_name"));
             extras.putBoolean("joining", joining);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
             ContentResolver.requestSync(account, this.getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
             receiver = new EditGroupReceiver();

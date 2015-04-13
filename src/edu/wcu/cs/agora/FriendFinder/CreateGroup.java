@@ -94,6 +94,9 @@ public class CreateGroup extends Activity implements View.OnClickListener
                              ((EditText) findViewById(R.id.group_description)).getText()
                                                                               .toString());
             extras.putBoolean("create", true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
             receiver = new CreateGroupReceiver();

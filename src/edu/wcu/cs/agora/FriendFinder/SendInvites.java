@@ -128,6 +128,9 @@ public class SendInvites extends Activity
             //extras.putString("table0", "users_not_invited");
             extras.putString("table0", "users");
             extras.putString("search", "%" + editText.getText().toString() + "%");
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+            extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
             ContentResolver.requestSync(account, getString(R.string.authority), extras);
             lv.setOnItemClickListener(this);
             spinnerDialog.show(getFragmentManager(), "Synchronizing with Server");
@@ -167,6 +170,9 @@ public class SendInvites extends Activity
                                extras.putString("request_type", "10");
                                extras.putString("id", getIntent().getExtras().getString("id"));
                                extras.putString("invited_user", user.getEmail());
+                               extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+                               extras.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
+                               extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
                                ContentResolver
                                        .requestSync(account, getString(R.string.authority), extras);
                                receiver = new SendInvitesReceiver();
