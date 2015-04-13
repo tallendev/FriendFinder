@@ -315,7 +315,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         try
         {
             // write and read
-            out.write(json.toString().getBytes());
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
         }
@@ -362,7 +362,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             // write and read
             Log.d("SYNC", json.toString());
-            out.write(json.toString().getBytes());
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
         }
@@ -421,9 +421,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
                 i++;
             }
             // write away
-            out.write(json.toString().getBytes());
-            out.flush();
-            Log.d("SYNC", "FLUSH DATA");
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             if (in.hasNextLine())
             {
@@ -478,7 +476,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             // write and read
             Log.d("SYNC", json.toString());
-            out.write(json.toString().getBytes());
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
         }
@@ -521,7 +519,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             // write and read
             Log.d("SYNC", json.toString());
-            out.write(json.toString().getBytes());
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
         }
@@ -564,7 +562,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             // write and read
             Log.d("SYNC", json.toString());
-            out.write(json.toString().getBytes());
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
         }
@@ -611,7 +609,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             // write and read
             Log.d("SYNC", json.toString());
-            out.write(json.toString().getBytes());
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
         }
@@ -658,7 +656,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             // write and read
             Log.d("SYNC", json.toString());
-            out.write(json.toString().getBytes());
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
         }
@@ -705,7 +703,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         {
             // write and read
             Log.d("SYNC", json.toString());
-            out.write(json.toString().getBytes());
+            write(json, out);
             Scanner in = new Scanner(sslSocket.getInputStream());
             jsonIn = new JSONObject(in.nextLine());
         }
@@ -748,7 +746,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
         try
         {
             // write and read
-            out.write(json.toString().getBytes());
+            write(json, out);
             //    Scanner in = new Scanner(sslSocket.getInputStream());
             //jsonIn = new JSONObject(in.nextLine());
         }
@@ -758,6 +756,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             Log.d("SYNC", ioe.getMessage());
             ioError = true;
         }
+    }
+
+    private void write (JSONObject jsonOut, OutputStream out) throws IOException
+    {
+        out.write((jsonOut.toString() + "\n").getBytes());
     }
 
     /**
