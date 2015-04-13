@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,7 +108,6 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         intent.putExtra("description", event.getDescription());
         intent.putExtra("id", event.getId());
         intent.putExtra("location", event.getLocation());
-        Log.d("EVENTS", "event.getId: " + event.getId());
         intent.putExtra("attending", event.isAttending());
         intent.putExtra("invited", event.isInvited());
         startActivityForResult(intent, REQUEST);
@@ -197,7 +195,6 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         extras.putString("table0", "event");
         extras.putString("search", "%%");
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
-        Log.d("EVENTS", "Resolver query");
     }
 
     /**
@@ -298,7 +295,6 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
             events = new ArrayList<>();
             while (cursor.moveToNext())
             {
-                Log.d("EVENTS", "cursor != null");
                 // retrieve data from content provider element
                 String eventName = cursor.getString(cursor.getColumnIndex("EVENT_NAME"));
                 String eventDate = cursor.getString(cursor.getColumnIndex("EVENT_DATE"));
@@ -311,15 +307,10 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                         .valueOf(cursor.getString(cursor.getColumnIndex("ATTENDING")));
                 boolean invited = Boolean
                         .valueOf(cursor.getString(cursor.getColumnIndex("INVITED")));
-                Log.d("EVENTS", "ID: " + id);
                 events.add(new Event(eventName, eventDate, eventTime, description, creator, id,
                                      attending, location, invited));
             }
-            Log.d("EVENTS", "ExtendedArray: ");
-            for (Event event : events)
-            {
-                Log.d("EVENTS", event.toString());
-            }
+            cursor.close();
             // Create our list.
             ExtendedArrayAdapter<Event> ad = new ExtendedArrayAdapter<Event>(rootView.getContext(),
                                                                              R.layout.events_list_item,
