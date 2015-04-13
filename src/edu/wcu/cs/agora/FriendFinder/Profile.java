@@ -3,7 +3,6 @@ package edu.wcu.cs.agora.FriendFinder;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -63,7 +62,6 @@ public class Profile extends Activity implements View.OnClickListener
             gender.setText(extras.getString("gender"));
         }
         busy = (TextView) findViewById(R.id.busy);
-        Log.d("PROFILE", "Busy: " + extras.getBoolean("busy"));
         if (extras.getBoolean("busy"))
         {
             busy.setText("Busy");

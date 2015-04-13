@@ -264,6 +264,7 @@ public class Invites extends Fragment implements AdapterView.OnItemClickListener
                 events.add(new Event(eventName, eventDate, eventTime, description, creator, id,
                                      attending, location, invited));
             }
+            cursor.close();
             // Create our list.
             ExtendedArrayAdapter<Event> ad = new ExtendedArrayAdapter<Event>(rootView.getContext(),
                                                                              R.layout.events_list_item,

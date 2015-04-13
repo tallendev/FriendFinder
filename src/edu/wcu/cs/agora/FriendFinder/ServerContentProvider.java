@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * @author Tyler Allen
@@ -156,7 +155,6 @@ public class ServerContentProvider extends ContentProvider
     public Uri insert (Uri uri, ContentValues values)
     {
         String table = getTableName(uri);
-        Log.d("INSERT_CONTENT_PROVIDER", table);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         long value = database.insert(table, null, values);
         this.getContext().getContentResolver().notifyChange(uri, null);

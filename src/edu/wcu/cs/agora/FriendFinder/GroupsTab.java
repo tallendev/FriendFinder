@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -291,18 +290,12 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
             groups = new ArrayList<>();
             while (cursor.moveToNext())
             {
-                Log.d("GROUPS", "cursor != null");
                 // retrieve data from content provider element
                 String groupName = cursor.getString(cursor.getColumnIndex("GROUP_NAME"));
                 String description = cursor.getString(cursor.getColumnIndex("GROUP_DESCRIPTION"));
                 String owner = cursor.getString(cursor.getColumnIndex("OWNER"));
                 boolean member = Boolean.valueOf(cursor.getString(cursor.getColumnIndex("MEMBER")));
                 groups.add(new Group(groupName, description, owner, member));
-            }
-            Log.d("GROUPS", "ExtendedArray: ");
-            for (Group group : groups)
-            {
-                Log.d("GROUPS", group.toString());
             }
             // Create our list.
             ExtendedArrayAdapter<Group> ad = new ExtendedArrayAdapter<Group>(rootView.getContext(),
