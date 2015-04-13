@@ -176,6 +176,14 @@ public class CreateEvent extends Activity implements View.OnClickListener
         private int      hour;
         private int      minute;
 
+        public TimePickerFragment ()
+        {
+            super();
+            c = Calendar.getInstance();
+            hour = c.get(Calendar.HOUR_OF_DAY);
+            minute = c.get(Calendar.MINUTE);
+        }
+
         public void onTimeSet (TimePicker view, int hourOfDay, int minute)
         {
             this.hour = hourOfDay;
@@ -227,6 +235,16 @@ public class CreateEvent extends Activity implements View.OnClickListener
          * Currently selected day.
          */
         private int day;
+
+        public DatePickerFragment ()
+        {
+            super();
+            final Calendar c = Calendar.getInstance();
+            year = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            day = c.get(Calendar.DAY_OF_MONTH);
+        }
+
 
         /**
          * @param view The view associated with this listener.
