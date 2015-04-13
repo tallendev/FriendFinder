@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * @author Tyler Allen
- * @version 3/3/2015
+ * @version 4/13/2015
  * Activity allowing user to search and invite users.
  * @created 3/3/015
  */

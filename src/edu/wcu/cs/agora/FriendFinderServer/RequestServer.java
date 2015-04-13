@@ -142,25 +142,27 @@ public class RequestServer
     {
         System.err.println("RequestServer listening for new connection.");
         final Socket client = serverSocket.accept();
-        System.err.println("RequestServer accepted new connection.");
-        client.setSoTimeout(TIMEOUT);
-        System.err.println("Timeout set");
-        final Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
-        System.err.println("Scanner made");
         Thread thread = new Thread(new Runnable()
         {
             @Override
             public void run ()
             {
-                if (in.hasNextLine())
+                try
                 {
-                    System.err.println("Read");
-                    JSONObject json = null;
-                    JSONObject jsonOut = new JSONObject();
-                    System.err.println("Build new request.");
-                    Request request = null;
-                    try
+                    System.err.println("RequestServer accepted new connection.");
+                    client.setSoTimeout(TIMEOUT);
+                    System.err.println("Timeout set");
+                    Scanner in = new Scanner(client.getInputStream());//.useDelimiter("\\A");
+                    System.err.println("Scanner made");
+                    if (in.hasNextLine())
                     {
+
+                        System.err.println("Read");
+                        JSONObject json = null;
+                        JSONObject jsonOut = new JSONObject();
+                        System.err.println("Build new request.");
+                        Request request = null;
+
                         json = new JSONObject(in.nextLine());
                         System.err.println("Finished read");
                         request = Request.requestBuilder(json, jsonOut);
@@ -171,15 +173,16 @@ public class RequestServer
                         out.println(jsonOut);
                         out.flush();
                         System.err.println("Sent JSON response");
+
                     }
-                    catch (SQLException | JSONException | IOException e)
+                    else
                     {
-                        e.printStackTrace();
+                        System.err.println("No message received from client.");
                     }
                 }
-                else
+                catch (SQLException | JSONException | IOException e)
                 {
-                    System.err.println("No message received from client.");
+                    e.printStackTrace();
                 }
             }
         });
