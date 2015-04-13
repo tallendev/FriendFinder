@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +102,6 @@ public class MemberList extends Activity implements AdapterView.OnItemClickListe
         extras.putString("search", "%%");
         extras.putString("group_name", getIntent().getExtras().getString("group_name"));
         ContentResolver.requestSync(account, this.getString(R.string.authority), extras);
-        Log.d("EVENTS", "Resolver query");
     }
 
     /**

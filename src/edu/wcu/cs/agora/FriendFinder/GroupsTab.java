@@ -193,7 +193,6 @@ public class GroupsTab extends Fragment implements AdapterView.OnItemClickListen
         extras.putString("table0", "user_group_self");
         extras.putString("search", "%%");
         ContentResolver.requestSync(account, getActivity().getString(R.string.authority), extras);
-        Log.d("EVENTS", "Resolver query");
     }
 
     /**
