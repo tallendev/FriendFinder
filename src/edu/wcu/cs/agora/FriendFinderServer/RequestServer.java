@@ -165,21 +165,14 @@ public class RequestServer
                         System.err.println("Finished read");
                         request = Request.requestBuilder(json, jsonOut);
                         request.getResponse();
-                    }
-                    catch (MalformedPacketException | SQLException | JSONException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    PrintStream out = null;
-                    try
-                    {
+                        PrintStream out = null;
                         out = new PrintStream(client.getOutputStream());
                         System.out.println(jsonOut);
                         out.println(jsonOut);
                         out.flush();
                         System.err.println("Sent JSON response");
                     }
-                    catch (IOException e)
+                    catch (SQLException | JSONException | IOException e)
                     {
                         e.printStackTrace();
                     }
