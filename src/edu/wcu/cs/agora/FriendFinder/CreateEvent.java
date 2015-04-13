@@ -137,7 +137,8 @@ public class CreateEvent extends Activity implements View.OnClickListener
             extras.putString("description",
                              ((EditText) findViewById(R.id.description)).getText().toString());
             extras.putString("time", timePicker.getHour() + ":" + timePicker.getMinute() + ":00");
-            extras.putString("date", datePicker.getYear() + "-" + datePicker.getMonth() + "-" +
+            // +1 fix to month here, because android months are off by 1 for SQL dates
+            extras.putString("date", datePicker.getYear() + "-" + datePicker.getMonth() + 1 + "-" +
                                      datePicker.getDay());
             extras.putString("location", location);
             extras.putBoolean("create", true);
