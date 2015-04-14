@@ -347,9 +347,6 @@ public class Register extends Activity
             // Success. Move to next activity and kill this one to preserve state.
             else if (intent.getExtras().getBoolean("success", false))
             {
-                Intent i = new Intent(Register.this, Profile.class);
-                i.putExtra("owner", true);
-                startActivity(i);
                 finish();
                 cleanupReceiver();
             }

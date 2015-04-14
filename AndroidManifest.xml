@@ -20,7 +20,7 @@ Android manifest.
             android:name="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.SYNC_FINISHED"
             android:protectionLevel="signature" />
 
-    <permission
+    <permissieon
             android:name="edu.wcu.cs.agora.FriendFinder.SyncAdapter.permission.GROUP_UPDATE"
             android:protectionLevel="signature"/>
     <permission
