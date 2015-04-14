@@ -243,6 +243,15 @@ public class Register extends Activity
             implements DatePickerDialog.OnDateSetListener
     {
 
+        public DatePickerFragment ()
+        {
+            super();
+            final Calendar c = Calendar.getInstance();
+            year = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            day = c.get(Calendar.DAY_OF_MONTH);
+        }
+
         /**
          * Currently selected year.
          */
@@ -347,6 +356,7 @@ public class Register extends Activity
             // Success. Move to next activity and kill this one to preserve state.
             else if (intent.getExtras().getBoolean("success", false))
             {
+                cleanupAccount();
                 finish();
                 cleanupReceiver();
             }

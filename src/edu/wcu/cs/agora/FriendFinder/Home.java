@@ -1,9 +1,13 @@
 package edu.wcu.cs.agora.FriendFinder;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +24,15 @@ public class Home extends Activity
 {
 
     /**
+     * Current User's account.
+     */
+    private Account account;
+    /**
+     * Shared preferences for storing user credentials.
+     */
+    private SharedPreferences sharedPreferences;
+
+    /**
      * Creates tabs on page and attaches listeners.
      *
      * @param savedInstanceState not used
@@ -29,6 +42,11 @@ public class Home extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        account = ((AccountManager) this.getSystemService(Context.ACCOUNT_SERVICE))
+                .getAccountsByType(GenericAccountService.ACCOUNT_TYPE)[0];
+        sharedPreferences = this
+                .getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
 
         Fragment fragment1 = new Events();
         Fragment fragment2 = new GroupsTab();
@@ -113,6 +131,7 @@ public class Home extends Activity
                 break;
 
             case R.id.logout:
+                cleanupAccount();
                 logout();
                 break;
 
@@ -121,6 +140,21 @@ public class Home extends Activity
         }
         return true;
     }
+
+    /**
+     * Helper for deleting account that has not been registered with server.
+     */
+    private void cleanupAccount ()
+    {
+        if (account != null)
+        {
+            AccountManager accountManager = (AccountManager) this.getSystemService(ACCOUNT_SERVICE);
+            accountManager.removeAccount(account, null, null);
+            account = null;
+        }
+        sharedPreferences.edit().remove("user").apply();
+    }
+
 
     /**
      * Functionality for logging out of the application.
