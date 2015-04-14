@@ -801,6 +801,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter
             // by requesting only data that has changed or doesn't exist.
             try
             {
+                Log.d("SYNCADAPTER", "DELETE TABLE" + table);
                 provider.delete(Uri.parse(ServerContentProvider.CONTENT_URI + "/" + table), null,
                                 null);
             }

@@ -173,8 +173,9 @@ public class ServerContentProvider extends ContentProvider
     {
         String table = getTableName(uri);
         SQLiteDatabase dataBase = dbHelper.getWritableDatabase();
+        int status = dataBase.delete(table, selection, selectionArgs);
         this.getContext().getContentResolver().notifyChange(uri, null);
-        return dataBase.delete(table, selection, selectionArgs);
+        return status;
     }
 
     /**
@@ -204,6 +205,11 @@ public class ServerContentProvider extends ContentProvider
         String value = uri.getPath();
         value = value.replace("/", ""); //we need to remove '/'
         return value;
+    }
+
+    public void resetDatabase() {
+        dbHelper.close();
+        dbHelper = new MainDatabaseHelper(getContext());
     }
 
     /**

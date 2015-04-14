@@ -107,6 +107,11 @@ public class Login extends Activity implements View.OnClickListener
             receiver = null;
         }
         Intent intent = new Intent(this, Home.class);
+        ContentProviderClient client = getContentResolver().acquireContentProviderClient(ServerContentProvider.AUTHORITY);
+        ServerContentProvider provider = (ServerContentProvider) client.getLocalContentProvider();
+        provider.resetDatabase();
+        client.release();
+
         startActivity(intent);
         finish();
     }

@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +33,10 @@ public class Home extends Activity
      */
     private SharedPreferences sharedPreferences;
 
+    private Fragment fragment1;
+    private Fragment fragment2;
+    private Fragment fragment3;
+
     /**
      * Creates tabs on page and attaches listeners.
      *
@@ -48,9 +53,9 @@ public class Home extends Activity
         sharedPreferences = this
                 .getSharedPreferences(getString(R.string.shared_prefs), Context.MODE_PRIVATE);
 
-        Fragment fragment1 = new Events();
-        Fragment fragment2 = new GroupsTab();
-        Fragment fragment3 = new Invites();
+        fragment1 = new Events();
+        fragment2 = new GroupsTab();
+        fragment3 = new Invites();
 
         ActionBar actionBar = getActionBar();
 
@@ -131,7 +136,6 @@ public class Home extends Activity
                 break;
 
             case R.id.logout:
-                cleanupAccount();
                 logout();
                 break;
 
@@ -146,13 +150,14 @@ public class Home extends Activity
      */
     private void cleanupAccount ()
     {
-        if (account != null)
-        {
-            AccountManager accountManager = (AccountManager) this.getSystemService(ACCOUNT_SERVICE);
-            accountManager.removeAccount(account, null, null);
-            account = null;
-        }
+        AccountManager accountManager = (AccountManager) this.getSystemService(ACCOUNT_SERVICE);
+        accountManager.removeAccount(account, null, null);
+        account = null;
         sharedPreferences.edit().remove("user").apply();
+        Intent intent = new Intent(this, SyncService.class);
+
+        stopService(intent);
+        stopService(new Intent(this, GenericAccountService.class));
     }
 
 
@@ -163,11 +168,16 @@ public class Home extends Activity
      */
     private void logout ()
     {
+        cleanupAccount();
         //FIXME delete user from shared preferences here
         Intent i = new Intent(getApplicationContext(), Login.class);
-        //finish all other existing activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        ContentProviderClient client = getContentResolver().acquireContentProviderClient(ServerContentProvider.AUTHORITY);
+        ServerContentProvider provider = (ServerContentProvider) client.getLocalContentProvider();
+        provider.shutdown();
+        client.release();
         startActivity(i);
+        finish();
     }
 
 }

@@ -183,6 +183,12 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
     public void onResume ()
     {
         super.onResume();
+        ExtendedArrayAdapter ad = new ExtendedArrayAdapter<>(rootView.getContext(),
+                R.layout.events_list_item,
+                R.id.eventname,
+                events);
+        lv.setAdapter(ad);
+        ad.notifyDataSetChanged();
         spinnerDialog.show(getFragmentManager(), "Synchronizing...");
         spinnerShowing = true;
         Bundle extras = new Bundle();
@@ -312,6 +318,11 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
                         .valueOf(cursor.getString(cursor.getColumnIndex("INVITED")));
                 events.add(new Event(eventName, eventDate, eventTime, description, creator, id,
                                      attending, location, invited));
+            }
+            Log.d("EVENT", "START EVENT CHANGE");
+            for (Event event : events)
+            {
+                Log.d("EVENT", event.toString());
             }
             cursor.close();
             // Create our list.
