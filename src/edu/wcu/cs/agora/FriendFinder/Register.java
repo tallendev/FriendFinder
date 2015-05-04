@@ -174,7 +174,7 @@ public class Register extends Activity
                     // Attempt to create a sync account
                     Account account = FriendFinder
                             .createSyncAccount(this, user.getText().toString(),
-                                               user.getText().toString());
+                                               password.getText().toString());
                     // Allow synchronization.
                     ContentResolver.setSyncAutomatically(account, AUTHORITY, true);
                     // Attempt to synchronize.
