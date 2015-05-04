@@ -8,13 +8,14 @@ Event creation page.
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:weightSum="10">
+    android:layout_height="match_parent" android:weightSum="10"
+              android:background="@color/lfgb">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="Create Event"
-        android:textColor="@color/gold"
+        android:textColor="@color/lfgw"
         android:textSize="60dp"
         android:gravity="center"
         android:id="@+id/textView"
@@ -26,6 +27,7 @@ Event creation page.
         android:layout_height="0dp"
         android:layout_weight="1"
         android:id="@+id/eventname"
+        android:textColorHint="@color/lfgw"
         android:hint="Event Name"
         android:layout_gravity="center_horizontal" />
 
@@ -34,6 +36,8 @@ Event creation page.
         android:layout_height="0dp"
         android:layout_weight="1"
         android:id="@+id/time"
+        android:alpha="1"
+        android:textColorHint="@color/lfgw"
         android:hint="Time"
         android:layout_gravity="center_horizontal" />
 
@@ -42,52 +46,25 @@ Event creation page.
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:weightSum="5">
+        android:weightSum="10">
+
+
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:id="@+id/date"
-            android:hint="Date"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="13dp"
-            android:text="calendar"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:weightSum="5">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:hint="Location"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="13dp"
-            android:text="map"
+            android:layout_weight="10"
+            android:text="Map"
             android:id="@+id/map"/>
     </LinearLayout>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:id="@+id/description"
         android:hint="Message"
+        android:textColorHint="@color/lfgw"
         android:layout_gravity="center_horizontal" />
 
 

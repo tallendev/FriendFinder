@@ -7,6 +7,9 @@ File containing various available colors. The color scheme is not set yet.
 
 
 <resources>
+    <color name="lfgb">#6170A0</color>
+    <color name="lfgw">#FDFDFD</color>
+
     <color name="purple">#592C88</color>
     <color name="gold">#C1A875</color>
 

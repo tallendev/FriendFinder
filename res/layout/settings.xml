@@ -12,7 +12,7 @@ A user's general app settings.
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:weightSum="100"
-              android:background="@color/purple">
+              android:background="@color/lfgb">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@ A user's general app settings.
                 android:layout_height="wrap_content"
                 android:text="@string/settings"
                 android:textSize="60sp"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:layout_weight="60"/>
 
     </LinearLayout>

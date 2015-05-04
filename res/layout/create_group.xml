@@ -9,13 +9,14 @@ Group creation page.
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical" android:layout_width="match_parent"
-              android:layout_height="match_parent" android:weightSum="10">
+              android:layout_height="match_parent" android:weightSum="10"
+              android:background="@color/lfgb">
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:text="@string/create_group"
-            android:textColor="@color/gold"
+            android:textColor="@color/lfgw"
             android:textSize="60dp"
             android:gravity="center"
             android:id="@+id/textView"
@@ -28,6 +29,7 @@ Group creation page.
             android:layout_weight="1"
             android:id="@+id/group_name"
             android:hint="@string/group_name"
+            android:textColorHint="@color/lfgw"
             android:layout_gravity="center_horizontal"/>
 
     <EditText
@@ -36,6 +38,7 @@ Group creation page.
             android:layout_weight="5"
             android:id="@+id/group_description"
             android:hint="@string/group_description"
+            android:textColorHint="@color/lfgw"
             android:layout_gravity="center_horizontal"/>
 
     <Button

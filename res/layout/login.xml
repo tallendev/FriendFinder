@@ -13,7 +13,7 @@ Log in page.
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:weightSum="100"
-              android:background="@color/purple">
+              android:background="@color/lfgb">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -24,46 +24,26 @@ Log in page.
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="13"
+            android:layout_weight="25"
             android:weightSum="100">
 
         <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="20"/>
+                android:layout_weight="23"/>
         <!-- placeholder until we get a graphic -->
         <TextView
+                android:layout_gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/f1"
-                android:textSize="60sp"
-                android:textColor="@color/gold"
-                android:id="@+id/friend"
-                android:layout_weight="55"/>
+                android:text="@string/lfg"
+                android:textSize="120sp"
+                android:textColor="@color/lfgw"
+                android:id="@+id/looking"
+                android:layout_weight="60"/>
 
     </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="13"
-            android:weightSum="100">
-
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="38"/>
-        <!-- placeholder until we get a graphic -->
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/f2"
-                android:textSize="60sp"
-                android:textColor="@color/gold"
-                android:id="@+id/finder"
-                android:layout_weight="55"/>
-
-    </LinearLayout>
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -87,6 +67,7 @@ Log in page.
                 android:inputType="textEmailAddress"
                 android:ems="10"
                 android:id="@+id/email"
+                android:textColorHint="@color/lfgw"
                 android:hint="@string/email"
                 android:singleLine="true"
                 android:ellipsize="start"
@@ -116,6 +97,7 @@ Log in page.
                 android:singleLine="true"
                 android:ellipsize="start"
                 android:gravity="center"
+                android:textColorHint="@color/lfgw"
                 android:layout_weight="60"/>
 
     </LinearLayout>
@@ -167,6 +149,7 @@ Log in page.
                 android:hint="@string/missing_acc"
                 android:singleLine="true"
                 android:ellipsize="start"
+                android:textColorHint="@color/lfgw"
                 android:gravity="center"
                 android:layout_weight="60"/>
 

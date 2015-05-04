@@ -8,7 +8,7 @@ User view page.
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:weightSum="10" android:background="@color/purple"
+    android:layout_height="match_parent" android:weightSum="10" android:background="@color/lfgb"
     android:padding="20dp">
 
 
@@ -29,30 +29,39 @@ User view page.
             android:layout_weight="3"
             android:src="@drawable/portrait"/>
 
-        <LinearLayout
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".5"
+            android:weightSum="100"/>
+
+
+    <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:paddingLeft="20dp"
             android:weightSum="2">
 
-            <TextView
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:text="My Name"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:ems="10"
                 android:id="@+id/name"
                 android:layout_weight="1" />
-            <TextView
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:text="Busy"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:layout_weight="1"
                 android:id="@+id/busy"/>
-        </LinearLayout>
     </LinearLayout>
 
     <TextView
@@ -60,37 +69,24 @@ User view page.
             android:layout_height="0dp"
             android:text="gender"
             android:gravity="bottom"
-            android:textColor="@color/gold"
+            android:textColor="@color/lfgw"
             android:id="@+id/gender1"
-            android:layout_weight="1" />
+            android:layout_weight=".3" />
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:text="birthday"
             android:gravity="bottom"
-            android:textColor="@color/gold"
+            android:textColor="@color/lfgw"
             android:id="@+id/birthday"
             android:layout_weight="1" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Likes:"
-        android:gravity="bottom"
-        android:textColor="@color/gold"
-        android:id="@+id/textView2"
-        android:layout_weight="1" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/editText"
-        android:text="Your likes here"
-        android:textColor="@color/gold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="1" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".5"
+            android:weightSum="100"/>
 
     <Button
         android:layout_width="match_parent"
@@ -99,6 +95,8 @@ User view page.
         android:layout_marginRight="200dp"
         android:id="@+id/schedule"
         android:layout_weight="1" />
+
+
 
     <LinearLayout
             android:orientation="horizontal"

@@ -10,7 +10,8 @@ List view xml.
               android:layout_height="fill_parent"
               android:gravity="top"
               android:orientation="vertical"
-              android:weightSum="10" >
+              android:weightSum="10"
+              android:background="@color/lfgb">
 
     <ListView
             android:id="@+id/listView1"
@@ -19,7 +20,7 @@ List view xml.
             android:layout_weight="10"
             android:cacheColorHint="#FF666666"
             android:choiceMode="multipleChoice"
-            android:textColor="@color/purple">
+            android:textColor="@color/lfgb">
 
     </ListView>
 </LinearLayout>

@@ -19,7 +19,7 @@ List view xml.
             android:layout_weight="10"
             android:cacheColorHint="#FF666666"
             android:choiceMode="multipleChoice"
-            android:textColor="@color/purple">
+            android:textColor="@color/lfgb">
 
     </ListView>
 </LinearLayout>

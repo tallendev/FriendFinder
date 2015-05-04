@@ -7,7 +7,7 @@ User profile editing page.
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:weightSum="10" android:background="@color/purple"
+    android:layout_height="match_parent" android:weightSum="10" android:background="@color/lfgb"
     android:padding="20dp">
 
 
@@ -19,6 +19,8 @@ User profile editing page.
         android:layout_weight="2"
         android:layout_gravity="center_horizontal">
 
+
+
         <!-- Placeholder for image button -->
         <Button
             android:layout_width="0dp"
@@ -27,51 +29,26 @@ User profile editing page.
             android:id="@+id/picture"
             android:layout_weight="3"/>
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+
+        </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".5"
+            android:weightSum="100"/>
+
+    <EditText
+            android:textColorHint="@color/lfgw"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:inputType="textPersonName"
             android:hint="Name"
             android:layout_marginBottom="50dp"
             android:ems="10"
             android:id="@+id/editText3"
             android:gravity="top"
-            android:layout_weight="7" />
-
-        </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Likes:"
-        android:textColor="@color/gold"
-        android:gravity="bottom"
-        android:id="@+id/textView2"
-        android:layout_weight="1" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/editText"
-        android:hint="Your likes here"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="2" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Dislikes:"
-        android:textColor="@color/gold"
-        android:gravity="bottom"
-        android:id="@+id/textView3"
-        android:layout_weight="1" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/editText2"
-        android:hint="Your dislikes here"
-        android:layout_weight="2" />
+            android:layout_weight="1" />
 
     <Button
         android:layout_width="match_parent"
@@ -80,6 +57,12 @@ User profile editing page.
         android:layout_marginRight="200dp"
         android:id="@+id/schedule"
         android:layout_weight="1" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:weightSum="100"/>
 
     <Button
         android:layout_width="match_parent"

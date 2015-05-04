@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1967621596">
+  <component name="DataSourceManagerImpl" format="xml" hash="1788014797">
     <data-source source="LOCAL" name="PostgreSQL - friendfinder@www.trantracker.com" uuid="c1762f4d-e0e3-4ac5-b7bd-7b9da82ecb5b">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://www.trantracker.com:5432/friendfinder</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL - friendfinder@www.trantracker.com [2]" uuid="72648a9b-69a5-4eeb-82f0-fa709af5c11b">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

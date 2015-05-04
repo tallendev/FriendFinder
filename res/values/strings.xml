@@ -8,6 +8,12 @@ String reference file.
 
 
 <resources>
+
+    <string name="lfg">LFG</string>
+    <string name="looking">Looking</string>
+    <string name="forr">For</string>
+    <string name="group">Group</string>
+
     <string name="app_name">FriendFinder</string>
     <string name="f1">Friend</string>
     <string name="f2">Finder</string>

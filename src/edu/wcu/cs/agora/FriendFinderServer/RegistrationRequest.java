@@ -56,12 +56,13 @@ public class RegistrationRequest extends Request
             System.err.println("Birthday: " + birthday);
             // Setting up the statement and its parameters.
             String createUser = "INSERT INTO friendfinder.users VALUES(?, ?, ?, ?, ?);";
+
             PreparedStatement stmt = conn.prepareStatement(createUser);
             stmt.setString(1, user);
-            stmt.setDate(2, Date.valueOf(birthday));
-            stmt.setString(3, gender);
-            stmt.setString(4, pass);
-            stmt.setString(5, name);
+            stmt.setDate(4, Date.valueOf(birthday));
+            stmt.setString(5, gender);
+            stmt.setString(2, pass);
+            stmt.setString(3, name);
             stmt.executeUpdate();
             out.put("success", true);
         }

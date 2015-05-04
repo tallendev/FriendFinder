@@ -11,7 +11,7 @@ Dynamically generated page representing an event.
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:weightSum="100"
-              android:background="@color/purple">
+              android:background="@color/lfgb">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@ Dynamically generated page representing an event.
                 android:layout_height="wrap_content"
                 android:text="@string/eventname"
                 android:textSize="38sp"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:id="@+id/eventname"
                 android:layout_weight="100"
                 android:gravity="center"/>
@@ -60,7 +60,7 @@ Dynamically generated page representing an event.
                 android:layout_height="wrap_content"
                 android:text="@string/time"
                 android:textSize="30sp"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:layout_weight="50"/>
         <TextView
                 android:id="@+id/date"
@@ -68,7 +68,7 @@ Dynamically generated page representing an event.
                 android:layout_height="wrap_content"
                 android:text="@string/date"
                 android:textSize="30sp"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:layout_weight="50"/>
 
     </LinearLayout>
@@ -95,7 +95,7 @@ Dynamically generated page representing an event.
                 android:layout_height="wrap_content"
                 android:text="@string/location"
                 android:textSize="30sp"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:layout_weight="60"/>
 
         <!-- Placeholder for maps icon -->
@@ -112,7 +112,7 @@ Dynamically generated page representing an event.
                 android:layout_height="wrap_content"
                 android:text="@string/location"
                 android:textSize="40sp"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:layout_weight="60"
                 android:gravity="center"/>
 
@@ -139,7 +139,7 @@ Dynamically generated page representing an event.
                 android:layout_height="wrap_content"
                 android:text="@string/information"
                 android:textSize="30sp"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:layout_weight="90"/>
 
     </LinearLayout>
@@ -160,7 +160,7 @@ Dynamically generated page representing an event.
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder_message"
                 android:textSize="20sp"
-                android:textColor="@color/gold"
+                android:textColor="@color/lfgw"
                 android:layout_weight="92"
                 android:id="@+id/description"/>
 
