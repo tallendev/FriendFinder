@@ -165,9 +165,9 @@ public class Register extends Activity
                     // pack bundle with user extras
                     extras.putString("request_type", "0");
                     extras.putString("user", user.getText().toString());
-                    extras.putString("password", user.getText().toString());
+                    extras.putString("password", password.getText().toString());
                     extras.putString("birthday",
-                                     datePicker.getYear() + "-" + datePicker.getMonth() + "-" +
+                                     datePicker.getYear() + "-" + (datePicker.getMonth() + 1) + "-" +
                                      datePicker.getDay());
                     extras.putString("gender", genderSelected);
                     extras.putString("name", name.getText().toString());

@@ -14,7 +14,7 @@ String reference file.
     <string name="forr">For</string>
     <string name="group">Group</string>
 
-    <string name="app_name">FriendFinder</string>
+    <string name="app_name">LFG</string>
     <string name="f1">Friend</string>
     <string name="f2">Finder</string>
     <string name="email">Email Address</string>
@@ -101,7 +101,7 @@ String reference file.
     <string name="join">Join</string>
     <string name="attend">Attend</string>
 
-
+<string name="birthday">Birthday</string>
 
 </resources>
 
