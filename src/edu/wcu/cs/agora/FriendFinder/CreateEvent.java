@@ -74,7 +74,7 @@ public class CreateEvent extends Activity implements View.OnClickListener
         findViewById(R.id.create).setOnClickListener(this);
         datePicker = new DatePickerFragment();
         timePicker = new TimePickerFragment();
-//        findViewById(R.id.date).setOnClickListener(this);
+        findViewById(R.id.date).setOnClickListener(this);
         findViewById(R.id.time).setOnClickListener(this);
         map.setOnClickListener(this);
         location = Map.getDefaultLocation();
