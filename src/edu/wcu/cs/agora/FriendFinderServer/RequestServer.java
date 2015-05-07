@@ -19,8 +19,6 @@ import java.util.Scanner;
  * The server for the application. This class listens for connections from clients and executes
  * their requests.
  *
- * TODO: Refactor me to use threaded responses so that the server may continue to listen for
- * connections.
  */
 public class RequestServer
 {

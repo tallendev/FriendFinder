@@ -16,7 +16,7 @@ import android.os.IBinder;
  * @version 12/8/2014
  *
  * Reference: Google docs GenericAccountService example.
- * Stubbed, most of these methods to be implemented if required/
+ * Stubbed, most of these methods to be implemented if required.
  */
 public class GenericAccountService extends Service
 {

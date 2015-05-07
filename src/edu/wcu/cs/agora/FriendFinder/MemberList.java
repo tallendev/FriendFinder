@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tyler on 2/16/2015.
+ * @author: Tyler Allen
+ * @created: 2/16/2015
+ * @version: 5/07/2015
  */
 public class MemberList extends Activity implements AdapterView.OnItemClickListener
 {

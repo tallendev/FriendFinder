@@ -10,7 +10,7 @@ import android.util.Log;
  * @author Tyler Allen
  * @created 11/29/14
  * @version 12/08/2014
- * Used for whole-application data and static methods.
+ * Used for application-wide data and static methods.
  */
 public class FriendFinder extends Application
 {

@@ -114,6 +114,12 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         startActivityForResult(intent, REQUEST);
     }
 
+    /**
+     * Performs a synchronization when we update an event.
+     * @param requestCode If we were updating the event.
+     * @param resultCode If we were succesful.
+     * @param data Not used.
+     */
     @Override
     public void onActivityResult (int requestCode, int resultCode, Intent data)
     {
@@ -273,6 +279,9 @@ public class Events extends Fragment implements AdapterView.OnItemClickListener
         }
     }
 
+    /**
+     * This class lets us observe the contentprovider for updates to event data, so that we may show those changes.
+     */
     private class SyncContentObserver extends ContentObserver
     {
 

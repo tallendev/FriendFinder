@@ -16,6 +16,8 @@ import java.util.Calendar;
  * @author Tyler Allen
  * @version 2/15/2015
  * @created 3/15/2015
+ *
+ * The event edit page.
  */
 public class EditEvent extends Activity implements View.OnClickListener
 {
@@ -59,7 +61,8 @@ public class EditEvent extends Activity implements View.OnClickListener
 
 
     /**
-     * @param savedInstanceState
+     * Sets up the event page.
+     * @param savedInstanceState not used.
      */
     @Override
     public void onCreate (Bundle savedInstanceState)
@@ -103,6 +106,12 @@ public class EditEvent extends Activity implements View.OnClickListener
         }
     }
 
+    /**
+     * Received if a map location changed.
+     * @param requestCode Determines if this was a map request.
+     * @param resultCode Determines if the request was succesful.
+     * @param data Contains the new location.
+     */
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data)
     {

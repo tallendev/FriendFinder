@@ -26,6 +26,8 @@ import java.util.List;
  * @author Tyler Allen
  * @version 12/7/2014 Code for the Fragment that contains events.
  * @created 09/29/2014
+ *
+ * This tab displays the user's groups.
  */
 
 public class GroupsTab extends Fragment implements AdapterView.OnItemClickListener

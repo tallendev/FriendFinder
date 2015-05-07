@@ -29,8 +29,11 @@ public class Map extends Activity implements GoogleMap.OnMarkerDragListener
     public static final int    MAP_LOCATION    = 12345;
 
 
+    /** The instance of the google map. */
     private GoogleMap map;
+    /** Location of an event, if necessary. */
     private LatLng location;
+    /** The marker, if necessary. */
     private Marker mark;
 
     public static String getDefaultLocation ()

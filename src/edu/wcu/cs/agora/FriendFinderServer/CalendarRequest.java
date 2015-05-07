@@ -9,10 +9,13 @@ import java.sql.SQLException;
 import java.util.Calendar;
 
 /**
- * Created by tyler on 3/24/2015.
+ * @author Tyler Allen
+ * @version 05/07/2015
+ * @created 3/24/2015.
  */
 public class CalendarRequest extends Request
 {
+    /** Array access constants for start and end dates.*/
     public static final int DATE_START = 0;
     public static final int DATE_END = 1;
 

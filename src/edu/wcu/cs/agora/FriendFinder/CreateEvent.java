@@ -93,6 +93,12 @@ public class CreateEvent extends Activity implements View.OnClickListener
         }
     }
 
+    /**
+     * Received if a location on the map has changed.
+     * @param requestCode Which type of return this is.
+     * @param resultCode Was the previous activity successful?
+     * @param data The new map location.
+     */
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data)
     {
@@ -187,12 +193,23 @@ public class CreateEvent extends Activity implements View.OnClickListener
             minute = c.get(Calendar.MINUTE);
         }
 
+        /**
+         * Updates the time.
+         * @param view Not used
+         * @param hourOfDay The hour selected.
+         * @param minute The minute selected.
+         */
         public void onTimeSet (TimePicker view, int hourOfDay, int minute)
         {
             this.hour = hourOfDay;
             this.minute = minute;
         }
 
+        /**
+         * Information to set up the calendar dialog.
+         * @param savedInstanceState not used
+         * @return The dialog.
+         */
         @Override
         public Dialog onCreateDialog (Bundle savedInstanceState)
         {

@@ -22,6 +22,8 @@ import java.util.Scanner;
  * @author Tyler Allen
  * @created 10/16/2014
  * @version 3/3/2015
+ *
+ * This class contains the logic for network communication.
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter
 {

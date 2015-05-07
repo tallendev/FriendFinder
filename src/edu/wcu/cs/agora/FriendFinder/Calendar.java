@@ -20,12 +20,18 @@ import java.util.Date;
  * @author Tyler Allen
  * @created 3/23/2015
  * @version 3/24/2015
+ *
+ * This file contains the logic for communicating calendar updates to the backend database.
  */
+
 public class Calendar extends Activity implements CalendarView.OnDateChangeListener
 {
+    /** Delay for calendar updates.. */
     public static final long     FIVE_MINUTES    = 300000;
+    /** The database location of the Calendar table. */
     public static final Uri      CALENDAR_URI    = Uri
             .parse("content://com.android.calendar/instances/when");
+    /** The begin date/time and end date/time constants. */
     public static final String[] CALENDAR_FIELDS = {CalendarContract.Instances.BEGIN,
             CalendarContract.Instances.END};
     /**
@@ -38,6 +44,10 @@ public class Calendar extends Activity implements CalendarView.OnDateChangeListe
     private        CalendarView calendar;
     private        Account      account;
 
+    /**
+     * Initialize our calendar.
+     * @param savedInstanceState not used
+     */
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
@@ -53,6 +63,9 @@ public class Calendar extends Activity implements CalendarView.OnDateChangeListe
         }
     }
 
+    /**
+     * Synchronizes with server if necessary.
+     */
     @Override
     protected void onResume ()
     {
@@ -72,6 +85,10 @@ public class Calendar extends Activity implements CalendarView.OnDateChangeListe
         }
     }
 
+    /**
+     * Gets all the events from google calendar.
+     * @return A string representing all google calendar events.
+     */
     private String getEvents ()
     {
         Uri.Builder builder = Uri.parse("content://com.android.calendar/instances/when")

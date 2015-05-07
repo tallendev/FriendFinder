@@ -10,7 +10,6 @@ import java.sql.SQLException;
  * @created 10/10/14
  * @version 12/8/2014
  *
- * TODO: Implement children
  */
 public abstract class Request
 {
